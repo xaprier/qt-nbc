@@ -19,7 +19,9 @@ set(PROJECT_SOURCES
         cpp-files/mainwindow.cpp
         header-files/mainwindow.h
         design-files/mainwindow.ui
-)
+        header-files/nbc.h
+        cpp-files/nbc.cpp
+        )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(qt-nbc
