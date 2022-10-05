@@ -14,6 +14,11 @@ class nbc {
   private:
 
   public:
+	static std::string binToOct( const std::basic_string<char> &number );
+
+	static std::string binToDec( std::basic_string<char> number );
+
+	static std::string binToHex( const std::basic_string<char> &number );
 
 };
 
