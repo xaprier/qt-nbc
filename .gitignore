@@ -36,3 +36,8 @@ build/
 cmake-build-debug/
 # jetbrains settings
 *.xml
+
+# vscode settings
+.vscode/
+# idea settings
+.idea/
