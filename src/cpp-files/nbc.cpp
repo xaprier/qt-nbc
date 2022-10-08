@@ -142,4 +142,3 @@ std::string nbc::octToDec( std::basic_string<char> number ) {
 std::string nbc::octToHex( const std::basic_string<char> &number ) {
 	return number.length() == 0 ? "0.0" : nbc::decToHex(octToDec(number));
 }
-
