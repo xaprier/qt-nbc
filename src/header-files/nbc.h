@@ -24,7 +24,7 @@ class nbc {
 	static std::string octToDec( std::basic_string<char> number );
 
 	static std::string octToHex( const std::basic_string<char> &number );
-	
+
 };
 
 #endif  // QT_NBC_NBC_H
