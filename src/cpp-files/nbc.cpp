@@ -20,18 +20,19 @@ std::string nbc::binToDec( std::basic_string<char> number ) {
 	}
 
 	// split the decimal number as it supposed to be
-	long int intPoint = 0;
+	unsigned long long intPoint = 0;
+
 	if (number.length() != 0) {
-		intPoint = std::stoi(number.substr(0, number.find('.')));
+		intPoint = std::stoull(number.substr(0, (number.find('.') != -1) ? number.length() : number.find('.')));
 	}
-	long int decPoint = 0;
+	unsigned long long decPoint = 0;
 	if (number.find('.') != -1 && number.length() > number.find('.') + 1) {
-		decPoint = std::stoi(
+		decPoint = std::stoull(
 				number.substr(number.find('.') + 1, number.length()));
 	}
 
 	// calculate the decimal number from binary
-	long int integer = 0;
+	unsigned long long integer = 0;
 	for (int i = 0; intPoint > 0; i++) {
 		integer += intPoint % 10 * pow(2, i);
 		intPoint /= 10;
@@ -57,8 +58,8 @@ std::string nbc::binToDec( std::basic_string<char> number ) {
 				result.push_back(static_cast<char>(decimal) + '0');
 				break;
 			} else {
-				result.push_back(static_cast<char>((( int ) decimal) + '0'));
-				decimal -= ( int ) decimal;
+				result.push_back(static_cast<char>((( unsigned long long ) decimal) + '0'));
+				decimal -= ( unsigned long long ) decimal;
 			}
 		}
 	} else {
