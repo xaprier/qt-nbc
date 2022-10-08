@@ -60,6 +60,8 @@ std::string nbc::binToDec( std::basic_string<char> number ) {
 			} else {
 				result.push_back(static_cast<char>((( unsigned long long ) decimal) + '0'));
 				decimal -= ( unsigned long long ) decimal;
+				result.push_back(static_cast<char>((( unsigned long long ) decimal) + '0'));
+				decimal -= ( unsigned long long ) decimal;
 			}
 		}
 	} else {
@@ -142,4 +144,3 @@ std::string nbc::octToDec( std::basic_string<char> number ) {
 std::string nbc::octToHex( const std::basic_string<char> &number ) {
 	return number.length() == 0 ? "0.0" : nbc::decToHex(octToDec(number));
 }
-
