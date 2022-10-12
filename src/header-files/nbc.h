@@ -19,21 +19,23 @@ class nbc {
 
     static std::string binToHex( const std::string &number );
 
-    static std::string decToBin( std::basic_string<char> number );
-
-    static std::string decToOct( std::basic_string<char> number );
-
-<<<<<<< Updated upstream
-	static std::string octToHex( const std::basic_string<char> &number );
-
-=======
-    static std::string decToHex( std::basic_string<char> number );
-
     static std::string octToBin( const std::string &number );
 
     static std::string octToDec( std::basic_string<char> number );
 
-	static std::string octToHex( const std::basic_string<char> &number );
+    static std::string octToHex( const std::basic_string<char> &number );
+
+    static std::string decToBin( std::basic_string<char> number );
+
+    static std::string decToOct( std::basic_string<char> number );
+
+    static std::string decToHex( std::basic_string<char> number );
+
+    static std::string hexToBin( const std::basic_string<char> &number );
+
+    static std::string hexToOct( const std::basic_string<char> &number );
+
+    static std::string hexToDec( std::basic_string<char> number );
 };
 
 #endif  // QT_NBC_NBC_H
