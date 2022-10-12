@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>choose</class>
+    <widget class="QMainWindow" name="choose">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>481</width>
+                <height>268</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Choose Operation</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <widget class="QLabel" name="label">
+                <property name="geometry">
+                    <rect>
+                        <x>80</x>
+                        <y>20</y>
+                        <width>321</width>
+                        <height>51</height>
+                    </rect>
+                </property>
+                <property name="font">
+                    <font>
+                        <pointsize>16</pointsize>
+                    </font>
+                </property>
+                <property name="text">
+                    <string>Choose the operation you want</string>
+                </property>
+            </widget>
+            <widget class="QComboBox" name="comboBox">
+                <property name="geometry">
+                    <rect>
+                        <x>80</x>
+                        <y>80</y>
+                        <width>291</width>
+                        <height>31</height>
+                    </rect>
+                </property>
+                <item>
+                    <property name="text">
+                        <string>Number Base Converter</string>
+                    </property>
+                </item>
+                <item>
+                    <property name="text">
+                        <string>Number Based Calculator</string>
+                    </property>
+                </item>
+            </widget>
+            <widget class="QPushButton" name="pushButton">
+                <property name="geometry">
+                    <rect>
+                        <x>190</x>
+                        <y>130</y>
+                        <width>84</width>
+                        <height>34</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Select</string>
+                </property>
+            </widget>
+        </widget>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
