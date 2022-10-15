@@ -6,6 +6,9 @@
 
 Coded a Qt application with C++ which is converting number bases, calculating the operations on different number bases.
 
+### Recording code sessions and uploaded to YouTube playlist 
+<a href="https://www.youtube.com/playlist?list=PLUWaeJl-QWIKn5Faxk4OtXYQWpuSaOQGr" target="_blank">Click for playlist!</a>
+
 ## nbc class
 
 - A class which includes number base converting functions
