@@ -47,60 +47,58 @@ NBCalculator::NBCalculator( QWidget *parent )
 
 NBCalculator::~NBCalculator() { delete ui; }
 
+// there is a problem on regular expression when switching to another base
+
 void NBCalculator::hasChanged() {
+    // clear the textbox if the base of this box change
+    if ( QObject::sender() == ui->num1Combo ) ui->num1Line->setText( "" );
+    if ( QObject::sender() == ui->num2Combo ) ui->num2Line->setText( "" );
+
     // number 1
     setNumbers( ( ui->num1Line->text().toStdString().length() != 0 )
                     ? ui->num1Line->text().toStdString()
                     : "0.0",
-                ui->num1Combo->currentIndex(), this->num1 );
+                ui->num1Combo->currentIndex(), &this->num1 );
 
     // number 2
     setNumbers( ( ui->num2Line->text().toStdString().length() != 0 )
                     ? ui->num2Line->text().toStdString()
                     : "0.0",
-                ui->num2Combo->currentIndex(), this->num2 );
+                ui->num2Combo->currentIndex(), &this->num2 );
 
     calculate( this->num1, this->num2 );
 }
 
 void NBCalculator::setNumbers( std::string numberToConvert, int indexing,
-                               std::string &pointOfNumber ) {
+                               std::string *pointOfNumber ) {
     switch ( indexing ) {
+        // binary
         case 0: {
             validator = new QRegularExpressionValidator( binExpression, this );
-            ( &pointOfNumber == &this->num1 )
-                ? ui->num1Line->setValidator( validator )
-                : ui->num2Line->setValidator( validator );
-            pointOfNumber = binToDec( numberToConvert );
+            *pointOfNumber = binToDec( numberToConvert );
             break;
         }
         // octal
         case 1: {
             validator = new QRegularExpressionValidator( octExpression, this );
-            ( &pointOfNumber == &this->num1 )
-                ? ui->num1Line->setValidator( validator )
-                : ui->num2Line->setValidator( validator );
-            pointOfNumber = octToDec( numberToConvert );
+            *pointOfNumber = octToDec( numberToConvert );
             break;
         }
         // decimal
         case 2: {
             validator = new QRegularExpressionValidator( decExpression, this );
-            ( &pointOfNumber == &this->num1 )
-                ? ui->num1Line->setValidator( validator )
-                : ui->num2Line->setValidator( validator );
-            pointOfNumber = numberToConvert;
+            *pointOfNumber = numberToConvert;
             break;
         }
         // hexadecimal
         default: {
             validator = new QRegularExpressionValidator( hexExpression, this );
-            ( &pointOfNumber == &this->num1 )
-                ? ui->num1Line->setValidator( validator )
-                : ui->num2Line->setValidator( validator );
-            pointOfNumber = hexToDec( numberToConvert );
+            *pointOfNumber = hexToDec( numberToConvert );
+            break;
         }
     }
+    ( pointOfNumber == &this->num1 ) ? ui->num1Line->setValidator( validator )
+                                     : ui->num2Line->setValidator( validator );
 }
 
 void NBCalculator::calculate( std::string num1, std::string num2 ) {
