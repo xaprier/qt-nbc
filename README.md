@@ -48,7 +48,7 @@ git clone https://github.com/xaprier/qt-nbc.git
 Enter the direcotry of the source code
 
 ```sh
-cd qt-notepad/src
+cd qt-nbc/src
 ```
 
 You can see the CMakeLists.txt which we use for build
