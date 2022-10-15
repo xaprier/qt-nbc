@@ -11,8 +11,7 @@
 #define QT_NBC_NBC_H
 
 class nbc {
-   private:
-   public:
+   protected:
     static std::string binToOct( const std::string &number );
 
     static std::string binToDec( std::basic_string<char> number );
