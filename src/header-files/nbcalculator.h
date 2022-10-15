@@ -28,7 +28,7 @@ class NBCalculator : public QDialog, public nbc {
     void hasChanged();
     void calculate( std::string num1, std::string num2 );
     void setNumbers( std::string numberToConvert, int indexing,
-                     std::string &pointOfNumber );
+                     std::string *pointOfNumber );
 
    private:
     std::string num1, num2;
