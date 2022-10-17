@@ -3,7 +3,6 @@
 //
 #include "../header-files/nbcalculator.h"
 
-#include <QRegularExpression>
 extern QRegularExpression binExpression;
 extern QRegularExpression octExpression;
 extern QRegularExpression decExpression;
