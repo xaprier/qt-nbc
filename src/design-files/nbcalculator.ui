@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Number Based Calculator</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.svg</normaloff>icon.svg</iconset>
+  </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>

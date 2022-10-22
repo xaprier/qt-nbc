@@ -13,96 +13,60 @@ QRegularExpression hexExpression( "^-?[0-9A-F]{1,}\\.?[0-9A-F]*$" );
 
 NBConverter::NBConverter( QWidget *parent )
     : QDialog( parent ), ui( new Ui::NBConverter ) {
-    QWidget::setFixedSize( 800, 600 );
+    QWidget::setFixedSize( 800, 209 );
 
     ui->setupUi( this );
 
-    // adding the options to the comboBox
-    QStringList list = { "Binary", "Decimal", "Octal", "Hexadecimal" };
-    ui->comboBox->addItems( list );
-    ui->lconvert1->setText( "Decimal" );
-    ui->lconvert2->setText( "Octal" );
-    ui->lconvert3->setText( "Hexadecimal" );
-
-    connect( ui->comboBox, &QComboBox::currentTextChanged, this,
-             &NBConverter::comboChanged );
-    connect( ui->convertBase, &QLineEdit::textChanged, this,
-             &NBConverter::baseChanged );
+    connect( ui->binLine, &QLineEdit::textEdited, this,
+             &NBConverter::textChanged );
+    connect( ui->octLine, &QLineEdit::textEdited, this,
+             &NBConverter::textChanged );
+    connect( ui->decLine, &QLineEdit::textEdited, this,
+             &NBConverter::textChanged );
+    connect( ui->hexaLine, &QLineEdit::textEdited, this,
+             &NBConverter::textChanged );
     connect( ui->exitBut, &QPushButton::clicked, this, &NBConverter::close );
 
     validator = new QRegularExpressionValidator( binExpression, this );
-    ui->convertBase->setValidator( validator );
+    ui->binLine->setValidator( validator );
+    validator = new QRegularExpressionValidator( octExpression, this );
+    ui->octLine->setValidator( validator );
+    validator = new QRegularExpressionValidator( decExpression, this );
+    ui->decLine->setValidator( validator );
+    validator = new QRegularExpressionValidator( hexExpression, this );
+    ui->hexaLine->setValidator( validator );
 }
 
 NBConverter::~NBConverter() { delete ui; }
 
-void NBConverter::comboChanged() {
-    ui->convert1->setText( "0.0" );
-    ui->convert2->setText( "0.0" );
-    ui->convert3->setText( "0.0" );
-    ui->convertBase->setText( "" );
-    if ( ui->comboBox->currentText() == "Binary" ) {
-        validator = new QRegularExpressionValidator( binExpression, this );
-        ui->convertBase->setValidator( validator );
-
-        ui->lconvert1->setText( "Decimal" );
-        ui->lconvert2->setText( "Octal" );
-        ui->lconvert3->setText( "Hexadecimal" );
-
-    } else if ( ui->comboBox->currentText() == "Decimal" ) {
-        validator = new QRegularExpressionValidator( decExpression, this );
-        ui->convertBase->setValidator( validator );
-
-        ui->lconvert1->setText( "Binary" );
-        ui->lconvert2->setText( "Octal" );
-        ui->lconvert3->setText( "Hexadecimal" );
-
-    } else if ( ui->comboBox->currentText() == "Octal" ) {
-        validator = new QRegularExpressionValidator( octExpression, this );
-        ui->convertBase->setValidator( validator );
-
-        ui->lconvert1->setText( "Binary" );
-        ui->lconvert2->setText( "Decimal" );
-        ui->lconvert3->setText( "Hexadecimal" );
-
-    } else {
-        validator = new QRegularExpressionValidator( hexExpression, this );
-        ui->convertBase->setValidator( validator );
-
-        ui->lconvert1->setText( "Binary" );
-        ui->lconvert2->setText( "Decimal" );
-        ui->lconvert3->setText( "Octal" );
-    }
-}
-
-void NBConverter::baseChanged() {
-    if ( ui->comboBox->currentText() == "Binary" ) {  // completed
-        ui->convert1->setText( QString::fromStdString(
-            binToDec( ui->convertBase->text().toStdString() ) ) );
-        ui->convert2->setText( QString::fromStdString(
-            binToOct( ui->convertBase->text().toStdString() ) ) );
-        ui->convert3->setText( QString::fromStdString(
-            binToHex( ui->convertBase->text().toStdString() ) ) );
-    } else if ( ui->comboBox->currentText() == "Decimal" ) {  // completed
-        ui->convert1->setText( QString::fromStdString(
-            decToBin( ui->convertBase->text().toStdString() ) ) );
-        ui->convert2->setText( QString::fromStdString(
-            decToOct( ui->convertBase->text().toStdString() ) ) );
-        ui->convert3->setText( QString::fromStdString(
-            decToHex( ui->convertBase->text().toStdString() ) ) );
-    } else if ( ui->comboBox->currentText() == "Octal" ) {  // completed
-        ui->convert1->setText( QString::fromStdString(
-            octToBin( ui->convertBase->text().toStdString() ) ) );
-        ui->convert2->setText( QString::fromStdString(
-            octToDec( ui->convertBase->text().toStdString() ) ) );
-        ui->convert3->setText( QString::fromStdString(
-            octToHex( ui->convertBase->text().toStdString() ) ) );
+void NBConverter::textChanged() {
+    if ( QObject::sender() == ui->binLine ) {  // completed
+        ui->octLine->setText( QString::fromStdString(
+            binToDec( ui->binLine->text().toStdString() ) ) );
+        ui->decLine->setText( QString::fromStdString(
+            binToOct( ui->binLine->text().toStdString() ) ) );
+        ui->hexaLine->setText( QString::fromStdString(
+            binToHex( ui->binLine->text().toStdString() ) ) );
+    } else if ( QObject::sender() == ui->decLine ) {  // completed
+        ui->binLine->setText( QString::fromStdString(
+            decToBin( ui->decLine->text().toStdString() ) ) );
+        ui->octLine->setText( QString::fromStdString(
+            decToOct( ui->decLine->text().toStdString() ) ) );
+        ui->hexaLine->setText( QString::fromStdString(
+            decToHex( ui->decLine->text().toStdString() ) ) );
+    } else if ( QObject::sender() == ui->octLine ) {  // completed
+        ui->binLine->setText( QString::fromStdString(
+            octToBin( ui->octLine->text().toStdString() ) ) );
+        ui->decLine->setText( QString::fromStdString(
+            octToDec( ui->octLine->text().toStdString() ) ) );
+        ui->hexaLine->setText( QString::fromStdString(
+            octToHex( ui->octLine->text().toStdString() ) ) );
     } else {  // completed
-        ui->convert1->setText( QString::fromStdString(
-            hexToBin( ui->convertBase->text().toStdString() ) ) );
-        ui->convert2->setText( QString::fromStdString(
-            hexToDec( ui->convertBase->text().toStdString() ) ) );
-        ui->convert3->setText( QString::fromStdString(
-            hexToOct( ui->convertBase->text().toStdString() ) ) );
+        ui->binLine->setText( QString::fromStdString(
+            hexToBin( ui->hexaLine->text().toStdString() ) ) );
+        ui->decLine->setText( QString::fromStdString(
+            hexToDec( ui->hexaLine->text().toStdString() ) ) );
+        ui->octLine->setText( QString::fromStdString(
+            hexToOct( ui->hexaLine->text().toStdString() ) ) );
     }
 }
