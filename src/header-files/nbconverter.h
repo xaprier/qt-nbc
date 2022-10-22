@@ -21,9 +21,7 @@ class NBConverter : public QDialog, public nbc {
 
    private slots:
 
-    void comboChanged();
-
-    void baseChanged();
+    void textChanged();
 
    private:
     Ui::NBConverter *ui;
