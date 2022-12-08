@@ -12,25 +12,25 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-    class NBCalculator;
+class NBCalculator;
 }
 QT_END_NAMESPACE
 
 class NBCalculator : public QDialog, public nbc {
     Q_OBJECT
 
-   public:
-    explicit NBCalculator( QWidget *parent = nullptr );
+  public:
+    explicit NBCalculator(QWidget *parent = nullptr);
 
     ~NBCalculator() override;
 
-   private slots:
+  private slots:
     void hasChanged();
-    void calculate( std::string num1, std::string num2 );
-    void setNumbers( std::string numberToConvert, int indexing,
-                     std::string *pointOfNumber );
+    void calculate(std::string num1, std::string num2);
+    void setNumbers(std::string numberToConvert, int indexing,
+                    std::string *pointOfNumber);
 
-   private:
+  private:
     std::string num1, num2;
     Ui::NBCalculator *ui;
     QValidator *validator;
