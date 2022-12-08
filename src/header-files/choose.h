@@ -9,24 +9,24 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-	class choose;
+class choose;
 }
 QT_END_NAMESPACE
 
 class choose : public QMainWindow {
-  Q_OBJECT
+    Q_OBJECT
 
   public:
-	explicit choose( QWidget *parent = nullptr );
+    explicit choose(QWidget *parent = nullptr);
 
-	~choose() override;
+    ~choose() override;
 
   private slots:
 
-	void onPushButton_clicked();
+    void onPushButton_clicked();
 
   private:
-	Ui::choose *ui;
+    Ui::choose *ui;
 };
 
 #endif  // QT_NBC_CHOOSE_H

@@ -9,23 +9,23 @@
 #include "header-files/nbcalculator.h"
 #include "header-files/nbconverter.h"
 
-choose::choose( QWidget *parent )
-    : QMainWindow( parent ), ui( new Ui::choose ) {
-    QWidget::setFixedSize( 481, 268 );
-    ui->setupUi( this );
+choose::choose(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::choose) {
+    QWidget::setFixedSize(481, 268);
+    ui->setupUi(this);
 
-    connect( ui->pushButton, &QPushButton::clicked, this,
-             &choose::onPushButton_clicked );
+    connect(ui->pushButton, &QPushButton::clicked, this,
+            &choose::onPushButton_clicked);
 }
 
 choose::~choose() { delete ui; }
 
 void choose::onPushButton_clicked() {
-    if ( ui->comboBox->currentIndex() == 0 ) {
-        NBConverter *n = new NBConverter( this );
+    if (ui->comboBox->currentIndex() == 0) {
+        NBConverter *n = new NBConverter(this);
         n->exec();
     } else {
-        NBCalculator *n = new NBCalculator( this );
+        NBCalculator *n = new NBCalculator(this);
         n->exec();
     }
 }
