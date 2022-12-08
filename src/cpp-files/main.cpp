@@ -4,8 +4,8 @@
 #include "../header-files/nbcalculator.h"
 #include "../header-files/nbconverter.h"
 
-int main( int argc, char *argv[] ) {
-    QApplication a( argc, argv );
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
     choose c;
     c.show();
     return QApplication::exec();
