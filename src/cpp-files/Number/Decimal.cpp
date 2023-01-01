@@ -1,4 +1,4 @@
-#include "../header-files/Decimal.h"
+#include "../header-files/Number/Decimal.h"
 
 #include <iostream>
 #include <utility>
