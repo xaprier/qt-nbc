@@ -22,7 +22,17 @@ set(PROJECT_SOURCES
     header-files/nbconverter.h
     design-files/nbconverter.ui
 
-    header-files/nbc.h
+    header-files/Number/Binary.h
+        header-files/Number/Decimal.h
+        header-files/Number/Hexadecimal.h
+        header-files/Number/Number.h
+        header-files/Number/Octal.h
+
+    cpp-files/Number/Binary.cpp
+        cpp-files/Number/Decimal.cpp
+        cpp-files/Number/Hexadecimal.cpp
+        cpp-files/Number/Number.cpp
+        cpp-files/Number/Octal.cpp
     cpp-files/nbc.cpp
 
     design-files/choose.ui
