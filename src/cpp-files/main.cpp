@@ -1,12 +1,11 @@
-#include <QApplication>
+#include <iostream>
 
-#include "../header-files/choose.h"
-#include "../header-files/nbcalculator.h"
-#include "../header-files/nbconverter.h"
+#include "../header-files/Binary.h"
+#include "../header-files/Decimal.h"
+#include "../header-files/Hexadecimal.h"
+#include "../header-files/Octal.h"
 
-int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
-    choose c;
-    c.show();
-    return QApplication::exec();
+int main() {
+
+    return 0;
 }
