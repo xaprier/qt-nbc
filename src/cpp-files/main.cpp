@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../header-files/Binary.h"
-#include "../header-files/Decimal.h"
-#include "../header-files/Hexadecimal.h"
-#include "../header-files/Octal.h"
+#include "../header-files/Number/Binary.h"
+#include "../header-files/Number/Decimal.h"
+#include "../header-files/Number/Hexadecimal.h"
+#include "../header-files/Number/Octal.h"
 
 int main() {
 
