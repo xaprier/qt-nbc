@@ -1,5 +1,5 @@
-#include "../header-files/Number.h"
-#include "header-files/Octal.h"
+#include "../header-files/Number/Number.h"
+#include "header-files/Number/Octal.h"
 
 #include <string>
 #include <utility>
