@@ -143,7 +143,13 @@ void testConverters() {
 
 }
 
+// test successful
+void ostreamOverloadTest() {
+    n = new Binary(d);
+    std::cout << d << " " << o << " " << h << " " << b << " " << *n << std::endl;
+}
+
 int main() {
-    testConverters();
+    ostreamOverloadTest();
     return 0;
 }

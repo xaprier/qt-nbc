@@ -4,6 +4,7 @@
 #include "Binary.h"
 #include "Hexadecimal.h"
 #include "Octal.h"
+#include <iostream>
 
 class Decimal : public Number {
   public:
@@ -17,6 +18,8 @@ class Decimal : public Number {
     Decimal toDec() override;
     Binary toBin() override;
     Hexadecimal toHex() override;
+
+    friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
 };
 
 #endif  // DECIMAL_H
