@@ -100,3 +100,7 @@ Binary Octal::toBin() {
 Hexadecimal Octal::toHex() {
     return Hexadecimal(*this);
 }
+
+std::ostream &operator<<(std::ostream &output, const Octal &o) {
+    return output << o.num;
+}

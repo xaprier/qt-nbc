@@ -103,3 +103,7 @@ Binary Binary::toBin() {
 Hexadecimal Binary::toHex() {
     return Hexadecimal(*this);
 }
+
+std::ostream &operator<<(std::ostream &output, const Binary &b) {
+    return output << b.num;
+}
