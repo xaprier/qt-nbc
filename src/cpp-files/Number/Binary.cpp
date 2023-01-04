@@ -88,21 +88,18 @@ Binary::Binary(const Hexadecimal &h) {
     this->num = b.num;
 }
 
-
-
 Octal Binary::toOct() {
-    std::cout << "Binary class toOct() worked" << std::endl;
-    return Octal();
+    return Octal(*this);
 }
+
 Decimal Binary::toDec() {
-    std::cout << "Binary class toDec() worked" << std::endl;
-    return Decimal();
+    return Decimal(*this);
 }
+
 Binary Binary::toBin() {
-    std::cout << "Binary class toBin() worked" << std::endl;
-    return Binary();
+    return Binary(*this);
 }
+
 Hexadecimal Binary::toHex() {
-    std::cout << "Binary class toHex() worked" << std::endl;
-    return Hexadecimal();
+    return Hexadecimal(*this);
 }
