@@ -17,6 +17,9 @@ class Hexadecimal : public Number {
 	Decimal toDec() override;
 	Binary toBin() override;
 	Hexadecimal toHex() override;
+
+	friend std::ostream &operator<<(std::ostream &output, const Hexadecimal &h);
+
 };
 
 #endif  // HEXADECIMAL_H

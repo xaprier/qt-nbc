@@ -18,6 +18,8 @@ class Octal : public Number {
 	Decimal toDec() override;
 	Binary toBin() override;
 	Hexadecimal toHex() override;
+
+	friend std::ostream &operator<<(std::ostream &output, const Octal &o);
 };
 
 #endif  // OCTAL_H

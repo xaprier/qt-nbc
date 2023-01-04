@@ -145,3 +145,7 @@ Binary Hexadecimal::toBin() {
 Hexadecimal Hexadecimal::toHex() {
     return Hexadecimal(*this);
 }
+
+std::ostream &operator<<(std::ostream &output, const Hexadecimal &h) {
+    return output << h.num;
+}

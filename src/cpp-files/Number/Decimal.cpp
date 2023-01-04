@@ -264,3 +264,7 @@ Binary Decimal::toBin() {
 Hexadecimal Decimal::toHex() {
     return Hexadecimal(*this);
 }
+
+std::ostream &operator<<(std::ostream &output, const Decimal &d) {
+    return output << d.num;
+}
