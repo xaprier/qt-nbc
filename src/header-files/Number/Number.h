@@ -1,6 +1,7 @@
 #ifndef NUMBER_H
 #define NUMBER_H
 #include <string>
+#include <iostream>
 class Binary;
 class Decimal;
 class Hexadecimal;
@@ -11,6 +12,10 @@ class Number {
     std::string num;
 
   public:
+    friend class Binary;
+    friend class Decimal;
+    friend class Hexadecimal;
+    friend class Octal;
     explicit Number(std::string = "0.0");
 	explicit Number(const Octal& o);
 	explicit Number(const Hexadecimal& h);
@@ -21,6 +26,9 @@ class Number {
     virtual Decimal toDec() = 0;
     virtual Binary toBin() = 0;
     virtual Hexadecimal toHex() = 0;
+
+    // cout operator overloading
+    friend std::ostream &operator<<(std::ostream &output, const Number &n);
 };
 
 #endif  // NUMBER_H
