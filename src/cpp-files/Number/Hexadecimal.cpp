@@ -131,18 +131,17 @@ Hexadecimal::Hexadecimal(const Binary &b) {
 
 
 Octal Hexadecimal::toOct() {
-    std::cout << "Hexadecimal class toOct() worked" << std::endl;
-    return Octal();
+    return Octal(*this);
 }
+
 Decimal Hexadecimal::toDec() {
-    std::cout << "Hexadecimal class toDec() worked" << std::endl;
-    return Decimal();
+    return Decimal(*this);
 }
+
 Binary Hexadecimal::toBin() {
-    std::cout << "Hexadecimal class toBin() worked" << std::endl;
-    return Binary();
+    return Binary(*this);
 }
+
 Hexadecimal Hexadecimal::toHex() {
-    std::cout << "Hexadecimal class toHex() worked" << std::endl;
-    return Hexadecimal();
+    return Hexadecimal(*this);
 }

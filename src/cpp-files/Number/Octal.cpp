@@ -86,18 +86,17 @@ Octal::Octal(const Binary &b) {
 }
 
 Octal Octal::toOct() {
-	std::cout << "Octal class toOct() worked" << std::endl;
-    return Octal();
+    return Octal(*this);
 }
+
 Decimal Octal::toDec() {
-	std::cout << "Octal class toDec() worked" << std::endl;
-    return Decimal();
+    return Decimal(*this);
 }
+
 Binary Octal::toBin() {
-	std::cout << "Octal class toBin() worked" << std::endl;
-    return Binary();
+    return Binary(*this);
 }
+
 Hexadecimal Octal::toHex() {
-	std::cout << "Octal class toHex() worked" << std::endl;
-    return Hexadecimal();
+    return Hexadecimal(*this);
 }

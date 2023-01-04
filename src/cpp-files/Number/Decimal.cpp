@@ -250,18 +250,17 @@ Decimal::Decimal(const Hexadecimal &h) {
 }
 
 Octal Decimal::toOct() {
-    std::cout << "Decimal class toOct() worked" << std::endl;
-    return Octal();
+    return Octal(*this);
 }
+
 Decimal Decimal::toDec() {
-    std::cout << "Decimal class toDec() worked" << std::endl;
-    return Decimal();
+    return Decimal(*this);
 }
+
 Binary Decimal::toBin() {
-    std::cout << "Decimal class toBin() worked" << std::endl;
-    return Binary();
+    return Binary(*this);
 }
+
 Hexadecimal Decimal::toHex() {
-    std::cout << "Decimal class toHex() worked" << std::endl;
-    return Hexadecimal();
+    return Hexadecimal(*this);
 }
