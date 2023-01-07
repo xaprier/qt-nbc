@@ -20,6 +20,10 @@ class Hexadecimal : public Number {
 
 	friend std::ostream &operator<<(std::ostream &output, const Hexadecimal &h);
 
+	Hexadecimal operator+(Hexadecimal h);
+	Hexadecimal operator+(Binary b);
+	Hexadecimal operator+(Octal o);
+	Hexadecimal operator+(Decimal second);
 };
 
 #endif  // HEXADECIMAL_H

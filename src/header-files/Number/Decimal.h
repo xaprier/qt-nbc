@@ -20,6 +20,11 @@ class Decimal : public Number {
     Hexadecimal toHex() override;
 
     friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
+
+    Decimal operator+(Decimal d);
+    Decimal operator+(Binary b);
+    Decimal operator+(Octal o);
+    Decimal operator+(Hexadecimal h);
 };
 
 #endif  // DECIMAL_H
