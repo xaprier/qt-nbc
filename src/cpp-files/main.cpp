@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iomanip>
+#include <cassert>
 
 #include "../header-files/Number/Binary.h"
 #include "../header-files/Number/Decimal.h"
@@ -6,9 +8,9 @@
 #include "../header-files/Number/Octal.h"
 
 Decimal d("12.75");
-Octal o("175.652");
-Hexadecimal h("1FC.ABF");
-Binary b("1100111011.110111101");
+Octal o("175.652"); // 125.83203125
+Hexadecimal h("1FC.ABF"); // 508.671630859375
+Binary b("1100111011.110111101"); // 827.869140625
 Number *n;
 
 std::ostream &operator<<(std::ostream &output, const Number &n) {
@@ -145,11 +147,88 @@ void testConverters() {
 
 // test successful
 void ostreamOverloadTest() {
+    // for testing the number object
     n = new Binary(d);
+
     std::cout << d << " " << o << " " << h << " " << b << " " << *n << std::endl;
 }
 
+// test successful
+void operator_plusOverloading() {
+    Binary res2;
+
+    // binary + binary = 1655.73828125 = 11001110111.10111101
+    res2 = b + b;
+    std::cout << res2 << std::endl;
+
+    // binary + octal = 953.701171875 = 1110111001.101100111
+    res2 = b + o;
+    std::cout << res2 << std::endl;
+
+    // binary + decimal = 840.619140625 = 1101001000.100111101
+    res2 = b + d;
+    std::cout << res2 << std::endl;
+
+    // binary + hexadecimal = 1336.540771484375 = 10100111000.100010100111
+    res2 = b + h;
+    std::cout << res2 << std::endl;
+
+    Octal res4;
+    // octal + octal = 251.6640625 = 373.524
+    res4 = o + o;
+    std::cout << res4 << std::endl;
+    // octal + binary = 953.701171875 = 1671.547
+    res4 = o + b;
+    std::cout << res4 << std::endl;
+    // octal + decimal = 138.58203125 = 212.452
+    res4 = o + d;
+    std::cout << res4 << std::endl;
+    // octal + hexadecimal = 634.503662109375 = 1172.4017
+    res4 = o + h;
+    std::cout << res4 << std::endl;
+
+    // add the control of including . for precision finder
+    Decimal res;
+
+    // decimal + decimal = 25.500
+    res = d + d;
+    std::cout << res << std::endl;
+
+    // decimal + binary = 840.61914062500
+    res = d + b;
+    std::cout << res << std::endl;
+
+    // decimal + octal = 138.5820312500
+    res = d + o;
+    std::cout << res << std::endl;
+
+    // decimal + hexadecimal  = 521.42163085937500
+    res = d + h;
+    std::cout << res << std::endl;
+
+    Hexadecimal res3;
+
+    // hexadecimal + hexadecimal = 1017.34326171875 = 3F9.57E
+    res3 = h + h;
+    std::cout << res3 << std::endl;
+
+    // hexadecimal + binary = 1336.540771484375 = 538.8A7
+    res3 = h + b;
+    std::cout << res3 << std::endl;
+
+    // hexadecimal + octal = 634.503662109375 = 27A.80F
+    res3 = h + o;
+    std::cout << res3 << std::endl;
+
+    // hexadecimal + decimal = 521.421630859375 = 209.6BF
+    res3 = h + d;
+    std::cout << res3 << std::endl;
+}
+
 int main() {
+    testConstructors();
+    testConverters();
     ostreamOverloadTest();
+    operator_plusOverloading();
     return 0;
 }

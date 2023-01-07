@@ -29,6 +29,7 @@ class Number {
 
     // cout operator overloading
     friend std::ostream &operator<<(std::ostream &output, const Number &n);
+    std::string to_string_with_precision(const long double value, int precision);
 };
 
 #endif  // NUMBER_H

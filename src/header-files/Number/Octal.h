@@ -20,6 +20,11 @@ class Octal : public Number {
 	Hexadecimal toHex() override;
 
 	friend std::ostream &operator<<(std::ostream &output, const Octal &o);
+
+	Octal operator+(Octal o);
+	Octal operator+(Binary b);
+	Octal operator+(Decimal second);
+	Octal operator+(Hexadecimal h);
 };
 
 #endif  // OCTAL_H
