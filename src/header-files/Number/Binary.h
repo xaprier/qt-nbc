@@ -4,6 +4,7 @@
 #include "Decimal.h"
 #include "Octal.h"
 #include "Hexadecimal.h"
+#include <iostream>
 
 class Binary : public Number {
   public:
@@ -19,6 +20,11 @@ class Binary : public Number {
 	Hexadecimal toHex() override;
 
 	friend std::ostream &operator<<(std::ostream &output, const Binary &b);
+
+	Binary operator+(Binary b);
+    Binary operator+(Decimal second);
+    Binary operator+(Octal o);
+    Binary operator+(Hexadecimal h);
 };
 
 #endif  // BINARY_H
