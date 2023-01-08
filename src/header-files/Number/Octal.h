@@ -25,6 +25,10 @@ class Octal : public Number {
 	Octal operator+(Binary b);
 	Octal operator+(Decimal second);
 	Octal operator+(Hexadecimal h);
+	Octal operator-(Octal o);
+	Octal operator-(Binary b);
+	Octal operator-(Decimal second);
+	Octal operator-(Hexadecimal h);
 };
 
 #endif  // OCTAL_H
