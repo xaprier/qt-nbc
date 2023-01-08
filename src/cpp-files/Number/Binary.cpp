@@ -114,55 +114,16 @@ Binary Binary::operator+(Binary b) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Binary result(first);
-    return result;
-}
-
-Binary Binary::operator+(Decimal second) {
-    // convert binary object to decimal
-    Decimal first(*this);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
-            0
-    );
-    // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
-    // then convert the sum of values to binary and return
-    Binary result(first);
-    return result;
-}
-
-Binary Binary::operator+(Hexadecimal h) {
-    // convert binary object to decimal
-    Decimal first(*this), second(h);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
-            0
-    );
-    // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
-    // then convert the sum of values to binary and return
-    Binary result(first);
-    return result;
+    return first.toBin();
 }
 
 Binary Binary::operator+(Octal o) {
@@ -171,15 +132,124 @@ Binary Binary::operator+(Octal o) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Binary result(first);
-    return result;
+    return first.toBin();
 }
+
+Binary Binary::operator+(Decimal second) {
+    // convert binary object to decimal
+    Decimal first(*this);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the sum of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    // then convert the sum of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator+(Hexadecimal h) {
+    // convert binary object to decimal
+    Decimal first(*this), second(h);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the sum of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    // then convert the sum of values to binary and return
+    return first.toBin();
+}
+
+
+Binary Binary::operator-(Binary b) {
+    // convert binary objects to decimal
+    Decimal first(*this), second(b);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator-(Octal o) {
+    // convert binary objects to decimal
+    Decimal first(*this), second(o);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator-(Decimal second) {
+    // convert binary objects to decimal
+    Decimal first(*this);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtracts of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator-(Hexadecimal h) {
+    // convert binary objects to decimal
+    Decimal first(*this), second(h);
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toBin();
+}
+

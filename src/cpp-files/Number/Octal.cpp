@@ -69,14 +69,6 @@ Octal::Octal(const Decimal &d) {
     this->num = result;
 }
 
-Octal::Octal(const Hexadecimal &h) {
-    // convert hexadecimal to decimal
-    Decimal d(h);
-    // convert decimal to octal
-    Octal o(d);
-    this->num = o.num;
-}
-
 Octal::Octal(const Binary &b) {
     // convert binary to decimal
     Decimal d(b);
@@ -85,16 +77,25 @@ Octal::Octal(const Binary &b) {
     this->num = o.num;
 }
 
+Octal::Octal(const Hexadecimal &h) {
+    // convert hexadecimal to decimal
+    Decimal d(h);
+    // convert decimal to octal
+    Octal o(d);
+    this->num = o.num;
+}
+
+
 Octal Octal::toOct() {
     return Octal(*this);
 }
 
-Decimal Octal::toDec() {
-    return Decimal(*this);
-}
-
 Binary Octal::toBin() {
     return Binary(*this);
+}
+
+Decimal Octal::toDec() {
+    return Decimal(*this);
 }
 
 Hexadecimal Octal::toHex() {
@@ -112,17 +113,16 @@ Octal Octal::operator+(Octal o) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Octal result(first);
-    return result;
+    return first.toOct();
 }
 
 Octal Octal::operator+(Binary b) {
@@ -132,17 +132,16 @@ Octal Octal::operator+(Binary b) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Octal result(first);
-    return result;
+    return first.toOct();
 }
 
 Octal Octal::operator+(Decimal second) {
@@ -152,17 +151,16 @@ Octal Octal::operator+(Decimal second) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Octal result(first);
-    return result;
+    return first.toOct();
 }
 
 Octal Octal::operator+(Hexadecimal h) {
@@ -172,16 +170,90 @@ Octal Octal::operator+(Hexadecimal h) {
     // find the max length of decimal points
     int precision = std::max(
         (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.'), first.num.length()).length() :
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
     // calculate the sum of decimal values
     first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
     // then convert the sum of values to binary and return
-    Octal result(first);
-    return result;
+    return first.toOct();
 }
 
+Octal Octal::operator-(Octal o) {
+    // convert objects to decimal for subtracting
+    Decimal first(*this), second(o);
+
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toOct();
+}
+
+Octal Octal::operator-(Binary b) {
+    // convert objects to decimal for subtracting
+    Decimal first(*this), second(b);
+
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toOct();
+}
+
+Octal Octal::operator-(Decimal second) {
+    // convert objects to decimal for subtracting
+    Decimal first(*this);
+
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toOct();
+}
+
+Octal Octal::operator-(Hexadecimal h) {
+    // convert objects to decimal for subtracting
+    Decimal first(*this), second(h);
+
+    // find the max length of decimal points
+    int precision = std::max(
+        (first.num.find('.') != -1) ?
+            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    // then convert the subtract of values to binary and return
+    return first.toOct();
+}

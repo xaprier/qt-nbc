@@ -27,6 +27,7 @@ class Number {
     virtual Binary toBin() = 0;
     virtual Hexadecimal toHex() = 0;
 
+
     // cout operator overloading
     friend std::ostream &operator<<(std::ostream &output, const Number &n);
     std::string to_string_with_precision(const long double value, int precision);
