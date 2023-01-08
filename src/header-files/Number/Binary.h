@@ -22,9 +22,14 @@ class Binary : public Number {
 	friend std::ostream &operator<<(std::ostream &output, const Binary &b);
 
 	Binary operator+(Binary b);
-    Binary operator+(Decimal second);
     Binary operator+(Octal o);
+    Binary operator+(Decimal second);
     Binary operator+(Hexadecimal h);
+	Binary operator-(Binary b);
+	Binary operator-(Octal o);
+	Binary operator-(Decimal second);
+	Binary operator-(Hexadecimal h);
+
 };
 
 #endif  // BINARY_H

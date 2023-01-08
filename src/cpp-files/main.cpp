@@ -156,19 +156,15 @@ void ostreamOverloadTest() {
 // test successful
 void operator_plusOverloading() {
     Binary res2;
-
     // binary + binary = 1655.73828125 = 11001110111.10111101
     res2 = b + b;
     std::cout << res2 << std::endl;
-
     // binary + octal = 953.701171875 = 1110111001.101100111
     res2 = b + o;
     std::cout << res2 << std::endl;
-
     // binary + decimal = 840.619140625 = 1101001000.100111101
     res2 = b + d;
     std::cout << res2 << std::endl;
-
     // binary + hexadecimal = 1336.540771484375 = 10100111000.100010100111
     res2 = b + h;
     std::cout << res2 << std::endl;
@@ -189,40 +185,92 @@ void operator_plusOverloading() {
 
     // add the control of including . for precision finder
     Decimal res;
-
-    // decimal + decimal = 25.500
+    // decimal + decimal = 25.50
     res = d + d;
     std::cout << res << std::endl;
-
-    // decimal + binary = 840.61914062500
+    // decimal + binary = 840.619140625
     res = d + b;
     std::cout << res << std::endl;
-
-    // decimal + octal = 138.5820312500
+    // decimal + octal = 138.58203125
     res = d + o;
     std::cout << res << std::endl;
-
-    // decimal + hexadecimal  = 521.42163085937500
+    // decimal + hexadecimal  = 521.421630859375
     res = d + h;
     std::cout << res << std::endl;
 
     Hexadecimal res3;
-
     // hexadecimal + hexadecimal = 1017.34326171875 = 3F9.57E
     res3 = h + h;
     std::cout << res3 << std::endl;
-
     // hexadecimal + binary = 1336.540771484375 = 538.8A7
     res3 = h + b;
     std::cout << res3 << std::endl;
-
     // hexadecimal + octal = 634.503662109375 = 27A.80F
     res3 = h + o;
     std::cout << res3 << std::endl;
-
     // hexadecimal + decimal = 521.421630859375 = 209.6BF
     res3 = h + d;
     std::cout << res3 << std::endl;
+}
+
+// test successful
+void operator_subtractOverloading() {
+    std::cout << std::endl;
+    Binary res;
+    // binary - binary - binary = -827.869140625 = -1100111011.110111101
+    res = b - b - b;
+    std::cout << res << std::endl;
+    // binary - octal = 702.037109375 = 1010111110.000010011
+    res = b - o;
+    std::cout << res << std::endl;
+    // binary - decimal = 815.119140625 = 1100101111.000111101
+    res = b - d;
+    std::cout << res << std::endl;
+    // binary - hexadecimal = 319.197509765625 = 100111111.001100101001
+    res = b - h;
+    std::cout << res << std::endl;
+
+    Octal res2;
+    // octal - octal - octal = -125.83203125 = -175.652
+    res2 = o - o - o;
+    std::cout << res2 << std::endl;
+    // octal - binary = -702.037109375 = -1276.023
+    res2 = o - b;
+    std::cout << res2 << std::endl;
+    // octal - decimal = 113.08203125 = 161.052
+    res2 = o - d;
+    std::cout << res2 << std::endl;
+    // octal - hexadecimal = -382.839599609375 = -576.6557
+    res2 = o - h;
+    std::cout << res2 << std::endl;
+
+    Decimal res3;
+    // decimal - decimal - decimal = -12.75
+    res3 = d - d - d;
+    std::cout << res3 << std::endl;
+    // decimal - binary = -815.119140625
+    res3 = d - b;
+    std::cout << res3 << std::endl;
+    // decimal - octal = -113.08203125
+    res3 = d - o;
+    std::cout << res3 << std::endl;
+    // decimal - hexadecimal = -495.921630859375
+    res3 = d - h;
+    std::cout << res3 << std::endl;
+
+    Hexadecimal res4;
+    // hexadecimal - hexadecimal - hexadecimal = -508.671630859375 = -1FC.ABF
+    res4 = h - h - h;
+    std::cout << res4 << std::endl;
+    // hexadecimal - binary = -319.197509765625 = -13F.329
+    res4 = h - b;
+    std::cout << res4 << std::endl;
+    // hexadecimal - octal = 382.839599609375 = 17E.D6F
+    res4 = h - o;
+    std::cout << res4 << std::endl;
+    // hexadecimal - decimal = 495.921630859375 = 1EF.EBF
+    res4 = h - d;
+    std::cout << res4 << std::endl;
 }
 
 int main() {
@@ -230,5 +278,6 @@ int main() {
     testConverters();
     ostreamOverloadTest();
     operator_plusOverloading();
+    operator_subtractOverloading();
     return 0;
 }

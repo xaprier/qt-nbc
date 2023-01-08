@@ -24,6 +24,10 @@ class Hexadecimal : public Number {
 	Hexadecimal operator+(Binary b);
 	Hexadecimal operator+(Octal o);
 	Hexadecimal operator+(Decimal second);
+	Hexadecimal operator-(Hexadecimal h);
+	Hexadecimal operator-(Binary b);
+	Hexadecimal operator-(Octal o);
+	Hexadecimal operator-(Decimal second);
 };
 
 #endif  // HEXADECIMAL_H

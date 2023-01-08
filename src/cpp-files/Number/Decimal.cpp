@@ -275,12 +275,13 @@ Decimal Decimal::operator+(Decimal second) {
     // find the max length of decimal points
     int precision = std::max(
         (this->num.find('.') != -1) ?
-            this->num.substr(num.find('.'), this->num.length()).length() :
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
+    // calculate the sum of decimal values
     result.num = to_string_with_precision(std::stold(this->num) + std::stold(second.num), precision);
     return result;
 }
@@ -291,28 +292,13 @@ Decimal Decimal::operator+(Binary b) {
     // find the max length of decimal points
     int precision = std::max(
         (this->num.find('.') != -1) ?
-            this->num.substr(num.find('.'), this->num.length()).length() :
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
-    result.num = to_string_with_precision(std::stold(this->num) + std::stold(second.num), precision);
-    return result;
-}
-
-Decimal Decimal::operator+(Hexadecimal h) {
-    // converting hexadecimal value to decimal with creating decimal object
-    Decimal result, second(h);
-    // find the max length of decimal points
-    int precision = std::max(
-        (this->num.find('.') != -1) ?
-            this->num.substr(num.find('.'), this->num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
-            0
-    );
+    // calculate the sum of decimal values
     result.num = to_string_with_precision(std::stold(this->num) + std::stold(second.num), precision);
     return result;
 }
@@ -323,13 +309,98 @@ Decimal Decimal::operator+(Octal o) {
     // find the max length of decimal points
     int precision = std::max(
         (this->num.find('.') != -1) ?
-            this->num.substr(num.find('.'), this->num.length()).length() :
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
             0,
         (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.'), second.num.length()).length() :
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
             0
     );
+    // calculate the sum of decimal values
     result.num = to_string_with_precision(std::stold(this->num) + std::stold(second.num), precision);
     return result;
 }
 
+Decimal Decimal::operator+(Hexadecimal h) {
+    // converting hexadecimal value to decimal with creating decimal object
+    Decimal result, second(h);
+    // find the max length of decimal points
+    int precision = std::max(
+        (this->num.find('.') != -1) ?
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the sum of decimal values
+    result.num = to_string_with_precision(std::stold(this->num) + std::stold(second.num), precision);
+    return result;
+}
+
+Decimal Decimal::operator-(Decimal second) {
+    // Converting values to Decimal/Create result object
+    Decimal result;
+    // find the max length of decimal points
+    int precision = std::max(
+        (this->num.find('.') != -1) ?
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    result.num = to_string_with_precision(std::stold(this->num) - std::stold(second.num), precision);
+    return result;
+}
+
+Decimal Decimal::operator-(Binary b) {
+    // Converting values to Decimal/Create result object
+    Decimal result, second(b);
+    // find the max length of decimal points
+    int precision = std::max(
+        (this->num.find('.') != -1) ?
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    result.num = to_string_with_precision(std::stold(this->num) - std::stold(second.num), precision);
+    return result;
+}
+
+Decimal Decimal::operator-(Octal o) {
+    // Converting values to Decimal/Create result object
+    Decimal result, second(o);
+    // find the max length of decimal points
+    int precision = std::max(
+        (this->num.find('.') != -1) ?
+            this->num.substr(this->num.find('.') + 1, this->num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    result.num = to_string_with_precision(std::stold(this->num) - std::stold(second.num), precision);
+    return result;
+}
+
+Decimal Decimal::operator-(Hexadecimal h) {
+    // Converting values to Decimal/Create result object
+    Decimal result, second(h);
+    // find the max length of decimal points
+    int precision = std::max(
+        (this->num.find('.') != -1) ?
+            this->num.substr(num.find('.') + 1, this->num.length()).length() :
+            0,
+        (second.num.find('.') != -1) ?
+            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
+            0
+    );
+    // calculate the subtract of decimal values
+    result.num = to_string_with_precision(std::stold(this->num) - std::stold(second.num), precision);
+    return result;
+}
