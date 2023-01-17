@@ -1,10 +1,10 @@
 
 #include "../../header-files/Number/Hexadecimal.h"
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <utility>
-#include <cmath>
-#include <algorithm>
 
 Hexadecimal::Hexadecimal(std::string num) : Number(std::move(num)) {}
 // copy constructor
@@ -129,7 +129,6 @@ Hexadecimal::Hexadecimal(const Binary &b) {
     this->num = h.num;
 }
 
-
 Octal Hexadecimal::toOct() {
     return Octal(*this);
 }
@@ -154,17 +153,13 @@ Hexadecimal Hexadecimal::operator+(Hexadecimal h) {
     // convert objects to decimal for summing
     Decimal first(*this), second(h);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toHex();
 }
@@ -173,17 +168,13 @@ Hexadecimal Hexadecimal::operator+(Binary b) {
     // convert objects to decimal for summing
     Decimal first(*this), second(b);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toHex();
 }
@@ -192,17 +183,13 @@ Hexadecimal Hexadecimal::operator+(Octal o) {
     // convert objects to decimal for summing
     Decimal first(*this), second(o);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toHex();
 }
@@ -211,17 +198,13 @@ Hexadecimal Hexadecimal::operator+(Decimal second) {
     // convert objects to decimal for summing
     Decimal first(*this);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toHex();
 }
@@ -230,18 +213,14 @@ Hexadecimal Hexadecimal::operator-(Hexadecimal h) {
     // convert objects to decimal for calculating
     Decimal first(*this), second(h);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
-    // then convert the subtract of values to binary and return
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the subtract of values to hexadecimal and return
     return first.toHex();
 }
 
@@ -249,18 +228,14 @@ Hexadecimal Hexadecimal::operator-(Binary b) {
     // convert objects to decimal for calculating
     Decimal first(*this), second(b);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
-    // then convert the subtract of values to binary and return
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the subtract of values to hexadecimal and return
     return first.toHex();
 }
 
@@ -268,36 +243,89 @@ Hexadecimal Hexadecimal::operator-(Octal o) {
     // convert objects to decimal for calculating
     Decimal first(*this), second(o);
 
-    int precision = std::max(
-    // find the max length of decimal points
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
-    // then convert the subtract of values to binary and return
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the subtract of values to hexadecimal and return
     return first.toHex();
 }
 
 Hexadecimal Hexadecimal::operator-(Decimal second) {
-        // convert objects to decimal for calculating
+    // convert objects to decimal for calculating
     Decimal first(*this);
 
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
-    // then convert the subtract of values to binary and return
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the subtract of values to hexadecimal and return
     return first.toHex();
 }
+
+Hexadecimal Hexadecimal::operator*(Hexadecimal h) {
+    // convert objects to decimal for calculating
+    Decimal first(*this), second(h);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the multiply of values to hexadecimal and return
+    return first.toHex();
+}
+
+Hexadecimal Hexadecimal::operator*(Binary b) {
+    // convert objects to decimal for calculating
+    Decimal first(*this), second(b);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the multiply of values to hexadecimal and return
+    return first.toHex();
+}
+
+Hexadecimal Hexadecimal::operator*(Octal o) {
+    // convert objects to decimal for calculating
+    Decimal first(*this), second(o);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the multiply of values to hexadecimal and return
+    return first.toHex();
+}
+
+Hexadecimal Hexadecimal::operator*(Decimal second) {
+    // convert objects to decimal for calculating
+    Decimal first(*this);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the multiply of values to hexadecimal and return
+    return first.toHex();
+}
+
