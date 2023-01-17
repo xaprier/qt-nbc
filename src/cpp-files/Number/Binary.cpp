@@ -111,17 +111,14 @@ std::ostream &operator<<(std::ostream &output, const Binary &b) {
 Binary Binary::operator+(Binary b) {
     // convert binary objects to decimal
     Decimal first(*this), second(b);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toBin();
 }
@@ -129,17 +126,14 @@ Binary Binary::operator+(Binary b) {
 Binary Binary::operator+(Octal o) {
     // convert binary object to decimal
     Decimal first(*this), second(o);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toBin();
 }
@@ -147,17 +141,14 @@ Binary Binary::operator+(Octal o) {
 Binary Binary::operator+(Decimal second) {
     // convert binary object to decimal
     Decimal first(*this);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toBin();
 }
@@ -165,17 +156,14 @@ Binary Binary::operator+(Decimal second) {
 Binary Binary::operator+(Hexadecimal h) {
     // convert binary object to decimal
     Decimal first(*this), second(h);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the sum of values to binary and return
     return first.toBin();
 }
@@ -184,17 +172,14 @@ Binary Binary::operator+(Hexadecimal h) {
 Binary Binary::operator-(Binary b) {
     // convert binary objects to decimal
     Decimal first(*this), second(b);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the subtract of values to binary and return
     return first.toBin();
 }
@@ -202,17 +187,14 @@ Binary Binary::operator-(Binary b) {
 Binary Binary::operator-(Octal o) {
     // convert binary objects to decimal
     Decimal first(*this), second(o);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the subtract of values to binary and return
     return first.toBin();
 }
@@ -220,17 +202,14 @@ Binary Binary::operator-(Octal o) {
 Binary Binary::operator-(Decimal second) {
     // convert binary objects to decimal
     Decimal first(*this);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the subtracts of values to binary and return
     return first.toBin();
 }
@@ -238,18 +217,72 @@ Binary Binary::operator-(Decimal second) {
 Binary Binary::operator-(Hexadecimal h) {
     // convert binary objects to decimal
     Decimal first(*this), second(h);
-    // find the max length of decimal points
-    int precision = std::max(
-        (first.num.find('.') != -1) ?
-            first.num.substr(first.num.find('.') + 1, first.num.length()).length() :
-            0,
-        (second.num.find('.') != -1) ?
-            second.num.substr(second.num.find('.') + 1, second.num.length()).length() :
-            0
-    );
+
     // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), precision);
+    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     // then convert the subtract of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator*(Binary b) {
+    // convert all values to decimal for multiply
+    Decimal first(*this), second(b);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    // then convert the subtract of values to binary and return
+    return first.toBin();
+}
+
+Binary Binary::operator*(Octal o) {
+    // convert all values to decimal for multiply
+    Decimal first(*this), second(o);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    return first.toBin();
+}
+
+Binary Binary::operator*(Decimal second) {
+    // convert all values to decimal for multiply
+    Decimal first(*this);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
+    return first.toBin();
+}
+
+Binary Binary::operator*(Hexadecimal h) {
+    // convert all values to decimal for multiply
+    Decimal first(*this), second(h);
+
+    // calculate the multiply of decimal values
+    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while(first.num[first.num.length() - 1] == '0')
+        first.num = first.num.substr(0, first.num.length() - 1);
+
     return first.toBin();
 }
 

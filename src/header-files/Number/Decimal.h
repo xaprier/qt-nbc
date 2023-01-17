@@ -29,6 +29,10 @@ class Decimal : public Number {
     Decimal operator-(Binary b);
     Decimal operator-(Octal o);
     Decimal operator-(Hexadecimal h);
+    Decimal operator*(Decimal second);
+    Decimal operator*(Binary b);
+    Decimal operator*(Octal o);
+    Decimal operator*(Hexadecimal h);
 };
 
 #endif  // DECIMAL_H

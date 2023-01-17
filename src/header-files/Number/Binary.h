@@ -29,6 +29,10 @@ class Binary : public Number {
 	Binary operator-(Octal o);
 	Binary operator-(Decimal second);
 	Binary operator-(Hexadecimal h);
+	Binary operator*(Binary b);
+	Binary operator*(Octal o);
+	Binary operator*(Decimal second);
+	Binary operator*(Hexadecimal h);
 
 };
 
