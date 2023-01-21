@@ -41,6 +41,11 @@ class Binary : public Number {
 	Binary operator/(Octal o);
 	Binary operator/(Decimal second);
 	Binary operator/(Hexadecimal h);
+	// operator overloadings of remainder
+	Binary operator%(Binary b);
+	Binary operator%(Octal o);
+	Binary operator%(Decimal second);
+	Binary operator%(Hexadecimal h);
 };
 
 #endif  // BINARY_H

@@ -1,6 +1,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include <cmath>
 
 #include "../header-files/Number/Binary.h"
 #include "../header-files/Number/Decimal.h"
@@ -273,128 +274,192 @@ void operator_subtractOverloading() {
 
 void operator_multiplyOverloading() {
     Binary res1;
-    // binary * binary = 827.869140625 * -827.869140625 = -685367.313999176025390625 = -10100111010100110111.010100000110001001
-    res1 = b * Binary("-1100111011.110111101"); // confirmed
-    std::cout << Decimal(res1) << " " << res1 << std::endl;
-    // binary * octal = 827.869140625 * -125.83203125 = -104172.45557403564453125 = -11001011011101100.01110100101000001
-    res1 = b * Octal("-175.652"); // confirmed
-    std::cout << Decimal(res1) << " " << res1 << std::endl;
-    // binary * decimal = 827.869140625 * -12.75 = -10555.33154296875 = -10100100111011.01010100111
-    res1 = b * Decimal("-12.75"); // confirmed
-    std::cout << Decimal(res1) << " " << res1 << std::endl;
-    // binary * hexadecimal = 827.869140625 * -508.671630859375 = -421113.545899868011474609375 =  -1100110110011111001.100010111100000000011
+    // 1100111011.110111101 * -111111100.101010111111 = -1100110110011111001.100010111100000000011
+    res1 = b * Binary("-111111100.101010111111"); // confirmed
+    std::cout << b << " * " << Binary("-111111100.101010111111") << " = " << res1 << std::endl;
+    // 1100111011.110111101 * -774.5277 = -1100110110011111001.100010111100000000011
+    res1 = b * Octal("-774.5277"); // confirmed
+    std::cout << b << " * " << Octal("-774.5277") << " = " << res1 << std::endl;
+    // 1100111011.110111101 * -508.671630859375 = -1100110110011111001.100010111100000000011
+    res1 = b * Decimal("-508.671630859375"); // confirmed
+    std::cout << b << " * " << Decimal("-508.671630859375") << " = " << res1 << std::endl;
+    // 1100111011.110111101 * -1FC.ABF = -1100110110011111001.100010111100000000011
     res1 = b * Hexadecimal("-1FC.ABF"); // confirmed
-    std::cout << Decimal(res1) << " " << res1 << std::endl;
+    std::cout << b << " * " << Hexadecimal("-1FC.ABF") << " = " << res1 << std::endl;
 
     Octal res2;
-    // octal * octal = 125.83203125 * -125.83203125 = -15833.7000885009765625 = -36731.546344
-    res2 = o * Octal("-175.652"); // confirmed
-    std::cout << res2.toDec() << " " << res2 << std::endl;
-    // octal * binary = 125.83203125 * -827.869140625 = -104172.45557403564453125 = -313354.351202
-    res2 = o * Binary("-1100111011.110111101"); // confirmed
-    std::cout << res2.toDec() << " " << res2 << std::endl;
-    // octal * decimal = 125.83203125 * -12.75 = -1604.3583984375 = -3104.2674
-    res2 = o * Decimal("-12.75"); // confirmed
-    std::cout << res2.toDec() << " " << res2 << std::endl;
-    // octal * hexadecimal = 125.83203125 * -508.671630859375 = -64007.18455028533935546875 = -175007.1363726
+    // 175.652 * -774.5277 = -175007.1363726
+    res2 = o * Octal("-774.5277"); // confirmed
+    std::cout << o << " * " << Octal("-774.5277") << " = " << res2 << std::endl;
+    // 175.652 * -111111100.101010111111 = -175007.1363726
+    res2 = o * Binary("-111111100.101010111111"); // confirmed
+    std::cout << o << " * " << Binary("-111111100.101010111111") << " = " << res2 << std::endl;
+    // 175.652 * -508.671630859375 = -175007.1363726
+    res2 = o * Decimal("-508.671630859375"); // confirmed
+    std::cout << o << " * " << Decimal("-508.671630859375") << " = " << res2 << std::endl;
+    // 175.652 * -1FC.ABF = -175007.1363726
     res2 = o * Hexadecimal("-1FC.ABF"); // confirmed
-    std::cout << res2.toDec() << " " << res2 << std::endl;
+    std::cout << o << " * " << Hexadecimal("-1FC.ABF") << " = " << res2 << std::endl;
 
     Decimal res3;
-    // decimal * decimal = 12.75 * -12.75 = -162.5625
-    res3 = d * Decimal("-12.75"); // confirmed
-    std::cout << res3 << std::endl;
-    // decimal * binary = 12.75 * -827.869140625 = -10555.33154296875
-    res3 = d * Binary("-1100111011.110111101"); // confirmed
-    std::cout << res3 << std::endl;
-    // decimal * octal = 12.75 * -125.83203125 = -1604.3583984375
-    res3 = d * Octal("-175.652"); // confirmed
-    std::cout << res3 << std::endl;
-    // decimal * hexadecimal = 12.75 * -508.671630859375 = -6485.563293457031
+    // 12.75 * -508.671630859375 = -6485.56329345703125
+    res3 = d * Decimal("-508.671630859375"); // confirmed
+    std::cout << d << " * " << Decimal("-508.671630859375") << " = " << res3 << std::endl;
+    // 12.75 * -111111100.101010111111 = -6485.56329345703125
+    res3 = d * Binary("-111111100.101010111111"); // confirmed
+    std::cout << d << " * " << Binary("-111111100.101010111111") << " = " << res3 << std::endl;
+    // 12.75 * -774.5277 = -6485.56329345703125
+    res3 = d * Octal("-774.5277"); // confirmed
+    std::cout << d << " * " << Octal("-774.5277") << " = " << res3 << std::endl;
+    // 12.75 * -1FC.ABF = -6485.56329345703125
     res3 = d * Hexadecimal("-1FC.ABF"); // confirmed
-    std::cout << res3 << std::endl;
+    std::cout << d << " * " << Hexadecimal("-1FC.ABF") << " = " << res3 << std::endl;
 
     Hexadecimal res4;
-    // hexadecimal * hexadecimal = 508.671630859375 * -508.671630859375 = -258746.828041136264801025390625 = -3F2BA.D3FA81
+    // 1FC.ABF * -1FC.ABF = -3F2BA.D3FA81
     res4 = h * Hexadecimal("-1FC.ABF"); // confirmed
-    std::cout << res4.toDec() << " " << res4 << std::endl;
-    // hexadecimal * binary = 508.671630859375 * -827.869140625 = -421113.545899868011474609375 = -66CF9.8BC018
-    res4 = h * Binary("-1100111011.110111101"); // confirmed
-    std::cout << res4.toDec() << " " << res4 << std::endl;
-    // hexadecimal * octal = 508.671630859375 * -125.83203125 = -64007.18455028533935546875 = -FA07.2F3EB
-    res4 = h * Octal("-175.652"); // confirmed
-    std::cout << res4.toDec() << " " << res4 << std::endl;
-    // hexadecimal * decimal = 508.671630859375 * -12.75 = -6485.56329345703125 = -1955.9034
-    res4 = h * Decimal("-12.75"); // confirmed
-    std::cout << res4.toDec() << " " << res4 << std::endl;
+    std::cout << h << " * " << Hexadecimal("-1FC.ABF") << " = " << res4 << std::endl;
+    // 1FC.ABF * -111111100.101010111111 = -3F2BA.D3FA81
+    res4 = h * Binary("-111111100.101010111111"); // confirmed
+    std::cout << h << " * " << Binary("-111111100.101010111111") << " = " << res4 << std::endl;
+    // 1FC.ABF * -774.5277 = -3F2BA.D3FA81
+    res4 = h * Octal("-774.5277"); // confirmed
+    std::cout << h << " * " << Octal("-774.5277") << " = " << res4 << std::endl;
+    // 1FC.ABF * -508.671630859375 = -3F2BA.D3FA81
+    res4 = h * Decimal("-508.671630859375"); // confirmed
+    std::cout << h << " * " << Decimal("-508.671630859375") << " = " << res4 << std::endl;
 }
 
 void operator_divideOverloading() {
     Binary res1;
-    // binary / binary = 827.869140625 / -0.625 = -10100101100.100101110011001100110011001100110011001101
+    // 1100111011.110111101 / -0.101 = -10100101100.100101110011001100110011001100110011001101
     res1 = b / Binary("-0000.101"); // confirmed
     std::cout << b << " / " << Binary("-0000.101") << " = " << res1 << std::endl;
-    // binary / octal = 827.869140625 / -5.001678466796875 = -10100101.10000100101011001111111110001000011100001011
-    res1 = b / Octal("-0005.00067"); // confirmed
-    std::cout << b << " / " << Octal("-0005.00067") << " = " << res1 << std::endl;
-    // binary / decimal = 827.869140625 / -0.00001 = -100111011110011101001100010.0001
-    res1 = b / Decimal("-000000.00001"); // confirmed
-    std::cout << b << " / " << Decimal("-000000.00001") << " = " << res1 << std::endl;
-    // binary / hexadecimal = 827.869140625 / -15.93750041723251342773 = -110011.1111000111011001110000110000100100111001111101
-    res1 = b / Hexadecimal("-00F.F00007"); // confirmed
-    std::cout << b << " / " << Hexadecimal("-00F.F00007") << " = " << res1 << std::endl;
+    // 1100111011.110111101 / -0.5 = -10100101100.100101110011001100110011001100110011001101
+    res1 = b / Octal("-0000.50000"); // confirmed
+    std::cout << b << " / " << Octal("-0000.50000") << " = " << res1 << std::endl;
+    // 1100111011.110111101 / -0.625 = -10100101100.100101110011001100110011001100110011001101
+    res1 = b / Decimal("-0000.625000"); // confirmed
+    std::cout << b << " / " << Decimal("-0000.625000") << " = " << res1 << std::endl;
+    // 1100111011.110111101 / -0.A = -10100101100.100101110011001100110011001100110011001101
+    res1 = b / Hexadecimal("-000.A000"); // confirmed
+    std::cout << b << " / " << Hexadecimal("-000.A000") << " = " << res1 << std::endl;
 
     Octal res2;
-    // octal / octal = 125.83203125 / -5.001678466796875 = -31.1207003775555143
-    res2 = o / Octal("-0005.00067"); // confirmed
-    std::cout << o << " / " << Octal("-0005.00067") << " = " << res2 << std::endl;
-    // octal / binary = 125.83203125 / -0.625 = -311.2514631463146314632
+    // 175.652 / -0.5 = -311.251463146314632
+    res2 = o / Octal("-0000.50000"); // confirmed
+    std::cout << o << " / " << Octal("-0000.50000") << " = " << res2 << std::endl;
+    // 175.652 / -0.101 = -311.251463146314632
     res2 = o / Binary("-0000.101"); // confirmed
     std::cout << o << " / " << Binary("-0000.101") << " = " << res2 << std::endl;
-    // octal / decimal = 125.83203125 / -0.00001 = -60000443.1
-    res2 = o / Decimal("-000000.00001"); // confirmed
-    std::cout << o << " / " << Decimal("-000000.00001") << " = " << res2 << std::endl;
-    // octal / hexadecimal = 125.83203125 / -15.93750041723251342773 = -7.71232461572730604
-    res2 = o / Hexadecimal("-00F.F00007"); // confirmed
-    std::cout << o << " / " << Hexadecimal("-00F.F00007") << " = " << res2 << std::endl;
+    // 175.652 / -0.625 = -311.251463146314632
+    res2 = o / Decimal("-0000.625000"); // confirmed
+    std::cout << o << " / " << Decimal("-0000.625000") << " = " << res2 << std::endl;
+    // 175.652 / -0.A = -311.251463146314632
+    res2 = o / Hexadecimal("-000.A000"); // confirmed
+    std::cout << o << " / " << Hexadecimal("-000.A000") << " = " << res2 << std::endl;
 
     Decimal res3;
-    // decimal / decimal = 12.75 / -0.00001 = -1275000.0
-    res3 = d / Decimal("-000000.00001"); // confirmed
-    std::cout << d << " / " << Decimal("-000000.00001") << " = " << res3 << std::endl;
-    // decimal / binary = 12.75 / -0.125 = -102.0
-    res3 = d / Binary("-000000.001"); // confirmed
-    std::cout << d << " / " << Binary("-000000.001") << " = " << res3 << std::endl;
-    // decimal / octal = 12.75 / -5.001678466796875 = -2.549144269196741816388418477857
-    res3 = d / Octal("-0005.00067"); // confirmed
-    std::cout << d << " / " << Octal("-0005.00067") << " = " << res3 << std::endl;
-    // decimal / hexadecimal = 12.75 / -15.93750041723251342773 = -0.799999979056564580173673689734
-    res3 = d / Hexadecimal("-00F.F00007"); // confirmed
-    std::cout << d << " / " << Hexadecimal("-00F.F00007") << " = " << res3 << std::endl;
+    // 12.75 / -0.625 = -20.399999999999999999653055304805
+    res3 = d / Decimal("-0000.625000"); // confirmed
+    std::cout << d << " / " << Decimal("-0000.625000") << " = " << res3 << std::endl;
+    // 12.75 / -0.001 = -102.0
+    res3 = d / Binary("-0000000.101"); // confirmed
+    std::cout << d << " / " << Binary("-0000000.101") << " = " << res3 << std::endl;
+    // 12.75 / -0.5 = -20.399999999999999999653055304805
+    res3 = d / Octal("-0000.50000"); // confirmed
+    std::cout << d << " / " << Octal("-0000.50000") << " = " << res3 << std::endl;
+    // 12.75 / -0.A = -20.399999999999999999653055304805
+    res3 = d / Hexadecimal("-000.A000"); // confirmed
+    std::cout << d << " / " << Hexadecimal("-000.A000") << " = " << res3 << std::endl;
 
     Hexadecimal res4;
-    // decimal / hexadecimal = 508.671630859375 / -15.93750041723251342773 = -1F.EAA99BA4FAC7
-    res4 = h / Hexadecimal("-00F.F00007"); // confirmed
-    std::cout << h << " / " << Hexadecimal("-00F.F00007") << " = " << res4 << std::endl;
-    // decimal / decimal = 508.671630859375 / -0.00001 = -3082BDB.16
-    res4 = h / Decimal("-000000.00001"); // confirmed
-    std::cout << h << " / " << Decimal("-000000.00001") << " = " << res4 << std::endl;
-    // decimal / binary = 508.671630859375 / -0.125 = -FE5.5F8
-    res4 = h / Binary("-000000.001"); // confirmed
-    std::cout << h << " / " << Binary("-000000.001") << " = " << res4 << std::endl;
-    // decimal / octal = 508.671630859375 / -5.001678466796875 = -65.B33F655A171
-    res4 = h / Octal("-0005.00067"); // confirmed
-    std::cout << h << " / " << Octal("-0005.00067") << " = " << res4 << std::endl;
+    // 1FC.ABF / -0.A = -32D.DFE66666666
+    res4 = h / Hexadecimal("-000.A000"); // confirmed
+    std::cout << h << " / " << Hexadecimal("-000.A000") << " = " << res4 << std::endl;
+    // 1FC.ABF / -0.625 = -32D.DFE66666666
+    res4 = h / Decimal("-0000.625000"); // confirmed
+    std::cout << h << " / " << Decimal("-0000.625000") << " = " << res4 << std::endl;
+    // 1FC.ABF / -0.001 = -FE5.5F8
+    res4 = h / Binary("-000000.101"); // confirmed
+    std::cout << h << " / " << Binary("-0000000.101") << " = " << res4 << std::endl;
+    // 1FC.ABF / -0.5 = -32D.DFE66666666
+    res4 = h / Octal("-0000.50000"); // confirmed
+    std::cout << h << " / " << Octal("-0000.50000") << " = " << res4 << std::endl;
+}
+
+void operator_remainderOverloading() {
+    Decimal d1("4.75");
+    Binary b1("100.11");
+    Octal o1("4.6");
+    Hexadecimal h1("4.C");
+
+    Binary res1;
+    // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
+    res1 = b % b1; // confirmed
+    std::cout << b << " % " << b1 << " = " << res1 << std::endl;
+    // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
+    res1 = b % o1; // confirmed
+    std::cout << b << " % " << o1 << " = " << res1 << std::endl;
+    // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
+    res1 = b % d1; // confirmed
+    std::cout << b << " % " << d1 << " = " << res1 << std::endl;
+    // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
+    res1 = b % h1; // confirmed
+    std::cout << b << " % " << h1 << " = " << res1 << std::endl;
+
+    Octal res2;
+    // 125.83203125 % 4.75 = 2.33203125 = 2.252
+    res2 = o % o1; // confirmed
+    std::cout << o << " % " << o1 << " = " << res2 << std::endl;
+    // 125.83203125 % 4.75 = 2.33203125 = 2.252
+    res2 = o % b1; // confirmed
+    std::cout << o << " % " << b1 << " = " << res2 << std::endl;
+    // 125.83203125 % 4.75 = 2.33203125 = 2.252
+    res2 = o % d1; // confirmed
+    std::cout << o << " % " << d1 << " = " << res2 << std::endl;
+    // 125.83203125 % 4.75 = 2.33203125 = 2.252
+    res2 = o % h1; // confirmed
+    std::cout << o << " % " << h1 << " = " << res2 << std::endl;
+
+    Decimal res3;
+    // 12.75 % 4.75 = 3.25
+    res3 = d % d1; // confirmed
+    std::cout << d << " % " << d1 << " = " << res3 << std::endl;
+    // 12.75 % 4.75 = 3.25
+    res3 = d % b1; // confirmed
+    std::cout << d << " % " << b1 << " = " << res3 << std::endl;
+    // 12.75 % 4.75 = 3.25
+    res3 = d % o1; // confirmed
+    std::cout << d << " % " << o1 << " = " << res3 << std::endl;
+    // 12.75 % 4.75 = 3.25
+    res3 = d % h1; // confirmed
+    std::cout << d << " % " << h1 << " = " << res3 << std::endl;
+
+    Hexadecimal res4;
+    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
+    res4 = h % h1; // confirmed
+    std::cout << d << " % " << d1 << " = " << res4 << std::endl;
+    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
+    res4 = h % b1; // confirmed
+    std::cout << d << " % " << b1 << " = " << res4 << std::endl;
+    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
+    res4 = h % o1; // confirmed
+    std::cout << d << " % " << o1 << " = " << res4 << std::endl;
+    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
+    res4 = h % d1; // confirmed
+    std::cout << d << " % " << h1 << " = " << res4 << std::endl;
+
 }
 
 int main() {
-    testConstructors();
-    testConverters();
-    ostreamOverloadTest();
-    operator_plusOverloading();
-    operator_subtractOverloading();
-    operator_multiplyOverloading();
-    operator_divideOverloading();
-
+    // testConstructors();
+    // testConverters();
+    // ostreamOverloadTest();
+    // operator_plusOverloading();
+    // operator_subtractOverloading();
+    // operator_multiplyOverloading();
+    // operator_divideOverloading();
+    operator_remainderOverloading();
     return 0;
 }

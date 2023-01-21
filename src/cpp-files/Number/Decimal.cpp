@@ -552,3 +552,91 @@ Decimal Decimal::operator/(Hexadecimal h) {
 
     return result;
 }
+
+Decimal Decimal::operator%(Decimal second) {
+    // creating return object/converting other object
+    Decimal result(*this);
+
+    try {
+        if (second.num == "0.0")
+            throw "Domain number cannot be zero! Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator%(Binary b) {
+    // creating return object/converting other object
+    Decimal result(*this), second(b);
+
+    try {
+        if (second.num == "0.0")
+            throw "Domain number cannot be zero! Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator%(Octal o) {
+    // creating return object/converting other object
+    Decimal result(*this), second(o);
+
+    try {
+        if (second.num == "0.0")
+            throw "Domain number cannot be zero! Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator%(Hexadecimal h) {
+    // creating return object/converting other object
+    Decimal result(*this), second(h);
+
+    try {
+        if (second.num == "0.0")
+            throw "Domain number cannot be zero! Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
