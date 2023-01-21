@@ -4,12 +4,27 @@
 #include <iomanip>
 #include <iostream>
 #include <utility>
-Decimal::Decimal(std::string num) : Number(std::move(num)) {}
+Decimal::Decimal(std::string num) {
+    // setting locale for qapplication changes(. might be , in region)
+    const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
+    std::setlocale(LC_NUMERIC, "C");
+
+    clean_number(num); // clean if it starts/ends with 0
+
+    this->num = num;
+}
 
 Decimal::Decimal(const Decimal &d) : Number(d) {}
 
 Decimal::Decimal(const Binary &b) {
+    // setting locale for qapplication changes(. might be , in region)
+    const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
+    std::setlocale(LC_NUMERIC, "C");
+
     std::string number = b.num;
+
+    clean_number(number);  // clean if it starts/ends with 0
+
     if (number.length() == 0 || number == "0.0") {
         this->num = "0.0";
         return;
@@ -73,11 +88,21 @@ Decimal::Decimal(const Binary &b) {
         result.push_back('0');
     }
 
+    // setting the locale to old
+    std::setlocale(LC_NUMERIC, oldLocale.c_str());
+
     this->num = result;
 }
 
 Decimal::Decimal(const Octal &o) {
+    // setting locale for qapplication changes(. might be , in region)
+    const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
+    std::setlocale(LC_NUMERIC, "C");
+
     std::string number = o.num;
+
+    clean_number(number);  // clean if it starts/ends with 0
+
     if (number.length() == 0 || number == "0.0") {
         this->num = "0.0";
         return;
@@ -138,11 +163,21 @@ Decimal::Decimal(const Octal &o) {
         result.push_back('0');
     }
 
+    // setting the locale to old
+    std::setlocale(LC_NUMERIC, oldLocale.c_str());
+
     this->num = result;
 }
 
 Decimal::Decimal(const Hexadecimal &h) {
+    // setting locale for qapplication changes(. might be , in region)
+    const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
+    std::setlocale(LC_NUMERIC, "C");
+
     std::string number = h.num;
+
+    clean_number(number);  // clean if it starts/ends with 0
+
     if (number.length() == 0 || number == "0.0") {
         this->num = "0.0";
         return;
@@ -237,6 +272,9 @@ Decimal::Decimal(const Hexadecimal &h) {
 
     if (isItNegative) sResult.insert(0, "-");
 
+    // setting the locale to old
+    std::setlocale(LC_NUMERIC, oldLocale.c_str());
+
     this->num = sResult;
 }
 
@@ -267,7 +305,7 @@ Decimal Decimal::operator+(Decimal second) {
     result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -281,7 +319,7 @@ Decimal Decimal::operator+(Binary b) {
     result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -295,7 +333,7 @@ Decimal Decimal::operator+(Octal o) {
     result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -309,7 +347,7 @@ Decimal Decimal::operator+(Hexadecimal h) {
     result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -323,7 +361,7 @@ Decimal Decimal::operator-(Decimal second) {
     result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -337,7 +375,7 @@ Decimal Decimal::operator-(Binary b) {
     result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -351,7 +389,7 @@ Decimal Decimal::operator-(Octal o) {
     result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -365,7 +403,7 @@ Decimal Decimal::operator-(Hexadecimal h) {
     result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -379,7 +417,7 @@ Decimal Decimal::operator*(Decimal second) {
     result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -393,7 +431,7 @@ Decimal Decimal::operator*(Binary b) {
     result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -407,7 +445,7 @@ Decimal Decimal::operator*(Octal o) {
     result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
@@ -421,7 +459,95 @@ Decimal Decimal::operator*(Hexadecimal h) {
     result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
 
     // remove the last indexes if it is 0
-    while (result.num[result.num.length() - 1] == '0')
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator/(Decimal second) {
+    // creating return object/converting other object
+    Decimal result(*this);
+
+    try {
+        if (second.num == "0.0")
+            throw "Divide by 0 exception. Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator/(Binary b) {
+    // creating return object/converting other object
+    Decimal result(*this), second(b);
+
+    try {
+        if (second.num == "0.0")
+            throw "Divide by 0 exception. Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator/(Octal o) {
+    // creating return object/converting other object
+    Decimal result(*this), second(o);
+
+    try {
+        if (second.num == "0.0")
+            throw "Divide by 0 exception. Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal Decimal::operator/(Hexadecimal h) {
+    // creating return object/converting other object
+    Decimal result(*this), second(h);
+
+    try {
+        if (second.num == "0.0")
+            throw "Divide by 0 exception. Exiting...";
+    } catch(const char* er) {
+        std::cerr << er << std::endl;
+        exit(1);
+    }
+
+    // calculate the multiply of decimal values
+    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;

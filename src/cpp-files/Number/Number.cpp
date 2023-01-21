@@ -23,3 +23,23 @@ std::string Number::to_string_with_precision(const long double value, int precis
     out << std::fixed << value;
     return out.str();
 }
+
+void Number::clean_number(std::string &num) {
+    bool isItNegative = num.at(0) == '-';
+    num = isItNegative ? num.substr(1, num.length()) : num;
+
+    if (num == "0" || num == "0.0") {
+        num = "0.0";
+        return;
+    }
+
+    while(num.at(0) == '0' && num.at(1) != '.')
+        num = num.substr(1, num.length());
+
+    while (num.at(num.length() - 1) == '0')
+        num = num.substr(0, num.length() - 1);
+
+    num = (num == "-." || num == ".") ? "0.0" : num;
+
+    num = isItNegative ? "-" + num : num;
+}

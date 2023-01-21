@@ -27,6 +27,7 @@ class Number {
     virtual Binary toBin() = 0;
     virtual Hexadecimal toHex() = 0;
 
+    void clean_number(std::string &num);
 
     // cout operator overloading
     friend std::ostream &operator<<(std::ostream &output, const Number &n);
