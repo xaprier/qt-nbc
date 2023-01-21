@@ -20,19 +20,26 @@ class Hexadecimal : public Number {
 
 	friend std::ostream &operator<<(std::ostream &output, const Hexadecimal &h);
 
+	// operator overloadings of summing
 	Hexadecimal operator+(Hexadecimal h);
 	Hexadecimal operator+(Binary b);
 	Hexadecimal operator+(Octal o);
 	Hexadecimal operator+(Decimal second);
+	// operator overloadings of substraction
 	Hexadecimal operator-(Hexadecimal h);
 	Hexadecimal operator-(Binary b);
 	Hexadecimal operator-(Octal o);
 	Hexadecimal operator-(Decimal second);
+	// operator overloadings of multiply
 	Hexadecimal operator*(Hexadecimal h);
 	Hexadecimal operator*(Binary b);
 	Hexadecimal operator*(Octal o);
 	Hexadecimal operator*(Decimal second);
-
+	// operator overloadings of divide
+	Hexadecimal operator/(Hexadecimal h);
+	Hexadecimal operator/(Binary b);
+	Hexadecimal operator/(Octal o);
+	Hexadecimal operator/(Decimal second);
 };
 
 #endif  // HEXADECIMAL_H

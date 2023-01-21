@@ -21,18 +21,26 @@ class Octal : public Number {
 
 	friend std::ostream &operator<<(std::ostream &output, const Octal &o);
 
+	// operator overloadings of summing
 	Octal operator+(Octal o);
 	Octal operator+(Binary b);
 	Octal operator+(Decimal second);
 	Octal operator+(Hexadecimal h);
+	// operator overloadings of substraction
 	Octal operator-(Octal o);
 	Octal operator-(Binary b);
 	Octal operator-(Decimal second);
 	Octal operator-(Hexadecimal h);
+	// operator overloadings of multiply
 	Octal operator*(Octal o);
 	Octal operator*(Binary b);
 	Octal operator*(Decimal second);
 	Octal operator*(Hexadecimal h);
+	// operator overloadings of divide
+	Octal operator/(Octal o);
+	Octal operator/(Binary b);
+	Octal operator/(Decimal second);
+	Octal operator/(Hexadecimal h);
 };
 
 #endif  // OCTAL_H
