@@ -1,10 +1,11 @@
 #ifndef DECIMAL_H
 #define DECIMAL_H
 
+#include <iostream>
+
 #include "Binary.h"
 #include "Hexadecimal.h"
 #include "Octal.h"
-#include <iostream>
 
 class Decimal : public Number {
   public:
@@ -21,18 +22,26 @@ class Decimal : public Number {
 
     friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
 
+    // operator overloadings of summing
     Decimal operator+(Decimal d);
     Decimal operator+(Binary b);
     Decimal operator+(Octal o);
     Decimal operator+(Hexadecimal h);
+    // operator overloadings of substraction
     Decimal operator-(Decimal second);
     Decimal operator-(Binary b);
     Decimal operator-(Octal o);
     Decimal operator-(Hexadecimal h);
+    // operator overloadings of multiply
     Decimal operator*(Decimal second);
     Decimal operator*(Binary b);
     Decimal operator*(Octal o);
     Decimal operator*(Hexadecimal h);
+    // operator overloadings of divide
+    Decimal operator/(Decimal second);
+    Decimal operator/(Binary b);
+    Decimal operator/(Octal o);
+    Decimal operator/(Hexadecimal h);
 };
 
 #endif  // DECIMAL_H

@@ -21,19 +21,26 @@ class Binary : public Number {
 
 	friend std::ostream &operator<<(std::ostream &output, const Binary &b);
 
+	// operator overloadings of summing
 	Binary operator+(Binary b);
     Binary operator+(Octal o);
     Binary operator+(Decimal second);
     Binary operator+(Hexadecimal h);
+	// operator overloadings of substraction
 	Binary operator-(Binary b);
 	Binary operator-(Octal o);
 	Binary operator-(Decimal second);
 	Binary operator-(Hexadecimal h);
+	// operator overloadings of multiply
 	Binary operator*(Binary b);
 	Binary operator*(Octal o);
 	Binary operator*(Decimal second);
 	Binary operator*(Hexadecimal h);
-
+	// operator overloadings of divide
+	Binary operator/(Binary b);
+	Binary operator/(Octal o);
+	Binary operator/(Decimal second);
+	Binary operator/(Hexadecimal h);
 };
 
 #endif  // BINARY_H
