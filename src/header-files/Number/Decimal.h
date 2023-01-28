@@ -47,6 +47,13 @@ class Decimal : public Number {
     Decimal operator%(Binary b);
     Decimal operator%(Octal o);
     Decimal operator%(Hexadecimal h);
+    // assignment operator overloadings
+	Decimal &operator=(const Decimal &d);
+	Decimal &operator+=(const Decimal &d);
+	Decimal &operator-=(const Decimal &d);
+	Decimal &operator*=(const Decimal &d);
+	Decimal &operator/=(const Decimal &d);
+	Decimal &operator%=(const Decimal &d);
 };
 
 #endif  // DECIMAL_H
