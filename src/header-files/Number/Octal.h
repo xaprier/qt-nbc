@@ -46,6 +46,13 @@ class Octal : public Number {
 	Octal operator%(Binary b);
 	Octal operator%(Decimal second);
 	Octal operator%(Hexadecimal h);
+	// assignment operator overloadings
+	Octal &operator=(const Octal &o);
+	Octal &operator+=(const Octal &o);
+	Octal &operator-=(const Octal &o);
+	Octal &operator*=(const Octal &o);
+	Octal &operator/=(const Octal &o);
+	Octal &operator%=(const Octal &o);
 };
 
 #endif  // OCTAL_H

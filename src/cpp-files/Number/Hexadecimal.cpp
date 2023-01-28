@@ -160,7 +160,7 @@ Hexadecimal Hexadecimal::toHex() {
 }
 
 std::ostream &operator<<(std::ostream &output, const Hexadecimal &h) {
-    return output << h.num;
+    return output << "0x" << h.num;
 }
 
 Hexadecimal Hexadecimal::operator+(Hexadecimal h) {
@@ -517,4 +517,36 @@ Hexadecimal Hexadecimal::operator%(Decimal second) {
         first.num = first.num.substr(0, first.num.length() - 1);
 
     return first.toHex();
+}
+
+Hexadecimal &Hexadecimal::operator=(const Hexadecimal &h) {
+	if (this == &h)
+		return *this;
+	this->num = h.num;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator+=(const Hexadecimal &h) {
+	*this = *this + h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator-=(const Hexadecimal &h) {
+	*this = *this - h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator*=(const Hexadecimal &h) {
+	*this = *this * h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator/=(const Hexadecimal &h) {
+	*this = *this / h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator%=(const Hexadecimal &h) {
+	*this = *this % h;
+	return *this;
 }

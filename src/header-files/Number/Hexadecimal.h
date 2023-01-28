@@ -45,6 +45,13 @@ class Hexadecimal : public Number {
 	Hexadecimal operator%(Binary b);
 	Hexadecimal operator%(Octal o);
 	Hexadecimal operator%(Decimal second);
+	// assignment operator overloadings
+	Hexadecimal &operator=(const Hexadecimal &h);
+	Hexadecimal &operator+=(const Hexadecimal &h);
+	Hexadecimal &operator-=(const Hexadecimal &h);
+	Hexadecimal &operator*=(const Hexadecimal &h);
+	Hexadecimal &operator/=(const Hexadecimal &h);
+	Hexadecimal &operator%=(const Hexadecimal &h);
 };
 
 #endif  // HEXADECIMAL_H

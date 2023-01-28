@@ -46,6 +46,14 @@ class Binary : public Number {
 	Binary operator%(Octal o);
 	Binary operator%(Decimal second);
 	Binary operator%(Hexadecimal h);
+	// assignment operator overloadings
+	Binary &operator=(const Binary &b);
+	Binary &operator+=(const Binary &b);
+	Binary &operator-=(const Binary &b);
+	Binary &operator*=(const Binary &b);
+	Binary &operator/=(const Binary &b);
+	Binary &operator%=(const Binary &b);
+
 };
 
 #endif  // BINARY_H

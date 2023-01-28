@@ -295,14 +295,14 @@ Hexadecimal Decimal::toHex() {
 }
 
 std::ostream &operator<<(std::ostream &output, const Decimal &d) {
-    return output << d.num;
+    return output << d.num << "d";
 }
 
 Decimal Decimal::operator+(Decimal second) {
     Decimal result(*this);
 
     // calculate the sum of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
+    result.num = sum(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -316,7 +316,7 @@ Decimal Decimal::operator+(Binary b) {
     Decimal result(*this), second(b);
 
     // calculate the sum of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
+    result.num = this->sum(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -330,7 +330,7 @@ Decimal Decimal::operator+(Octal o) {
     Decimal result(*this), second(o);
 
     // calculate the sum of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
+    result.num = this->sum(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -344,7 +344,7 @@ Decimal Decimal::operator+(Hexadecimal h) {
     Decimal result(*this), second(h);
 
     // calculate the sum of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) + std::stold(second.num), 30);
+    result.num = this->sum(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -358,7 +358,7 @@ Decimal Decimal::operator-(Decimal second) {
     Decimal result(*this);
 
     // calculate the subtract of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
+    result.num = this->sub(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -372,7 +372,7 @@ Decimal Decimal::operator-(Binary b) {
     Decimal result(*this), second(b);
 
     // calculate the subtract of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
+    result.num = this->sub(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -386,7 +386,7 @@ Decimal Decimal::operator-(Octal o) {
     Decimal result(*this), second(o);
 
     // calculate the subtract of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
+    result.num = this->sub(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -400,7 +400,7 @@ Decimal Decimal::operator-(Hexadecimal h) {
     Decimal result(*this), second(h);
 
     // calculate the subtract of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) - std::stold(second.num), 30);
+    result.num = this->sub(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -414,7 +414,7 @@ Decimal Decimal::operator*(Decimal second) {
     Decimal result(*this);
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
+    result.num = this->mul(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -428,7 +428,7 @@ Decimal Decimal::operator*(Binary b) {
     Decimal result(*this), second(b);
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
+    result.num = this->mul(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -442,7 +442,7 @@ Decimal Decimal::operator*(Octal o) {
     Decimal result(*this), second(o);
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
+    result.num = this->mul(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -456,7 +456,7 @@ Decimal Decimal::operator*(Hexadecimal h) {
     Decimal result(*this), second(h);
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) * std::stold(second.num), 30);
+    result.num = this->mul(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -478,7 +478,7 @@ Decimal Decimal::operator/(Decimal second) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+    result.num = this->div(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -500,7 +500,7 @@ Decimal Decimal::operator/(Binary b) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -522,7 +522,7 @@ Decimal Decimal::operator/(Octal o) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -544,7 +544,7 @@ Decimal Decimal::operator/(Hexadecimal h) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stold(result.num) / std::stold(second.num), 30);
+    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -566,7 +566,7 @@ Decimal Decimal::operator%(Decimal second) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+    result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -588,7 +588,7 @@ Decimal Decimal::operator%(Binary b) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+    result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -610,7 +610,7 @@ Decimal Decimal::operator%(Octal o) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+    result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -632,11 +632,43 @@ Decimal Decimal::operator%(Hexadecimal h) {
     }
 
     // calculate the multiply of decimal values
-    result.num = to_string_with_precision(fmod(std::stold(result.num), std::stold(second.num)), 30);
+    result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
         result.num = result.num.substr(0, result.num.length() - 1);
 
     return result;
+}
+
+Decimal &Decimal::operator=(const Decimal &d) {
+    if (this == &d)
+        return *this;
+    this->num = d.num;
+    return *this;
+}
+
+Decimal &Decimal::operator+=(const Decimal &d) {
+    *this = *this + d;
+    return *this;
+}
+
+Decimal &Decimal::operator-=(const Decimal &d) {
+    *this = *this - d;
+    return *this;
+}
+
+Decimal &Decimal::operator*=(const Decimal &d) {
+    *this = *this * d;
+    return *this;
+}
+
+Decimal &Decimal::operator/=(const Decimal &d) {
+    *this = *this / d;
+    return *this;
+}
+
+Decimal &Decimal::operator%=(const Decimal &d) {
+    *this = *this % d;
+    return *this;
 }
