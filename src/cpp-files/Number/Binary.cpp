@@ -119,7 +119,7 @@ Hexadecimal Binary::toHex() {
 }
 
 std::ostream &operator<<(std::ostream &output, const Binary &b) {
-    return output << b.num;
+    return output << b.num << "b";
 }
 
 Binary Binary::operator+(Binary b) {
@@ -474,4 +474,36 @@ Binary Binary::operator%(Hexadecimal h) {
         first.num = first.num.substr(0, first.num.length() - 1);
 
     return first.toBin();
+}
+
+Binary &Binary::operator=(const Binary &b) {
+    if (this == &b)
+        return *this;
+    this->num = b.num;
+    return *this;
+}
+
+Binary &Binary::operator+=(const Binary &b) {
+    *this = *this + b;
+    return *this;
+}
+
+Binary &Binary::operator-=(const Binary &b) {
+    *this = *this - b;
+    return *this;
+}
+
+Binary &Binary::operator*=(const Binary &b) {
+    *this = *this * b;
+    return *this;
+}
+
+Binary &Binary::operator/=(const Binary &b) {
+    *this = *this / b;
+    return *this;
+}
+
+Binary &Binary::operator%=(const Binary &b) {
+    *this = *this % b;
+    return *this;
 }

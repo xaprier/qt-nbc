@@ -116,7 +116,7 @@ Hexadecimal Octal::toHex() {
 }
 
 std::ostream &operator<<(std::ostream &output, const Octal &o) {
-    return output << o.num;
+    return output << "0" << o.num;
 }
 
 Octal Octal::operator+(Octal o) {
@@ -124,7 +124,7 @@ Octal Octal::operator+(Octal o) {
     Decimal first(*this), second(o);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -139,7 +139,7 @@ Octal Octal::operator+(Binary b) {
     Decimal first(*this), second(b);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -154,7 +154,7 @@ Octal Octal::operator+(Decimal second) {
     Decimal first(*this);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -169,7 +169,7 @@ Octal Octal::operator+(Hexadecimal h) {
     Decimal first(*this), second(h);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -180,62 +180,62 @@ Octal Octal::operator+(Hexadecimal h) {
 }
 
 Octal Octal::operator-(Octal o) {
-    // convert objects to decimal for subtracting
+    // convert objects to decimal for substracting
     Decimal first(*this), second(o);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
 Octal Octal::operator-(Binary b) {
-    // convert objects to decimal for subtracting
+    // convert objects to decimal for substracting
     Decimal first(*this), second(b);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
 Octal Octal::operator-(Decimal second) {
-    // convert objects to decimal for subtracting
+    // convert objects to decimal for substracting
     Decimal first(*this);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
 Octal Octal::operator-(Hexadecimal h) {
-    // convert objects to decimal for subtracting
+    // convert objects to decimal for substracting
     Decimal first(*this), second(h);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
@@ -243,14 +243,14 @@ Octal Octal::operator*(Octal o) {
     // convert objects to decimal for multiply
     Decimal first(*this), second(o);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    // calculate the multiply of decimal values
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
@@ -258,14 +258,14 @@ Octal Octal::operator*(Binary b) {
     // convert objects to decimal for multiply
     Decimal first(*this), second(b);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    // calculate the multiply of decimal values
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
@@ -273,14 +273,14 @@ Octal Octal::operator*(Decimal second) {
     // convert objects to decimal for multiply
     Decimal first(*this);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
@@ -288,14 +288,14 @@ Octal Octal::operator*(Hexadecimal h) {
     // convert objects to decimal for multiply
     Decimal first(*this), second(h);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    // calculate the multiply of decimal values
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to octal and return
+    // then convert the substract of values to octal and return
     return first.toOct();
 }
 
@@ -311,8 +311,8 @@ Octal Octal::operator/(Octal o) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    // calculate the divide of decimal values
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -333,8 +333,8 @@ Octal Octal::operator/(Binary b) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    // calculate the divide of decimal values
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -355,8 +355,8 @@ Octal Octal::operator/(Decimal second) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    // calculate the divide of decimal values
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -377,8 +377,8 @@ Octal Octal::operator/(Hexadecimal h) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    // calculate the divide of decimal values
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -399,7 +399,7 @@ Octal Octal::operator%(Octal o) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
+    // calculate the remainder of decimal values
     first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
 
     // remove the last indexes if it is 0
@@ -421,7 +421,7 @@ Octal Octal::operator%(Binary b) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
+    // calculate the remainder of decimal values
     first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
 
     // remove the last indexes if it is 0
@@ -443,7 +443,7 @@ Octal Octal::operator%(Decimal second) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
+    // calculate the remainder of decimal values
     first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
 
     // remove the last indexes if it is 0
@@ -465,7 +465,7 @@ Octal Octal::operator%(Hexadecimal h) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
+    // calculate the remainder of decimal values
     first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
 
     // remove the last indexes if it is 0
@@ -473,4 +473,35 @@ Octal Octal::operator%(Hexadecimal h) {
         first.num = first.num.substr(0, first.num.length() - 1);
 
     return first.toOct();
+}
+Octal &Octal::operator=(const Octal &o) {
+	if (this == &o)
+		return *this;
+	this->num = o.num;
+	return *this;
+}
+
+Octal &Octal::operator+=(const Octal &o) {
+	*this = *this + o;
+	return *this;
+}
+
+Octal &Octal::operator-=(const Octal &o) {
+	*this = *this - o;
+	return *this;
+}
+
+Octal &Octal::operator*=(const Octal &o) {
+	*this = *this * o;
+	return *this;
+}
+
+Octal &Octal::operator/=(const Octal &o) {
+	*this = *this / o;
+	return *this;
+}
+
+Octal &Octal::operator%=(const Octal &o) {
+	*this = *this % o;
+	return *this;
 }
