@@ -33,372 +33,395 @@ std::ostream &operator<<(std::ostream &output, const Number &n) {
 
 // test successful
 void testConstructors() {
+	std::cout << "Constructors With Parameter Decimal" << std::endl;
     // print binary value of Decimal(12.75) = 1100.11
     n = new Binary(d);
-    std::cout << *n;
+    test(n->getNum(), "1100.11", 0);
     // print octal value of Decimal(12.75) = 14.6
     n = new Octal(d);
-    std::cout << *n;
+	test(n->getNum(), "14.6", 1);
     // print decimal value of Decimal(12.75) = 12.75
     n = new Decimal(d);
-    std::cout << *n;
+	test(n->getNum(), "12.75", 2);
     // print hexa value of Decimal(12.75) = C.C
     n = new Hexadecimal(d);
-    std::cout << *n << std::endl;
+	test(n->getNum(), "C.C", 3);
 
+	std::cout << "\nConstructors With Parameter Octal" << std::endl;
     // print binary value of Octal(175.652) = 1111101.11010101
     n = new Binary(o);
-    std::cout << *n;
+	test(n->getNum(), "1111101.11010101", 0);
     // print octal value of Octal(175.652) = 175.652
     n = new Octal(o);
-    std::cout << *n;
+	test(n->getNum(), "175.652", 1);
     // print decimal value of Octal(175.652) = 125.83203125
     n = new Decimal(o);
-    std::cout << *n;
+	test(n->getNum(), "125.83203125", 2);
     // print hexadecimal value of Octal(175.652) = 7D.D5
     n = new Hexadecimal(o);
-    std::cout << *n << std::endl;
+	test(n->getNum(), "7D.D5", 3);
 
+	std::cout << "\nConstructors With Parameter Hexadecimal" << std::endl;
     // print binary value of Hexadecimal(1FC.ABF) = 111111100.101010111111
     n = new Binary(h);
-    std::cout << *n;
+    test(n->getNum(), "111111100.101010111111", 0);
     // print octal value of Hexadecimal(1FC.ABF) = 774.5277
     n = new Octal(h);
-    std::cout << *n;
+	test(n->getNum(), "774.5277", 1);
     // print decimal value of Hexadecimal(1FC.ABF) = 508.671630859375
     n = new Decimal(h);
-    std::cout << *n;
+	test(n->getNum(), "508.671630859375", 2);
     // print hexadecimal value of Hexadecimal(1FC.ABF) = 1FC.ABF
     n = new Hexadecimal(h);
-    std::cout << *n << std::endl;
+	test(n->getNum(), "1FC.ABF", 3);
 
+	std::cout << "\nConstructors With Parameter Binary" << std::endl;
     // print binary value of Binary(1100111011.110111101) = 1100111011.110111101
     n = new Binary(b);
-    std::cout << *n;
+	test(n->getNum(), "1100111011.110111101", 0);
     // print octal value of Binary(1100111011.110111101) = 1473.675
     n = new Octal(b);
-    std::cout << *n;
+	test(n->getNum(), "1473.675", 1);
     // print decimal value of Binary(1100111011.110111101) = 827.869140625
     n = new Decimal(b);
-    std::cout << *n;
+	test(n->getNum(), "827.869140625", 2);
     // print hexadecimal value of Binary(1100111011.110111101) = 33B.DE8
     n = new Hexadecimal(b);
-    std::cout << *n << std::endl;
+	test(n->getNum(), "33B.DE8", 3);
 }
 
 // test successful
 void testConverters() {
+	std::cout << "\nBinary toX() Tests" << std::endl;
+	// print binary value of Binary(1100111011.110111101) = 1100111011.110111101
+	n = new Binary;
+	*n = b.toBin();
+	test(n->getNum(), "1100111011.110111101", 0);
+	// print octal value of Binary(1100111011.110111101) = 1473.675
+	n = new Octal;
+	*n = b.toOct();
+	test(n->getNum(), "1473.675", 1);
+	// print decimal value of Binary(1100111011.110111101) = 827.869140625
+	n = new Decimal;
+	*n = b.toDec();
+	test(n->getNum(), "827.869140625", 2);
+	// print hexadecimal value of Binary(1100111011.110111101) = 33B.DE8
+	n = new Hexadecimal;
+	*n = b.toHex();
+	test(n->getNum(), "33B.DE8", 3);
+
+	std::cout << "\nDecimal toX() Tests" << std::endl;
     // print binary value of Decimal(12.75) = 1100.11
     n = new Binary;
     *n = d.toBin();
-    std::cout << *n;
+    test(n->getNum(), "1100.11", 0);
     // print octal value of Decimal(12.75) = 14.6
     n = new Octal;
     *n = d.toOct();
-    std::cout << *n;
+	test(n->getNum(), "14.6", 1);
     // print decimal value of Decimal(12.75) = 12.75
     n = new Decimal;
     *n = d.toDec();
-    std::cout << *n;
-    // print hexa value of Decimal(12.75) = C.C
+	test(n->getNum(), "12.75", 2);
+    // print hexadecimal value of Decimal(12.75) = C.C
     n = new Hexadecimal;
     *n = d.toHex();
-    std::cout << *n << std::endl;
+	test(n->getNum(), "C.C", 3);
 
+	std::cout << "\nOctal toX() Tests" << std::endl;
     // print binary value of Octal(175.652) = 1111101.11010101
     n = new Binary;
     *n = o.toBin();
-    std::cout << *n;
+    test(n->getNum(), "1111101.11010101", 0);
     // print octal value of Octal(175.652) = 175.652
     n = new Octal;
     *n = o.toOct();
-    std::cout << *n;
+	test(n->getNum(), "175.652", 1);
     // print decimal value of Octal(175.652) = 125.83203125
     n = new Decimal;
     *n = o.toDec();
-    std::cout << *n;
+	test(n->getNum(), "125.83203125", 2);
     // print hexadecimal value of Octal(175.652) = 7D.D5
     n = new Hexadecimal;
     *n = o.toHex();
-    std::cout << *n << std::endl;
+	test(n->getNum(), "7D.D5", 3);
 
+	std::cout << "\nHexadecimal toX() Tests" << std::endl;
     // print binary value of Hexadecimal(1FC.ABF) = 111111100.101010111111
     n = new Binary;
     *n = h.toBin();
-    std::cout << *n;
+    test(n->getNum(), "111111100.101010111111", 0);
     // print octal value of Hexadecimal(1FC.ABF) = 774.5277
     n = new Octal;
     *n = h.toOct();
-    std::cout << *n;
+	test(n->getNum(), "774.5277", 1);
     // print decimal value of Hexadecimal(1FC.ABF) = 508.671630859375
     n = new Decimal;
     *n = h.toDec();
-    std::cout << *n;
+	test(n->getNum(), "508.671630859375", 2);
     // print hexadecimal value of Hexadecimal(1FC.ABF) = 1FC.ABF
     n = new Hexadecimal;
     *n = h.toHex();
-    std::cout << *n << std::endl;
-
-    // print binary value of Binary(1100111011.110111101) = 1100111011.110111101
-    n = new Binary;
-    *n = b.toBin();
-    std::cout << *n;
-    // print octal value of Binary(1100111011.110111101) = 1473.675
-    n = new Octal;
-    *n = b.toOct();
-    std::cout << *n;
-    // print decimal value of Binary(1100111011.110111101) = 827.869140625
-    n = new Decimal;
-    *n = b.toDec();
-    std::cout << *n;
-    // print hexadecimal value of Binary(1100111011.110111101) = 33B.DE8
-    n = new Hexadecimal;
-    *n = b.toHex();
-    std::cout << *n << std::endl;
+	test(n->getNum(), "1FC.ABF", 3);
 }
 
 // test successful
 void ostreamOverloadTest() {
     // for testing the number object
     n = new Binary(d);
-
-    std::cout << d << " " << o << " " << h << " " << b << " " << *n << std::endl;
+	std::cout << "\nostream<< Operator Overloadings" << std::endl;
+	test(d.getNum() + "d 0" + o.getNum() + " 0x" + h.getNum() + " " + b.getNum() + "b " + n->getNum(), "12.75d 0175.652 0x1FC.ABF 1100111011.110111101b 1100.11", 0);
 }
 
 // test successful
 void operator_plusOverloading() {
-    Binary res2;
+    Binary res1;
     // binary + binary = 1655.73828125 = 11001110111.10111101
-    res2 = b + b;
-    std::cout << res2 << std::endl;
+	res1 = b + b;
+    std::cout << "\nBinary Sum Operator Overloadings" << std::endl;
+	test(Decimal("1655.73828125").toBin().getNum(), res1.getNum(), 0);
     // binary + octal = 953.701171875 = 1110111001.101100111
-    res2 = b + o;
-    std::cout << res2 << std::endl;
+	res1 = b + o;
+	test(Decimal("953.701171875").toBin().getNum(), res1.getNum(), 1);
     // binary + decimal = 840.619140625 = 1101001000.100111101
-    res2 = b + d;
-    std::cout << res2 << std::endl;
+	res1 = b + d;
+	test(Decimal("840.619140625").toBin().getNum(), res1.getNum(), 2);
     // binary + hexadecimal = 1336.540771484375 = 10100111000.100010100111
-    res2 = b + h;
-    std::cout << res2 << std::endl;
+	res1 = b + h;
+	test(Decimal("1336.540771484375").toBin().getNum(), res1.getNum(), 3);
 
-    Octal res4;
+	std::cout << "\nOctal Sum Operator Overloadings" << std::endl;
+    Octal res2;
     // octal + octal = 251.6640625 = 373.524
-    res4 = o + o;
-    std::cout << res4 << std::endl;
+	res2 = o + o;
+    test(Decimal("251.6640625").toOct().getNum(), res2.getNum(), 0);
     // octal + binary = 953.701171875 = 1671.547
-    res4 = o + b;
-    std::cout << res4 << std::endl;
+	res2 = o + b;
+	test(Decimal("953.701171875").toOct().getNum(), res2.getNum(), 1);
     // octal + decimal = 138.58203125 = 212.452
-    res4 = o + d;
-    std::cout << res4 << std::endl;
+	res2 = o + d;
+	test(Decimal("138.58203125").toOct().getNum(), res2.getNum(), 2);
     // octal + hexadecimal = 634.503662109375 = 1172.4017
-    res4 = o + h;
-    std::cout << res4 << std::endl;
+	res2 = o + h;
+	test(Decimal("634.503662109375").toOct().getNum(), res2.getNum(), 3);
 
+	std::cout << "\nDecimal Sum Operator Overloadings" << std::endl;
     // add the control of including . for precision finder
-    Decimal res;
+    Decimal res3;
     // decimal + decimal = 25.50
-    res = d + d;
-    std::cout << res << std::endl;
+	res3 = d + d;
+    test(Decimal("25.5").getNum(), res3.getNum(), 0);
     // decimal + binary = 840.619140625
-    res = d + b;
-    std::cout << res << std::endl;
+    res3 = d + b;
+	test(Decimal("840.619140625").getNum(), res3.getNum(), 1);
     // decimal + octal = 138.58203125
-    res = d + o;
-    std::cout << res << std::endl;
+    res3 = d + o;
+	test(Decimal("138.58203125").getNum(), res3.getNum(), 2);
     // decimal + hexadecimal  = 521.421630859375
-    res = d + h;
-    std::cout << res << std::endl;
+    res3 = d + h;
+	test(Decimal("521.421630859375").getNum(), res3.getNum(), 3);
 
-    Hexadecimal res3;
+	std::cout << "\nHexadecimal Sum Operator Overloadings" << std::endl;
+    Hexadecimal res4;
     // hexadecimal + hexadecimal = 1017.34326171875 = 3F9.57E
-    res3 = h + h;
-    std::cout << res3 << std::endl;
+	res4 = h + h;
+    test(Decimal("1017.34326171875").toHex().getNum(), res4.getNum(), 0);
     // hexadecimal + binary = 1336.540771484375 = 538.8A7
-    res3 = h + b;
-    std::cout << res3 << std::endl;
+	res4 = h + b;
+	test(Decimal("1336.540771484375").toHex().getNum(), res4.getNum(), 1);
     // hexadecimal + octal = 634.503662109375 = 27A.80F
-    res3 = h + o;
-    std::cout << res3 << std::endl;
+	res4 = h + o;
+	test(Decimal("634.503662109375").toHex().getNum(), res4.getNum(), 2);
     // hexadecimal + decimal = 521.421630859375 = 209.6BF
-    res3 = h + d;
-    std::cout << res3 << std::endl;
+	res4 = h + d;
+	test(Decimal("521.421630859375").toHex().getNum(), res4.getNum(), 3);
 }
 
 // test successful
 void operator_subtractOverloading() {
-    std::cout << std::endl;
+    std::cout << "\nBinary Substract Operator Overloadings" << std::endl;
     Binary res;
     // binary - binary - binary = -827.869140625 = -1100111011.110111101
     res = b - b - b;
-    std::cout << res << std::endl;
+    test(Decimal("-827.869140625").toBin().getNum(), res.getNum(), 0);
     // binary - octal = 702.037109375 = 1010111110.000010011
     res = b - o;
-    std::cout << res << std::endl;
+    test(Decimal("702.037109375").toBin().getNum(), res.getNum(), 1);
     // binary - decimal = 815.119140625 = 1100101111.000111101
     res = b - d;
-    std::cout << res << std::endl;
+    test(Decimal("815.119140625").toBin().getNum(), res.getNum(), 2);
     // binary - hexadecimal = 319.197509765625 = 100111111.001100101001
     res = b - h;
-    std::cout << res << std::endl;
+    test(Decimal("319.197509765625").toBin().getNum(), res.getNum(), 3);
 
+    std::cout << "\nOctal Substract Operator Overloadings" << std::endl;
     Octal res2;
     // octal - octal - octal = -125.83203125 = -175.652
     res2 = o - o - o;
-    std::cout << res2 << std::endl;
+    test(Decimal("-125.83203125").toOct().getNum(), res2.getNum(), 0);
     // octal - binary = -702.037109375 = -1276.023
     res2 = o - b;
-    std::cout << res2 << std::endl;
+    test(Decimal("-702.037109375").toOct().getNum(), res2.getNum(), 1);
     // octal - decimal = 113.08203125 = 161.052
     res2 = o - d;
-    std::cout << res2 << std::endl;
+    test(Decimal("113.08203125").toOct().getNum(), res2.getNum(), 2);
     // octal - hexadecimal = -382.839599609375 = -576.6557
     res2 = o - h;
-    std::cout << res2 << std::endl;
+    test(Decimal("-382.839599609375").toOct().getNum(), res2.getNum(), 3);
 
+	std::cout << "\nDecimal Substract Operator Overloadings" << std::endl;
     Decimal res3;
     // decimal - decimal - decimal = -12.75
     res3 = d - d - d;
-    std::cout << res3 << std::endl;
+    test(Decimal("-12.75").getNum(), res3.getNum(), 0);
     // decimal - binary = -815.119140625
     res3 = d - b;
-    std::cout << res3 << std::endl;
+	test(Decimal("-815.119140625").getNum(), res3.getNum(), 1);
     // decimal - octal = -113.08203125
     res3 = d - o;
-    std::cout << res3 << std::endl;
+	test(Decimal("-113.08203125").getNum(), res3.getNum(), 2);
     // decimal - hexadecimal = -495.921630859375
     res3 = d - h;
-    std::cout << res3 << std::endl;
+	test(Decimal("-495.921630859375").getNum(), res3.getNum(), 3);
 
+	std::cout << "\nHexadecimal Substract Operator Overloadings" << std::endl;
     Hexadecimal res4;
     // hexadecimal - hexadecimal - hexadecimal = -508.671630859375 = -1FC.ABF
     res4 = h - h - h;
-    std::cout << res4 << std::endl;
+    test(Decimal("-508.671630859375").toHex().getNum(), res4.getNum(), 0);
     // hexadecimal - binary = -319.197509765625 = -13F.329
     res4 = h - b;
-    std::cout << res4 << std::endl;
+	test(Decimal("-319.197509765625").toHex().getNum(), res4.getNum(), 1);
     // hexadecimal - octal = 382.839599609375 = 17E.D6F
     res4 = h - o;
-    std::cout << res4 << std::endl;
+	test(Decimal("382.839599609375").toHex().getNum(), res4.getNum(), 2);
     // hexadecimal - decimal = 495.921630859375 = 1EF.EBF
     res4 = h - d;
-    std::cout << res4 << std::endl;
+	test(Decimal("495.921630859375").toHex().getNum(), res4.getNum(), 3);
 }
 
 void operator_multiplyOverloading() {
+    std::cout << "\nBinary Multiply Operator Overloadings" << std::endl;
     Binary res1;
     // 1100111011.110111101 * -111111100.101010111111 = -1100110110011111001.100010111100000000011
-    res1 = b * Binary("-111111100.101010111111");  // confirmed
-    std::cout << b << " * " << Binary("-111111100.101010111111") << " = " << res1 << std::endl;
+    res1 = b * Binary("-111111100.101010111111");
+    test(Decimal("-421113.54589986801147460938").toBin().getNum(), res1.getNum(), 0);
     // 1100111011.110111101 * -774.5277 = -1100110110011111001.100010111100000000011
-    res1 = b * Octal("-774.5277");  // confirmed
-    std::cout << b << " * " << Octal("-774.5277") << " = " << res1 << std::endl;
+    res1 = b * Octal("-774.5277");
+    test(Decimal("-421113.54589986801147460938").toBin().getNum(), res1.getNum(), 1);
     // 1100111011.110111101 * -508.671630859375 = -1100110110011111001.100010111100000000011
-    res1 = b * Decimal("-508.671630859375");  // confirmed
-    std::cout << b << " * " << Decimal("-508.671630859375") << " = " << res1 << std::endl;
+    res1 = b * Decimal("-508.671630859375");
+    test(Decimal("-421113.54589986801147460938").toBin().getNum(), res1.getNum(), 2);
     // 1100111011.110111101 * -1FC.ABF = -1100110110011111001.100010111100000000011
-    res1 = b * Hexadecimal("-1FC.ABF");  // confirmed
-    std::cout << b << " * " << Hexadecimal("-1FC.ABF") << " = " << res1 << std::endl;
+    res1 = b * Hexadecimal("-1FC.ABF");
+    test(Decimal("-421113.54589986801147460938").toBin().getNum(), res1.getNum(), 3);
 
+    std::cout << "\nOctal Multiply Operator Overloadings" << std::endl;
     Octal res2;
     // 175.652 * -774.5277 = -175007.1363726
-    res2 = o * Octal("-774.5277");  // confirmed
-    std::cout << o << " * " << Octal("-774.5277") << " = " << res2 << std::endl;
+    res2 = o * Octal("-774.5277");
+    test(Decimal("-64007.18455028533935546875").toOct().getNum(), res2.getNum(), 0);
     // 175.652 * -111111100.101010111111 = -175007.1363726
-    res2 = o * Binary("-111111100.101010111111");  // confirmed
-    std::cout << o << " * " << Binary("-111111100.101010111111") << " = " << res2 << std::endl;
+    res2 = o * Binary("-111111100.101010111111");
+    test(Decimal("-64007.18455028533935546875").toOct().getNum(), res2.getNum(), 1);
     // 175.652 * -508.671630859375 = -175007.1363726
-    res2 = o * Decimal("-508.671630859375");  // confirmed
-    std::cout << o << " * " << Decimal("-508.671630859375") << " = " << res2 << std::endl;
+    res2 = o * Decimal("-508.671630859375");
+    test(Decimal("-64007.18455028533935546875").toOct().getNum(), res2.getNum(), 2);
     // 175.652 * -1FC.ABF = -175007.1363726
-    res2 = o * Hexadecimal("-1FC.ABF");  // confirmed
-    std::cout << o << " * " << Hexadecimal("-1FC.ABF") << " = " << res2 << std::endl;
+    res2 = o * Hexadecimal("-1FC.ABF");
+    test(Decimal("-64007.18455028533935546875").toOct().getNum(), res2.getNum(), 3);
 
+    std::cout << "\nDecimal Multiply Operator Overloadings" << std::endl;
     Decimal res3;
     // 12.75 * -508.671630859375 = -6485.56329345703125
-    res3 = d * Decimal("-508.671630859375");  // confirmed
-    std::cout << d << " * " << Decimal("-508.671630859375") << " = " << res3 << std::endl;
+    res3 = d * Decimal("-508.671630859375");
+    test(Decimal("-6485.56329345703125").getNum(), res3.getNum(), 0);
     // 12.75 * -111111100.101010111111 = -6485.56329345703125
-    res3 = d * Binary("-111111100.101010111111");  // confirmed
-    std::cout << d << " * " << Binary("-111111100.101010111111") << " = " << res3 << std::endl;
+    res3 = d * Binary("-111111100.101010111111");
+    test(Decimal("-6485.56329345703125").getNum(), res3.getNum(), 1);
     // 12.75 * -774.5277 = -6485.56329345703125
-    res3 = d * Octal("-774.5277");  // confirmed
-    std::cout << d << " * " << Octal("-774.5277") << " = " << res3 << std::endl;
+    res3 = d * Octal("-774.5277");
+    test(Decimal("-6485.56329345703125").getNum(), res3.getNum(), 2);
     // 12.75 * -1FC.ABF = -6485.56329345703125
-    res3 = d * Hexadecimal("-1FC.ABF");  // confirmed
-    std::cout << d << " * " << Hexadecimal("-1FC.ABF") << " = " << res3 << std::endl;
+    res3 = d * Hexadecimal("-1FC.ABF");
+    test(Decimal("-6485.56329345703125").getNum(), res3.getNum(), 3);
 
+    std::cout << "\nHexadecimal Multiply Operator Overloadings" << std::endl;
     Hexadecimal res4;
     // 1FC.ABF * -1FC.ABF = -3F2BA.D3FA81
-    res4 = h * Hexadecimal("-1FC.ABF");  // confirmed
-    std::cout << h << " * " << Hexadecimal("-1FC.ABF") << " = " << res4 << std::endl;
+    res4 = h * Hexadecimal("-1FC.ABF");
+    test(Decimal("-258746.82804113626480102539").toHex().getNum(), res4.getNum(), 0);
     // 1FC.ABF * -111111100.101010111111 = -3F2BA.D3FA81
-    res4 = h * Binary("-111111100.101010111111");  // confirmed
-    std::cout << h << " * " << Binary("-111111100.101010111111") << " = " << res4 << std::endl;
+    res4 = h * Binary("-111111100.101010111111");
+    test(Decimal("-258746.82804113626480102539").toHex().getNum(), res4.getNum(), 1);
     // 1FC.ABF * -774.5277 = -3F2BA.D3FA81
-    res4 = h * Octal("-774.5277");  // confirmed
-    std::cout << h << " * " << Octal("-774.5277") << " = " << res4 << std::endl;
+    res4 = h * Octal("-774.5277");
+    test(Decimal("-258746.82804113626480102539").toHex().getNum(), res4.getNum(), 2);
     // 1FC.ABF * -508.671630859375 = -3F2BA.D3FA81
-    res4 = h * Decimal("-508.671630859375");  // confirmed
-    std::cout << h << " * " << Decimal("-508.671630859375") << " = " << res4 << std::endl;
+    res4 = h * Decimal("-508.671630859375");
+    test(Decimal("-258746.82804113626480102539").toHex().getNum(), res4.getNum(), 3);
 }
 
 void operator_divideOverloading() {
+    std::cout << "\nBinary Divide Operator Overloadings" << std::endl;
     Binary res1;
     // 1100111011.110111101 / -0.101 = -10100101100.100101110011001100110011001100110011001101
-    res1 = b / Binary("-0000.101");  // confirmed
-    std::cout << b << " / " << Binary("-0000.101") << " = " << res1 << std::endl;
+    res1 = b / Binary("-0000.101");
+    test(Decimal("-1324.59062500000004547474").toBin().getNum(), res1.getNum(), 0);
     // 1100111011.110111101 / -0.5 = -10100101100.100101110011001100110011001100110011001101
-    res1 = b / Octal("-0000.50000");  // confirmed
-    std::cout << b << " / " << Octal("-0000.50000") << " = " << res1 << std::endl;
+    res1 = b / Octal("-0000.50000");
+    test(Decimal("-1324.59062500000004547474").toBin().getNum(), res1.getNum(), 1);
     // 1100111011.110111101 / -0.625 = -10100101100.100101110011001100110011001100110011001101
-    res1 = b / Decimal("-0000.625000");  // confirmed
-    std::cout << b << " / " << Decimal("-0000.625000") << " = " << res1 << std::endl;
+    res1 = b / Decimal("-0000.625000");
+    test(Decimal("-1324.59062500000004547474").toBin().getNum(), res1.getNum(), 2);
     // 1100111011.110111101 / -0.A = -10100101100.100101110011001100110011001100110011001101
-    res1 = b / Hexadecimal("-000.A000");  // confirmed
-    std::cout << b << " / " << Hexadecimal("-000.A000") << " = " << res1 << std::endl;
+    res1 = b / Hexadecimal("-000.A000");
+    test(Decimal("-1324.59062500000004547474").toBin().getNum(), res1.getNum(), 3);
 
+    std::cout << "\nOctal Divide Operator Overloadings" << std::endl;
     Octal res2;
-    // 175.652 / -0.5 = -311.251463146314632
-    res2 = o / Octal("-0000.50000");  // confirmed
-    std::cout << o << " / " << Octal("-0000.50000") << " = " << res2 << std::endl;
-    // 175.652 / -0.101 = -311.251463146314632
-    res2 = o / Binary("-0000.101");  // confirmed
-    std::cout << o << " / " << Binary("-0000.101") << " = " << res2 << std::endl;
-    // 175.652 / -0.625 = -311.251463146314632
-    res2 = o / Decimal("-0000.625000");  // confirmed
-    std::cout << o << " / " << Decimal("-0000.625000") << " = " << res2 << std::endl;
-    // 175.652 / -0.A = -311.251463146314632
-    res2 = o / Hexadecimal("-000.A000");  // confirmed
-    std::cout << o << " / " << Hexadecimal("-000.A000") << " = " << res2 << std::endl;
+    // 175.652 / -0.5 = -201.33125
+    res2 = o / Octal("-0000.50000");
+    test(Decimal("-201.33125").toOct().getNum(), res2.getNum(), 0);
+    // 175.652 / -0.101 = -201.33125d
+    res2 = o / Binary("-0000.101");
+    test(Decimal("-201.33125").toOct().getNum(), res2.getNum(), 0);
+    // 175.652 / -0.625 = -201.33125d
+    res2 = o / Decimal("-0000.625000");
+    test(Decimal("-201.33125").toOct().getNum(), res2.getNum(), 0);
+    // 175.652 / -0.A = -201.33125d
+    res2 = o / Hexadecimal("-000.A000");
+    test(Decimal("-201.33125").toOct().getNum(), res2.getNum(), 0);
 
+    std::cout << "\nDecimal Divide Operator Overloadings" << std::endl;
     Decimal res3;
-    // 12.75 / -0.625 = -20.399999999999999999653055304805
-    res3 = d / Decimal("-0000.625000");  // confirmed
-    std::cout << d << " / " << Decimal("-0000.625000") << " = " << res3 << std::endl;
-    // 12.75 / -0.001 = -102.0
-    res3 = d / Binary("-0000000.101");  // confirmed
-    std::cout << d << " / " << Binary("-0000000.101") << " = " << res3 << std::endl;
-    // 12.75 / -0.5 = -20.399999999999999999653055304805
-    res3 = d / Octal("-0000.50000");  // confirmed
-    std::cout << d << " / " << Octal("-0000.50000") << " = " << res3 << std::endl;
-    // 12.75 / -0.A = -20.399999999999999999653055304805
-    res3 = d / Hexadecimal("-000.A000");  // confirmed
-    std::cout << d << " / " << Hexadecimal("-000.A000") << " = " << res3 << std::endl;
+    // 12.75 / -0.625 = -20.4
+    res3 = d / Decimal("-0000.625000");
+    test(Decimal("-20.4").getNum(), res3.getNum(), 0);
+    // 12.75 / -0.001 = -20.4
+    res3 = d / Binary("-0000000.101");
+    test(Decimal("-20.4").getNum(), res3.getNum(), 1);
+    // 12.75 / -0.5 = -20.4
+    res3 = d / Octal("-0000.50000");
+    test(Decimal("-20.4").getNum(), res3.getNum(), 2);
+    // 12.75 / -0.A = -20.4
+    res3 = d / Hexadecimal("-000.A000");
+    test(Decimal("-20.4").getNum(), res3.getNum(), 3);
 
+    std::cout << "\nHexadecimal Divide Operator Overloadings" << std::endl;
     Hexadecimal res4;
     // 1FC.ABF / -0.A = -32D.DFE66666666
-    res4 = h / Hexadecimal("-000.A000");  // confirmed
-    std::cout << h << " / " << Hexadecimal("-000.A000") << " = " << res4 << std::endl;
+    res4 = h / Hexadecimal("-000.A000");
+    test(Decimal("-813.874609375").toHex().getNum(), res4.getNum(), 0);
     // 1FC.ABF / -0.625 = -32D.DFE66666666
-    res4 = h / Decimal("-0000.625000");  // confirmed
-    std::cout << h << " / " << Decimal("-0000.625000") << " = " << res4 << std::endl;
-    // 1FC.ABF / -0.001 = -FE5.5F8
-    res4 = h / Binary("-000000.101");  // confirmed
-    std::cout << h << " / " << Binary("-0000000.101") << " = " << res4 << std::endl;
+    res4 = h / Decimal("-0000.625000");
+    test(Decimal("-813.874609375").toHex().getNum(), res4.getNum(), 1);
+    // 1FC.ABF / -0.001 = -32D.DFE66666666
+    res4 = h / Binary("-000000.101");
+    test(Decimal("-813.874609375").toHex().getNum(), res4.getNum(), 2);
     // 1FC.ABF / -0.5 = -32D.DFE66666666
-    res4 = h / Octal("-0000.50000");  // confirmed
-    std::cout << h << " / " << Octal("-0000.50000") << " = " << res4 << std::endl;
+    res4 = h / Octal("-0000.50000");
+    test(Decimal("-813.874609375").toHex().getNum(), res4.getNum(), 3);
 }
 
 void operator_remainderOverloading() {
@@ -407,61 +430,65 @@ void operator_remainderOverloading() {
     Octal o1("4.6");
     Hexadecimal h1("4.C");
 
+    std::cout << "\nBinary Remainder Operator Overloadings" << std::endl;
     Binary res1;
     // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
-    res1 = b % b1;  // confirmed
-    std::cout << b << " % " << b1 << " = " << res1 << std::endl;
+    res1 = b % b1;
+    test(Decimal("1.369140625").toBin().getNum(), res1.getNum(), 0);
     // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
-    res1 = b % o1;  // confirmed
-    std::cout << b << " % " << o1 << " = " << res1 << std::endl;
+    res1 = b % o1;
+    test(Decimal("1.369140625").toBin().getNum(), res1.getNum(), 1);
     // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
-    res1 = b % d1;  // confirmed
-    std::cout << b << " % " << d1 << " = " << res1 << std::endl;
+    res1 = b % d1;
+    test(Decimal("1.369140625").toBin().getNum(), res1.getNum(), 2);
     // 827.869140625 % 4.75 = 1.369140625 = 1.010111101
-    res1 = b % h1;  // confirmed
-    std::cout << b << " % " << h1 << " = " << res1 << std::endl;
+    res1 = b % h1;
+    test(Decimal("1.369140625").toBin().getNum(), res1.getNum(), 3);
 
+    std::cout << "\nOctal Remainder Operator Overloadings" << std::endl;
     Octal res2;
-    // 125.83203125 % 4.75 = 2.33203125 = 2.252
-    res2 = o % o1;  // confirmed
-    std::cout << o << " % " << o1 << " = " << res2 << std::endl;
-    // 125.83203125 % 4.75 = 2.33203125 = 2.252
-    res2 = o % b1;  // confirmed
-    std::cout << o << " % " << b1 << " = " << res2 << std::endl;
-    // 125.83203125 % 4.75 = 2.33203125 = 2.252
-    res2 = o % d1;  // confirmed
-    std::cout << o << " % " << d1 << " = " << res2 << std::endl;
-    // 125.83203125 % 4.75 = 2.33203125 = 2.252
-    res2 = o % h1;  // confirmed
-    std::cout << o << " % " << h1 << " = " << res2 << std::endl;
+    // 125.83203125 % 4.75 = 2.33203125 = 02.252
+    res2 = o % o1;
+    test(Decimal("2.33203125").toOct().getNum(), res2.getNum(), 0);
+    // 125.83203125 % 4.75 = 2.33203125 = 02.252
+    res2 = o % b1;
+    test(Decimal("2.33203125").toOct().getNum(), res2.getNum(), 1);
+    // 125.83203125 % 4.75 = 2.33203125 = 02.252
+    res2 = o % d1;
+    test(Decimal("2.33203125").toOct().getNum(), res2.getNum(), 2);
+    // 125.83203125 % 4.75 = 2.33203125 = 02.252
+    res2 = o % h1;
+    test(Decimal("2.33203125").toOct().getNum(), res2.getNum(), 3);
 
+    std::cout << "\nDecimal Remainder Operator Overloadings" << std::endl;
     Decimal res3;
     // 12.75 % 4.75 = 3.25
-    res3 = d % d1;  // confirmed
-    std::cout << d << " % " << d1 << " = " << res3 << std::endl;
+    res3 = d % d1;
+    test(Decimal("3.25").getNum(), res3.getNum(), 0);
     // 12.75 % 4.75 = 3.25
-    res3 = d % b1;  // confirmed
-    std::cout << d << " % " << b1 << " = " << res3 << std::endl;
+    res3 = d % b1;
+    test(Decimal("3.25").getNum(), res3.getNum(), 1);
     // 12.75 % 4.75 = 3.25
-    res3 = d % o1;  // confirmed
-    std::cout << d << " % " << o1 << " = " << res3 << std::endl;
+    res3 = d % o1;
+    test(Decimal("3.25").getNum(), res3.getNum(), 2);
     // 12.75 % 4.75 = 3.25
-    res3 = d % h1;  // confirmed
-    std::cout << d << " % " << h1 << " = " << res3 << std::endl;
+    res3 = d % h1;
+    test(Decimal("3.25").getNum(), res3.getNum(), 3);
 
+    std::cout << "\nHexaecimal Remainder Operator Overloadings" << std::endl;
     Hexadecimal res4;
-    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
-    res4 = h % h1;  // confirmed
-    std::cout << d << " % " << d1 << " = " << res4 << std::endl;
-    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
-    res4 = h % b1;  // confirmed
-    std::cout << d << " % " << b1 << " = " << res4 << std::endl;
-    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
-    res4 = h % o1;  // confirmed
-    std::cout << d << " % " << o1 << " = " << res4 << std::endl;
-    // 508.671630859375 % 4.75 = 3.25 = 0.6BF
-    res4 = h % d1;  // confirmed
-    std::cout << d << " % " << h1 << " = " << res4 << std::endl;
+    // 508.671630859375 % 4.75 = 0.421630859375 = 0x0.6BF
+    res4 = h % h1;
+    test(Decimal("0.421630859375").toHex().getNum(), res4.getNum(), 0);
+    // 508.671630859375 % 4.75 = 0.421630859375 = 0x0.6BF
+    res4 = h % b1;
+    test(Decimal("0.421630859375").toHex().getNum(), res4.getNum(), 1);
+    // 508.671630859375 % 4.75 = 0.421630859375 = 0x0.6BF
+    res4 = h % o1;
+    test(Decimal("0.421630859375").toHex().getNum(), res4.getNum(), 2);
+    // 508.671630859375 % 4.75 = 0.421630859375 = 0x0.6BF
+    res4 = h % d1;
+    test(Decimal("0.421630859375").toHex().getNum(), res4.getNum(), 3);
 }
 
 void operator_assignmentsOverloading() {
@@ -470,7 +497,7 @@ void operator_assignmentsOverloading() {
     Decimal d1("157.55");
     Hexadecimal h1("1F.6C");
 
-	std::cout << "Binary Assignment Tests" << std::endl;
+	std::cout << "\nBinary Assignment Tests" << std::endl;
     // 1001.1001
     b = b1;
 	test(b1.getNum(), b.getNum(), 0);
@@ -554,15 +581,15 @@ void operator_assignmentsOverloading() {
 }
 
 int main() {
-//     testConstructors();
-//     testConverters();
-    // ostreamOverloadTest();
-    // operator_plusOverloading();
-    // operator_subtractOverloading();
-    // operator_multiplyOverloading();
-    // operator_divideOverloading();
-    // operator_remainderOverloading();
+    testConstructors();
+    testConverters();
+    ostreamOverloadTest();
+    operator_plusOverloading();
+    operator_subtractOverloading();
+    operator_multiplyOverloading();
+    operator_divideOverloading();
+    operator_remainderOverloading();
     operator_assignmentsOverloading();
-    // setting locale for qapplication changes(. might be , in region)
+
     return 0;
 }
