@@ -54,11 +54,11 @@ std::string Number::sum(std::string val1, std::string val2) {
 	val2[0] == '-' ? val2.erase(0, 1) : "";
 	std::string result;
 
-	if (!val1IsNegative && val2IsNegative) {
+	if (!val1IsNegative && val2IsNegative) { // 13 + -52 = 13 - 52
 		return this->sub(val1, val2);
-	} else if (val1IsNegative && !val2IsNegative) {
+	} else if (val1IsNegative && !val2IsNegative) { // -13 + 52 = 52 - 13;
 		return this->sub(val2, val1);
-	} else if (val1IsNegative && val2IsNegative) {
+	} else if (val1IsNegative && val2IsNegative) { // -13 + -52 = "-" + (13 + 52)
 		return "-" + this->sum(val1, val2);
 	}
 
@@ -117,13 +117,18 @@ std::string Number::sub(std::string val1, std::string val2) {
 	val1[0] == '-' ? val1.erase(0, 1) : "";
 	val2[0] == '-' ? val2.erase(0, 1) : "";
 	std::string result;
-
+	clean_number(val1);
+	clean_number(val2);
+	if (val1.empty() || val1 == "0.0")
+		return "-" + val2;
 	if (!val1IsNegative && val2IsNegative) { // - - = +
 		return this->sum(val1, val2);
 	} else if (val1IsNegative && !val2IsNegative) {
 		return "-" + this->sum(val2, val1);
 	} else if (val1IsNegative && val2IsNegative) {
 		return this->sub(val2, val1);
+	} else if (std::stod(val1) < std::stod(val2)) {
+		return "-" + this->sub(val2, val1);
 	}
 
 	// integer to .
