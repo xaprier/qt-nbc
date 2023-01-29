@@ -499,8 +499,8 @@ Decimal Decimal::operator/(Binary b) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
+    // calculate the divide of decimal values
+    result.num = this->div(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -521,8 +521,8 @@ Decimal Decimal::operator/(Octal o) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
+    // calculate the divide of decimal values
+    result.num = this->div(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
@@ -543,8 +543,8 @@ Decimal Decimal::operator/(Hexadecimal h) {
         exit(1);
     }
 
-    // calculate the multiply of decimal values
-    result.num = to_string_with_precision(std::stod(result.num) / std::stod(second.num), 30);
+    // calculate the divide of decimal values
+    result.num = this->div(result.num, second.num);
 
     // remove the last indexes if it is 0
     while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
