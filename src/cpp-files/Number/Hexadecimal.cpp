@@ -11,6 +11,11 @@ Hexadecimal::Hexadecimal(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
+	if (num == "NaN") {
+		this->num = "NaN";
+		return;
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -24,6 +29,11 @@ Hexadecimal::Hexadecimal(const Decimal &d) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = d.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number); // clean if it starts/ends with 0
 
@@ -47,8 +57,7 @@ Hexadecimal::Hexadecimal(const Decimal &d) {
     double decPoint = 0;
     if (number.find('.') != -1 &&
         number.length() > number.find('.') + 1) {
-        decPoint = std::stod(number.substr(0, number.length()));
-        decPoint -= static_cast<unsigned long long>(decPoint);
+		decPoint = std::stod(this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
     }
 
     do {
@@ -531,8 +540,38 @@ Hexadecimal &Hexadecimal::operator+=(const Hexadecimal &h) {
 	return *this;
 }
 
+Hexadecimal &Hexadecimal::operator+=(const Binary &b) {
+	*this = *this + b;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator+=(const Octal &o) {
+	*this = *this + o;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator+=(const Decimal &d) {
+	*this = *this + d;
+	return *this;
+}
+
 Hexadecimal &Hexadecimal::operator-=(const Hexadecimal &h) {
 	*this = *this - h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator-=(const Binary &b) {
+	*this = *this - b;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator-=(const Octal &o) {
+	*this = *this - o;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator-=(const Decimal &d) {
+	*this = *this - d;
 	return *this;
 }
 
@@ -541,12 +580,60 @@ Hexadecimal &Hexadecimal::operator*=(const Hexadecimal &h) {
 	return *this;
 }
 
+Hexadecimal &Hexadecimal::operator*=(const Binary &b) {
+	*this = *this * b;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator*=(const Octal &o) {
+	*this = *this * o;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator*=(const Decimal &d) {
+	*this = *this * d;
+	return *this;
+}
+
 Hexadecimal &Hexadecimal::operator/=(const Hexadecimal &h) {
 	*this = *this / h;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator/=(const Binary &b) {
+	*this = *this / b;
+	return *this;
+}
+Hexadecimal &Hexadecimal::operator/=(const Octal &o) {
+	*this = *this / o;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator/=(const Decimal &d) {
+	*this = *this / d;
 	return *this;
 }
 
 Hexadecimal &Hexadecimal::operator%=(const Hexadecimal &h) {
 	*this = *this % h;
 	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator%=(const Binary &b) {
+    *this = *this % b;
+    return *this;
+}
+
+Hexadecimal &Hexadecimal::operator%=(const Octal &o) {
+    *this = *this % o;
+    return *this;
+}
+
+Hexadecimal &Hexadecimal::operator%=(const Decimal &d) {
+    *this = *this % d;
+    return *this;
+}
+
+Hexadecimal::operator std::string() {
+	return this->num;
 }
