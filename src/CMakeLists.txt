@@ -43,7 +43,9 @@ set(PROJECT_SOURCES
     design-files/nbcalculator.ui
     cpp-files/nbcalculator.cpp
     header-files/nbcalculator.h
-)
+        cpp-files/test_cases.cpp
+        header-files/test_cases.h
+        )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(qt-nbc
