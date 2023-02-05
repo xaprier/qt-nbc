@@ -9,6 +9,11 @@ Decimal::Decimal(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
+	if (num == "NaN") {
+		this->num = "NaN";
+		return;
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -22,6 +27,11 @@ Decimal::Decimal(const Binary &b) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = b.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number);  // clean if it starts/ends with 0
 
@@ -38,13 +48,12 @@ Decimal::Decimal(const Binary &b) {
     }
 
     // split the decimal number as it supposed to be
-    unsigned long long intPoint = 0;
+    std::string intPoint;
 
     if (number.length() != 0) {
-        intPoint = std::stoull(number.substr(0, (number.find('.') != -1)
-                                                    ? number.length()
-                                                    : number.find('.')));
+        intPoint = number.substr(0, number.find('.'));
     }
+
     std::string decPoint;
     if (number.find('.') != -1 &&
         number.length() > number.find('.') + 1) {
@@ -53,9 +62,8 @@ Decimal::Decimal(const Binary &b) {
 
     // calculate the decimal number from binary
     unsigned long long integer = 0;
-    for (int i = 0; intPoint > 0; i++) {
-        integer += intPoint % 10 * pow(2, i);
-        intPoint /= 10;
+    for (int i = intPoint.length() - 1; i >= 0; i--) {
+        integer += static_cast<int>(intPoint[i] - '0') * pow(2, intPoint.length() - i - 1);
     }
 
     // add calculated integer value of decimal to result string
@@ -100,6 +108,11 @@ Decimal::Decimal(const Octal &o) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = o.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number);  // clean if it starts/ends with 0
 
@@ -175,6 +188,11 @@ Decimal::Decimal(const Hexadecimal &h) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = h.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number);  // clean if it starts/ends with 0
 
@@ -653,8 +671,38 @@ Decimal &Decimal::operator+=(const Decimal &d) {
     return *this;
 }
 
+Decimal &Decimal::operator+=(const Binary &b) {
+    *this = *this + b;
+    return *this;
+}
+
+Decimal &Decimal::operator+=(const Octal &o) {
+    *this = *this + o;
+    return *this;
+}
+
+Decimal &Decimal::operator+=(const Hexadecimal &h) {
+    *this = *this + h;
+    return *this;
+}
+
 Decimal &Decimal::operator-=(const Decimal &d) {
     *this = *this - d;
+    return *this;
+}
+
+Decimal &Decimal::operator-=(const Binary &b) {
+    *this = *this - b;
+    return *this;
+}
+
+Decimal &Decimal::operator-=(const Octal &o) {
+    *this = *this - o;
+    return *this;
+}
+
+Decimal &Decimal::operator-=(const Hexadecimal &h) {
+    *this = *this - h;
     return *this;
 }
 
@@ -663,12 +711,61 @@ Decimal &Decimal::operator*=(const Decimal &d) {
     return *this;
 }
 
+Decimal &Decimal::operator*=(const Binary &b) {
+    *this = *this * b;
+    return *this;
+}
+
+Decimal &Decimal::operator*=(const Octal &o) {
+    *this = *this * o;
+    return *this;
+}
+
+Decimal &Decimal::operator*=(const Hexadecimal &h) {
+    *this = *this * h;
+    return *this;
+}
+
 Decimal &Decimal::operator/=(const Decimal &d) {
     *this = *this / d;
+    return *this;
+}
+
+Decimal &Decimal::operator/=(const Binary &b) {
+    *this = *this / b;
+    return *this;
+}
+
+Decimal &Decimal::operator/=(const Octal &o) {
+    *this = *this / o;
+    return *this;
+}
+
+Decimal &Decimal::operator/=(const Hexadecimal &h) {
+    *this = *this / h;
     return *this;
 }
 
 Decimal &Decimal::operator%=(const Decimal &d) {
     *this = *this % d;
     return *this;
+}
+
+Decimal &Decimal::operator%=(const Binary &b) {
+    *this = *this % b;
+    return *this;
+}
+
+Decimal &Decimal::operator%=(const Octal &o) {
+    *this = *this % o;
+    return *this;
+}
+
+Decimal &Decimal::operator%=(const Hexadecimal &h) {
+    *this = *this % h;
+    return *this;
+}
+
+Decimal::operator std::string() {
+    return this->num;
 }

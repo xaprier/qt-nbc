@@ -9,6 +9,11 @@ Octal::Octal(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
+	if (num == "NaN") {
+		this->num = "NaN";
+		return;
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -22,6 +27,11 @@ Octal::Octal(const Decimal &d) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = d.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number); // clean if it starts/ends with 0
 
@@ -45,8 +55,7 @@ Octal::Octal(const Decimal &d) {
     double decPoint = 0;
     if (number.find('.') != -1 &&
         number.length() > number.find('.') + 1) {
-        decPoint = std::stod(number);
-        decPoint -= static_cast<int>(decPoint);
+		decPoint = std::stod(this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
     }
 
     // calculate the octal number from decimal
@@ -486,8 +495,38 @@ Octal &Octal::operator+=(const Octal &o) {
 	return *this;
 }
 
+Octal &Octal::operator+=(const Binary &b) {
+	*this = *this + b;
+	return *this;
+}
+
+Octal &Octal::operator+=(const Decimal &d) {
+	*this = *this + d;
+	return *this;
+}
+
+Octal &Octal::operator+=(const Hexadecimal &h) {
+	*this = *this + h;
+	return *this;
+}
+
 Octal &Octal::operator-=(const Octal &o) {
 	*this = *this - o;
+	return *this;
+}
+
+Octal &Octal::operator-=(const Binary &b) {
+	*this = *this - b;
+	return *this;
+}
+
+Octal &Octal::operator-=(const Decimal &d) {
+	*this = *this - d;
+	return *this;
+}
+
+Octal &Octal::operator-=(const Hexadecimal &h) {
+	*this = *this - h;
 	return *this;
 }
 
@@ -496,12 +535,61 @@ Octal &Octal::operator*=(const Octal &o) {
 	return *this;
 }
 
+Octal &Octal::operator*=(const Binary &b) {
+	*this = *this * b;
+	return *this;
+}
+
+Octal &Octal::operator*=(const Decimal &d) {
+	*this = *this * d;
+	return *this;
+}
+
+Octal &Octal::operator*=(const Hexadecimal &h) {
+	*this = *this * h;
+	return *this;
+}
+
 Octal &Octal::operator/=(const Octal &o) {
 	*this = *this / o;
+	return *this;
+}
+
+Octal &Octal::operator/=(const Binary &b) {
+	*this = *this / b;
+	return *this;
+}
+
+Octal &Octal::operator/=(const Decimal &d) {
+	*this = *this / d;
+	return *this;
+}
+
+Octal &Octal::operator/=(const Hexadecimal &h) {
+	*this = *this / h;
 	return *this;
 }
 
 Octal &Octal::operator%=(const Octal &o) {
 	*this = *this % o;
 	return *this;
+}
+
+Octal &Octal::operator%=(const Binary &b) {
+	*this = *this % b;
+	return *this;
+}
+
+Octal &Octal::operator%=(const Decimal &d) {
+	*this = *this % d;
+	return *this;
+}
+
+Octal &Octal::operator%=(const Hexadecimal &h) {
+	*this = *this % h;
+	return *this;
+}
+
+Octal::operator std::string() {
+	return this->num;
 }

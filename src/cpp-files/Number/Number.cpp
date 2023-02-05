@@ -3,7 +3,6 @@
 #include <sstream>
 #include <string>
 #include <utility>
-#include <cassert>
 
 #include "header-files/Number/Octal.h"
 
@@ -25,6 +24,8 @@ std::string Number::to_string_with_precision(const long double value, int precis
 }
 
 void Number::clean_number(std::string &num) {
+	if (num == "NaN") return;
+
 	if (num == "0" || num == "0.0" || num.empty()) {
 		num = "0.0";
 		return;
@@ -48,6 +49,8 @@ void Number::clean_number(std::string &num) {
 }
 
 std::string Number::sum(std::string val1, std::string val2) {
+	if (val1 == "NaN" || val2 == "NaN")
+		return "NaN";
 	bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
 	// remove the first character if it is negative
 	val1[0] == '-' ? val1.erase(0, 1) : "";
@@ -106,12 +109,16 @@ std::string Number::sum(std::string val1, std::string val2) {
 		index--;
 	}
 
+	result.insert(result.begin(), char(got + '0'));
+
 	clean_number(result);
 
 	return result;
 }
 
 std::string Number::sub(std::string val1, std::string val2) {
+	if (val1 == "NaN" || val2 == "NaN")
+		return "NaN";
 	bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
 	// remove the first character if it is negative
 	val1[0] == '-' ? val1.erase(0, 1) : "";
@@ -177,6 +184,8 @@ std::string Number::sub(std::string val1, std::string val2) {
 }
 
 std::string Number::mul(std::string val1, std::string val2) {
+	if (val1 == "NaN" || val2 == "NaN")
+		return "NaN";
 	// setting locale for qapplication changes(. might be , in region)
 	const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
 	std::setlocale(LC_NUMERIC, "C");
@@ -215,8 +224,7 @@ std::string Number::mul(std::string val1, std::string val2) {
 
 		if (i == tVal2.length() - 1)
 			firstLen = n.length();
-
-		results[i] = std::string(i - (n.length() - firstLen), '0') + n + std::string(tVal2.length() - i - 1, '0');
+		results[i] = std::string(firstLen - n.length() + i + 1, '0') + n + std::string(tVal2.length() - i - 1, '0');
 	}
 	std::string result = "0";
 	for (int i = 0; i < tVal2.length(); i++) {
@@ -234,6 +242,8 @@ std::string Number::mul(std::string val1, std::string val2) {
 }
 
 std::string Number::div(std::string val1, std::string val2) {
+	if (val1 == "NaN" || val2 == "NaN")
+		return "NaN";
 	bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
 	// remove the first character if it is negative
 	val1[0] == '-' ? val1.erase(0, 1) : "";
@@ -267,10 +277,26 @@ std::string Number::div(std::string val1, std::string val2) {
 	// erase decimal points
 	val1.erase(val1.find('.'), 1);
 	val2.erase(val2.find('.'), 1);
+	unsigned long long divisor;
 
-	// divide and get remainder
-	unsigned long long divisor = stoull(val2);
-	unsigned long long remainder = stoull(val1) % divisor;
+	try {
+		// divide and get remainder
+		divisor = stoull(val2);
+	} catch(const std::out_of_range& oor) {
+		std::cerr << oor.what() << " threw std::out_of_range on second value\n";
+
+		return "NaN";
+	}
+
+	unsigned long long remainder;
+
+	try {
+		remainder = std::stoull(val1) % divisor;
+	} catch (const std::out_of_range &oor) {
+		std::cerr << oor.what() << " threw std::out_of_range on first value\n";
+		return "NaN";
+	}
+
 	result += std::to_string(static_cast<unsigned long long>(stoull(val1) / divisor));
 	if (remainder != 0) {
 		result += ".";
@@ -299,3 +325,299 @@ std::string Number::div(std::string val1, std::string val2) {
 
 	return result;
 }
+
+bool Number::operator<(const Binary& b) {
+	Decimal *first, second(b);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-';
+}
+
+bool Number::operator<(const Octal &o) {
+	Decimal *first, second(o);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-';
+}
+
+bool Number::operator<(const Decimal &second) {
+	Decimal *first;
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-';
+}
+
+bool Number::operator<(const Hexadecimal &h) {
+	Decimal *first, second(h);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-';
+}
+bool Number::operator<=(const Binary &b) {
+	Decimal *first, second(b);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-' || first->num == "0.0";
+}
+bool Number::operator<=(const Octal &o) {
+	Decimal *first, second(o);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-' || first->num == "0.0";
+}
+bool Number::operator<=(const Decimal &second) {
+	Decimal *first;
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-' || first->num == "0.0";
+}
+bool Number::operator<=(const Hexadecimal &h) {
+	Decimal *first, second(h);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num[0] == '-' || first->num == "0.0";
+}
+
+bool Number::operator>(const Binary &b) {
+	Decimal *first, second(b);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-';
+}
+
+bool Number::operator>(const Octal &o) {
+	Decimal *first, second(o);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-';
+}
+
+bool Number::operator>(const Decimal &sec) {
+	Decimal *first, second(sec);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-';
+}
+bool Number::operator>(const Hexadecimal &h) {
+	Decimal *first, second(h);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-';
+}
+
+bool Number::operator>=(const Binary &b) {
+	Decimal *first, second(b);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-' || second.num == "0.0";
+}
+
+bool Number::operator>=(const Octal &o) {
+	Decimal *first, second(o);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-' || second.num == "0.0";
+}
+
+bool Number::operator>=(const Decimal &sec) {
+	Decimal *first, second(sec);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-' || second.num == "0.0";
+}
+
+bool Number::operator>=(const Hexadecimal &h) {
+	Decimal *first, second(h);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	second -= *first;
+	return second.num[0] == '-' || second.num == "0.0";
+}
+
+bool Number::operator==(const Binary &b) {
+	Decimal *first, second(b);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num == "0.0";
+}
+
+bool Number::operator==(const Octal &o) {
+	Decimal *first, second(o);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num == "0.0";
+}
+
+bool Number::operator==(const Decimal &second) {
+	Decimal *first;
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num == "0.0";
+}
+
+bool Number::operator==(const Hexadecimal &h) {
+	Decimal *first, second(h);
+	if (dynamic_cast<Binary *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Binary *>(this));
+	} else if (dynamic_cast<Octal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Octal *>(this));
+	} else if (dynamic_cast<Decimal *>(this) != nullptr) {
+		first = new Decimal(*dynamic_cast<Decimal *>(this));
+	} else {
+		first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
+	}
+	*first -= second;
+	return first->num == "0.0";
+}
+

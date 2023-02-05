@@ -18,6 +18,8 @@ class Hexadecimal : public Number {
 	Binary toBin() override;
 	Hexadecimal toHex() override;
 
+	operator std::string() override;
+
 	friend std::ostream &operator<<(std::ostream &output, const Hexadecimal &h);
 
 	// operator overloadings of summing
@@ -47,11 +49,31 @@ class Hexadecimal : public Number {
 	Hexadecimal operator%(Decimal second);
 	// assignment operator overloadings
 	Hexadecimal &operator=(const Hexadecimal &h);
+
 	Hexadecimal &operator+=(const Hexadecimal &h);
+	Hexadecimal &operator+=(const Binary &b);
+	Hexadecimal &operator+=(const Octal &o);
+	Hexadecimal &operator+=(const Decimal &d);
+
 	Hexadecimal &operator-=(const Hexadecimal &h);
+	Hexadecimal &operator-=(const Binary &b);
+	Hexadecimal &operator-=(const Octal &o);
+	Hexadecimal &operator-=(const Decimal &d);
+
 	Hexadecimal &operator*=(const Hexadecimal &h);
+	Hexadecimal &operator*=(const Binary &b);
+	Hexadecimal &operator*=(const Octal &o);
+	Hexadecimal &operator*=(const Decimal &d);
+
 	Hexadecimal &operator/=(const Hexadecimal &h);
+	Hexadecimal &operator/=(const Binary &b);
+	Hexadecimal &operator/=(const Octal &o);
+	Hexadecimal& operator/=(const Decimal& d);
+
 	Hexadecimal &operator%=(const Hexadecimal &h);
+	Hexadecimal &operator%=(const Binary &b);
+	Hexadecimal &operator%=(const Octal &o);
+	Hexadecimal &operator%=(const Decimal &d);
 };
 
 #endif  // HEXADECIMAL_H

@@ -19,6 +19,8 @@ class Octal : public Number {
 	Binary toBin() override;
 	Hexadecimal toHex() override;
 
+	operator std::string() override;
+
 	friend std::ostream &operator<<(std::ostream &output, const Octal &o);
 
 	// operator overloadings of summing
@@ -48,11 +50,31 @@ class Octal : public Number {
 	Octal operator%(Hexadecimal h);
 	// assignment operator overloadings
 	Octal &operator=(const Octal &o);
+
 	Octal &operator+=(const Octal &o);
+	Octal &operator+=(const Binary &b);
+	Octal &operator+=(const Decimal &d);
+	Octal &operator+=(const Hexadecimal &h);
+
 	Octal &operator-=(const Octal &o);
+	Octal &operator-=(const Binary &b);
+	Octal &operator-=(const Decimal &d);
+	Octal &operator-=(const Hexadecimal &h);
+
 	Octal &operator*=(const Octal &o);
+	Octal &operator*=(const Binary &b);
+	Octal &operator*=(const Decimal &d);
+	Octal &operator*=(const Hexadecimal &h);
+
 	Octal &operator/=(const Octal &o);
+	Octal &operator/=(const Binary &b);
+	Octal &operator/=(const Decimal &d);
+	Octal &operator/=(const Hexadecimal &h);
+
 	Octal &operator%=(const Octal &o);
+	Octal &operator%=(const Binary &b);
+	Octal &operator%=(const Decimal &d);
+	Octal &operator%=(const Hexadecimal &h);
 };
 
 #endif  // OCTAL_H
