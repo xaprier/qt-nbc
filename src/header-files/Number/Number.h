@@ -27,6 +27,32 @@ class Number {
     virtual Binary toBin() = 0;
     virtual Hexadecimal toHex() = 0;
 
+	virtual operator std::string() = 0;
+
+	bool operator<(const Binary &b);
+	bool operator<(const Octal &o);
+	bool operator<(const Decimal &second);
+	bool operator<(const Hexadecimal &h);
+	bool operator<=(const Binary &b);
+	bool operator<=(const Octal &o);
+	bool operator<=(const Decimal &second);
+	bool operator<=(const Hexadecimal &h);
+	bool operator>(const Binary &b);
+	bool operator>(const Octal &o);
+	bool operator>(const Decimal &sec);
+	bool operator>(const Hexadecimal &h);
+	bool operator>=(const Binary &b);
+	bool operator>=(const Octal &o);
+	bool operator>=(const Decimal &sec);
+	bool operator>=(const Hexadecimal &h);
+	bool operator==(const Binary &b);
+	bool operator==(const Octal &o);
+	bool operator==(const Decimal &second);
+	bool operator==(const Hexadecimal &h);
+
+
+
+
     static void clean_number(std::string &num);
 
 	std::string getNum() const {

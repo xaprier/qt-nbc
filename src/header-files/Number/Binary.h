@@ -19,6 +19,8 @@ class Binary : public Number {
 	Binary toBin() override;
 	Hexadecimal toHex() override;
 
+	operator std::string() override;
+
 	friend std::ostream &operator<<(std::ostream &output, const Binary &b);
 
 	// operator overloadings of summing
@@ -48,12 +50,31 @@ class Binary : public Number {
 	Binary operator%(Hexadecimal h);
 	// assignment operator overloadings
 	Binary &operator=(const Binary &b);
-	Binary &operator+=(const Binary &b);
-	Binary &operator-=(const Binary &b);
-	Binary &operator*=(const Binary &b);
-	Binary &operator/=(const Binary &b);
-	Binary &operator%=(const Binary &b);
 
+	Binary &operator+=(const Binary &b);
+	Binary &operator+=(const Octal &o);
+	Binary &operator+=(const Decimal &second);
+	Binary &operator+=(const Hexadecimal &h);
+
+	Binary &operator-=(const Binary &b);
+	Binary &operator-=(const Octal &o);
+	Binary &operator-=(const Decimal &d);
+	Binary &operator-=(const Hexadecimal &h);
+
+	Binary &operator*=(const Binary &b);
+	Binary &operator*=(const Octal &o);
+	Binary &operator*=(const Decimal &d);
+	Binary &operator*=(const Hexadecimal &h);
+
+	Binary &operator/=(const Binary &b);
+	Binary &operator/=(const Octal &o);
+	Binary &operator/=(const Decimal &d);
+	Binary &operator/=(const Hexadecimal &h);
+
+	Binary &operator%=(const Binary &b);
+	Binary &operator%=(const Octal &o);
+	Binary &operator%=(const Decimal &d);
+	Binary &operator%=(const Hexadecimal &h);
 };
 
 #endif  // BINARY_H

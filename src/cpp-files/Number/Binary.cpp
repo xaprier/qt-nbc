@@ -10,6 +10,11 @@ Binary::Binary(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
+	if (num == "NaN") {
+		this->num = "NaN";
+		return;
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -24,6 +29,11 @@ Binary::Binary(const Decimal &d) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = d.num;
+
+	if (number == "NaN") {
+		this->num = "NaN";
+		return;
+	}
 
     clean_number(number); // clean if it starts/ends with 0
 
@@ -45,10 +55,8 @@ Binary::Binary(const Decimal &d) {
         intPoint = std::stoull(number.substr(0, number.find('.')));
     }
     double decPoint = 0;
-    if (number.find('.') != -1 &&
-        number.length() > number.find('.') + 1) {
-        decPoint = std::stod(number);
-        decPoint -= static_cast<int>(decPoint);
+	if (number.length() > number.find('.') + 1) {
+        decPoint = std::stod(this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
     }
 
     // calculate the binary number from decimal
@@ -127,7 +135,7 @@ Binary Binary::operator+(Binary b) {
     Decimal first(*this), second(b);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -142,7 +150,7 @@ Binary Binary::operator+(Octal o) {
     Decimal first(*this), second(o);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -157,7 +165,7 @@ Binary Binary::operator+(Decimal second) {
     Decimal first(*this);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -172,7 +180,7 @@ Binary Binary::operator+(Hexadecimal h) {
     Decimal first(*this), second(h);
 
     // calculate the sum of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) + std::stold(second.num), 30);
+    first.num = this->sum(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -187,14 +195,14 @@ Binary Binary::operator-(Binary b) {
     // convert binary objects to decimal
     Decimal first(*this), second(b);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to binary and return
+    // then convert the substract of values to binary and return
     return first.toBin();
 }
 
@@ -202,8 +210,8 @@ Binary Binary::operator-(Octal o) {
     // convert binary objects to decimal
     Decimal first(*this), second(o);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -217,14 +225,14 @@ Binary Binary::operator-(Decimal second) {
     // convert binary objects to decimal
     Decimal first(*this);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtracts of values to binary and return
+    // then convert the substracts of values to binary and return
     return first.toBin();
 }
 
@@ -232,14 +240,14 @@ Binary Binary::operator-(Hexadecimal h) {
     // convert binary objects to decimal
     Decimal first(*this), second(h);
 
-    // calculate the subtract of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) - std::stold(second.num), 30);
+    // calculate the substract of decimal values
+    first.num = this->sub(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to binary and return
+    // then convert the substract of values to binary and return
     return first.toBin();
 }
 
@@ -248,13 +256,13 @@ Binary Binary::operator*(Binary b) {
     Decimal first(*this), second(b);
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
         first.num = first.num.substr(0, first.num.length() - 1);
 
-    // then convert the subtract of values to binary and return
+    // then convert the multiply of values to binary and return
     return first.toBin();
 }
 
@@ -263,7 +271,7 @@ Binary Binary::operator*(Octal o) {
     Decimal first(*this), second(o);
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -277,7 +285,7 @@ Binary Binary::operator*(Decimal second) {
     Decimal first(*this);
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -291,7 +299,7 @@ Binary Binary::operator*(Hexadecimal h) {
     Decimal first(*this), second(h);
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) * std::stold(second.num), 30);
+    first.num = this->mul(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -313,7 +321,7 @@ Binary Binary::operator/(Binary b) {
     }
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -335,7 +343,7 @@ Binary Binary::operator/(Octal o) {
     }
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -357,7 +365,7 @@ Binary Binary::operator/(Decimal second) {
     }
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -379,7 +387,7 @@ Binary Binary::operator/(Hexadecimal h) {
     }
 
     // calculate the multiply of decimal values
-    first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
+    first.num = this->div(first.num, second.num);
 
     // remove the last indexes if it is 0
     while (first.num.at(first.num.length() - 1) == '0' && first.num.at(first.num.length() - 2) != '.')
@@ -488,9 +496,39 @@ Binary &Binary::operator+=(const Binary &b) {
     return *this;
 }
 
+Binary &Binary::operator+=(const Octal &o) {
+	*this = *this + o;
+	return *this;
+}
+
+Binary &Binary::operator+=(const Decimal &second) {
+	*this = *this + second;
+	return *this;
+}
+
+Binary &Binary::operator+=(const Hexadecimal &h) {
+	*this = *this + h;
+	return *this;
+}
+
 Binary &Binary::operator-=(const Binary &b) {
     *this = *this - b;
     return *this;
+}
+
+Binary &Binary::operator-=(const Octal &o) {
+	*this = *this - o;
+	return *this;
+}
+
+Binary &Binary::operator-=(const Decimal &d) {
+	*this = *this - d;
+	return *this;
+}
+
+Binary &Binary::operator-=(const Hexadecimal &h) {
+	*this = *this - h;
+	return *this;
 }
 
 Binary &Binary::operator*=(const Binary &b) {
@@ -498,12 +536,62 @@ Binary &Binary::operator*=(const Binary &b) {
     return *this;
 }
 
+Binary &Binary::operator*=(const Octal &o) {
+	*this = *this * o;
+	return *this;
+}
+
+Binary &Binary::operator*=(const Decimal &d) {
+	*this = *this * d;
+	return *this;
+}
+
+Binary &Binary::operator*=(const Hexadecimal &h) {
+	*this = *this * h;
+	return *this;
+}
+
 Binary &Binary::operator/=(const Binary &b) {
     *this = *this / b;
     return *this;
+}
+
+Binary &Binary::operator/=(const Octal &o) {
+	*this = *this / o;
+	return *this;
+}
+
+Binary &Binary::operator/=(const Decimal &d) {
+	*this = *this / d;
+	return *this;
+}
+
+Binary &Binary::operator/=(const Hexadecimal &h) {
+	*this = *this / h;
+	return *this;
 }
 
 Binary &Binary::operator%=(const Binary &b) {
     *this = *this % b;
     return *this;
 }
+
+Binary &Binary::operator%=(const Octal &o) {
+	*this = *this % o;
+	return *this;
+}
+
+Binary &Binary::operator%=(const Decimal &d) {
+	*this = *this % d;
+	return *this;
+}
+
+Binary &Binary::operator%=(const Hexadecimal &h) {
+	*this = *this % h;
+	return *this;
+}
+
+Binary::operator std::string() {
+	return this->num;
+}
+

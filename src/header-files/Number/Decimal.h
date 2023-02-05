@@ -20,7 +20,9 @@ class Decimal : public Number {
     Binary toBin() override;
     Hexadecimal toHex() override;
 
-    friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
+	operator std::string() override;
+
+	friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
 
     // operator overloadings of summing
     Decimal operator+(Decimal d);
@@ -49,11 +51,31 @@ class Decimal : public Number {
     Decimal operator%(Hexadecimal h);
     // assignment operator overloadings
 	Decimal &operator=(const Decimal &d);
+
 	Decimal &operator+=(const Decimal &d);
+	Decimal &operator+=(const Binary &b);
+	Decimal &operator+=(const Octal &o);
+	Decimal &operator+=(const Hexadecimal &h);
+
 	Decimal &operator-=(const Decimal &d);
+	Decimal &operator-=(const Binary &b);
+	Decimal &operator-=(const Octal &o);
+	Decimal &operator-=(const Hexadecimal &h);
+
 	Decimal &operator*=(const Decimal &d);
+	Decimal &operator*=(const Binary &b);
+	Decimal &operator*=(const Octal &o);
+	Decimal &operator*=(const Hexadecimal &h);
+
 	Decimal &operator/=(const Decimal &d);
+	Decimal &operator/=(const Binary &b);
+	Decimal &operator/=(const Octal &o);
+	Decimal &operator/=(const Hexadecimal &h);
+
 	Decimal &operator%=(const Decimal &d);
+	Decimal &operator%=(const Binary &b);
+	Decimal &operator%=(const Octal &o);
+	Decimal &operator%=(const Hexadecimal &h);
 };
 
 #endif  // DECIMAL_H
