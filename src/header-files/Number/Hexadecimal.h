@@ -5,7 +5,7 @@
 #include "Binary.h"
 #include "Octal.h"
 
-class Hexadecimal : public Number {
+class Hexadecimal : public BaseClass {
   public:
 	explicit Hexadecimal(std::string num = "0.0");
 	explicit Hexadecimal(const Octal &o);
@@ -18,35 +18,35 @@ class Hexadecimal : public Number {
 	Binary toBin() override;
 	Hexadecimal toHex() override;
 
-	operator std::string() override;
+	explicit operator std::string() override;
 
 	friend std::ostream &operator<<(std::ostream &output, const Hexadecimal &h);
 
 	// operator overloadings of summing
-	Hexadecimal operator+(Hexadecimal h);
-	Hexadecimal operator+(Binary b);
-	Hexadecimal operator+(Octal o);
-	Hexadecimal operator+(Decimal second);
+	Hexadecimal operator+(const Hexadecimal& h);
+	Hexadecimal operator+(const Binary& b);
+	Hexadecimal operator+(const Octal& o);
+	Hexadecimal operator+(const Decimal& second);
 	// operator overloadings of substraction
-	Hexadecimal operator-(Hexadecimal h);
-	Hexadecimal operator-(Binary b);
-	Hexadecimal operator-(Octal o);
-	Hexadecimal operator-(Decimal second);
+	Hexadecimal operator-(const Hexadecimal& h);
+	Hexadecimal operator-(const Binary& b);
+	Hexadecimal operator-(const Octal& o);
+	Hexadecimal operator-(const Decimal& second);
 	// operator overloadings of multiply
-	Hexadecimal operator*(Hexadecimal h);
-	Hexadecimal operator*(Binary b);
-	Hexadecimal operator*(Octal o);
-	Hexadecimal operator*(Decimal second);
+	Hexadecimal operator*(const Hexadecimal& h);
+	Hexadecimal operator*(const Binary& b);
+	Hexadecimal operator*(const Octal& o);
+	Hexadecimal operator*(const Decimal& second);
 	// operator overloadings of divide
-	Hexadecimal operator/(Hexadecimal h);
-	Hexadecimal operator/(Binary b);
-	Hexadecimal operator/(Octal o);
-	Hexadecimal operator/(Decimal second);
+	Hexadecimal operator/(const Hexadecimal& h);
+	Hexadecimal operator/(const Binary& b);
+	Hexadecimal operator/(const Octal& o);
+	Hexadecimal operator/(const Decimal& second);
 	// operator overloadings of remainder
-	Hexadecimal operator%(Hexadecimal h);
-	Hexadecimal operator%(Binary b);
-	Hexadecimal operator%(Octal o);
-	Hexadecimal operator%(Decimal second);
+	Hexadecimal operator%(const Hexadecimal& h);
+	Hexadecimal operator%(const Binary& b);
+	Hexadecimal operator%(const Octal& o);
+	Hexadecimal operator%(const Decimal& second);
 	// assignment operator overloadings
 	Hexadecimal &operator=(const Hexadecimal &h);
 

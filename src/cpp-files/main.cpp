@@ -1,7 +1,8 @@
 #include <iostream>
 #include "../header-files/test_cases.h"
 
-std::ostream &operator<<(std::ostream &output, const Number &n) {
+template <class T>
+std::ostream &operator<<(std::ostream &output, const BaseClass &n) {
     output << n.num;
     return output;
 }

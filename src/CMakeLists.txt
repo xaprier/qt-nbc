@@ -26,14 +26,14 @@ set(PROJECT_SOURCES
     header-files/Number/Binary.h
         header-files/Number/Decimal.h
         header-files/Number/Hexadecimal.h
-        header-files/Number/Number.h
+        header-files/Number/BaseClass.h
         header-files/Number/Octal.h
 
-    cpp-files/Number/Binary.cpp
-        cpp-files/Number/Decimal.cpp
-        cpp-files/Number/Hexadecimal.cpp
-        cpp-files/Number/Number.cpp
-        cpp-files/Number/Octal.cpp
+        cpp-files/Number/Binary/Binary.cpp
+        cpp-files/Number/Decimal/Decimal.cpp
+        cpp-files/Number/Hexadecimal/Hexadecimal.cpp
+        cpp-files/Number/BaseClass.cpp
+        cpp-files/Number/Octal/Octal.cpp
     cpp-files/nbc.cpp
 
     design-files/choose.ui
@@ -45,7 +45,8 @@ set(PROJECT_SOURCES
     header-files/nbcalculator.h
         cpp-files/test_cases.cpp
         header-files/test_cases.h
-        )
+        header-files/Number/Number.h
+        cpp-files/Number/Number.cpp cpp-files/Number/Binary/subtracting.cpp cpp-files/Number/Binary/summing.cpp cpp-files/Number/Binary/multiplying.cpp cpp-files/Number/Binary/dividing.cpp cpp-files/Number/Binary/remainder.cpp cpp-files/Number/Decimal/dividing.cpp cpp-files/Number/Decimal/subtracting.cpp cpp-files/Number/Decimal/remainder.cpp cpp-files/Number/Decimal/summing.cpp cpp-files/Number/Decimal/multiplying.cpp cpp-files/Number/Hexadecimal/dividing.cpp cpp-files/Number/Hexadecimal/multiplying.cpp cpp-files/Number/Hexadecimal/remainder.cpp cpp-files/Number/Hexadecimal/subtracting.cpp cpp-files/Number/Hexadecimal/summing.cpp cpp-files/Number/Octal/dividing.cpp cpp-files/Number/Octal/multiplying.cpp cpp-files/Number/Octal/remainder.cpp cpp-files/Number/Octal/subtracting.cpp cpp-files/Number/Octal/summing.cpp)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(qt-nbc
