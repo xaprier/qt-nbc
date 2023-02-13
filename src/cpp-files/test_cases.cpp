@@ -9,7 +9,7 @@ Decimal d("12.75");
 Octal o("175.652");                // 125.83203125
 Hexadecimal h("1FC.ABF");          // 508.671630859375
 Binary b("1100111011.110111101");  // 827.869140625
-Number *n;
+BaseClass *n;
 
 
 void test(const std::string &expected, const std::string &output, int test_case) {
