@@ -7,7 +7,7 @@
 #include "Hexadecimal.h"
 #include "Octal.h"
 
-class Decimal : public Number {
+class Decimal : public BaseClass {
   public:
     explicit Decimal(std::string num = "0.0");
     explicit Decimal(const Octal &o);
@@ -20,35 +20,35 @@ class Decimal : public Number {
     Binary toBin() override;
     Hexadecimal toHex() override;
 
-	operator std::string() override;
+	explicit operator std::string() override;
 
 	friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
 
     // operator overloadings of summing
-    Decimal operator+(Decimal d);
-    Decimal operator+(Binary b);
-    Decimal operator+(Octal o);
-    Decimal operator+(Hexadecimal h);
+    Decimal operator+(const Decimal& d);
+    Decimal operator+(const Binary& b);
+    Decimal operator+(const Octal& o);
+    Decimal operator+(const Hexadecimal& h);
     // operator overloadings of substraction
-    Decimal operator-(Decimal second);
-    Decimal operator-(Binary b);
-    Decimal operator-(Octal o);
-    Decimal operator-(Hexadecimal h);
+    Decimal operator-(const Decimal& second);
+    Decimal operator-(const Binary& b);
+    Decimal operator-(const Octal& o);
+    Decimal operator-(const Hexadecimal& h);
     // operator overloadings of multiply
-    Decimal operator*(Decimal second);
-    Decimal operator*(Binary b);
-    Decimal operator*(Octal o);
-    Decimal operator*(Hexadecimal h);
+    Decimal operator*(const Decimal& second);
+    Decimal operator*(const Binary& b);
+    Decimal operator*(const Octal& o);
+    Decimal operator*(const Hexadecimal& h);
     // operator overloadings of divide
-    Decimal operator/(Decimal second);
-    Decimal operator/(Binary b);
-    Decimal operator/(Octal o);
-    Decimal operator/(Hexadecimal h);
+    Decimal operator/(const Decimal& second);
+    Decimal operator/(const Binary& b);
+    Decimal operator/(const Octal& o);
+    Decimal operator/(const Hexadecimal& h);
     // operator overloadings of remainder
-    Decimal operator%(Decimal second);
-    Decimal operator%(Binary b);
-    Decimal operator%(Octal o);
-    Decimal operator%(Hexadecimal h);
+    Decimal operator%(const Decimal& second);
+    Decimal operator%(const Binary& b);
+    Decimal operator%(const Octal& o);
+    Decimal operator%(const Hexadecimal& h);
     // assignment operator overloadings
 	Decimal &operator=(const Decimal &d);
 

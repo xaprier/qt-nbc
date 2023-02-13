@@ -9,10 +9,8 @@
 #include "header-files/Number/Decimal.h"
 #include "header-files/Number/Hexadecimal.h"
 #include "header-files/Number/Octal.h"
-#include "header-files/Number/Number.h"
+#include "header-files/Number/BaseClass.h"
 
-
-void test(const std::string &expected, const std::string &output, int test_case);
 void testConstructors();
 void testConverters();
 void ostreamOverloadTest();
