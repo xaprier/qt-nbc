@@ -1,4 +1,4 @@
-#include "../../header-files/Number/BaseClass.h"
+#include "header-files/Number/BaseClass.h"
 
 #include <sstream>
 #include <string>

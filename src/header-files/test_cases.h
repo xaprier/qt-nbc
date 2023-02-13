@@ -5,11 +5,11 @@
 #ifndef QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
 #define QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
 
-#include "header-files/Number/Binary.h"
-#include "header-files/Number/Decimal.h"
-#include "header-files/Number/Hexadecimal.h"
-#include "header-files/Number/Octal.h"
-#include "header-files/Number/BaseClass.h"
+#include "Number/Binary.h"
+#include "Number/Decimal.h"
+#include "Number/Hexadecimal.h"
+#include "Number/Octal.h"
+#include "Number/BaseClass.h"
 
 void testConstructors();
 void testConverters();
