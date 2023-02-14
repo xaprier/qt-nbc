@@ -92,13 +92,6 @@ Hexadecimal Hexadecimal::operator%(const Decimal& second) {
 	return first.toHex();
 }
 
-Hexadecimal &Hexadecimal::operator=(const Hexadecimal &h) {
-	if (this == &h)
-		return *this;
-	this->num = h.num;
-	return *this;
-}
-
 Hexadecimal &Hexadecimal::operator%=(const Hexadecimal &h) {
 	*this = *this % h;
 	return *this;
