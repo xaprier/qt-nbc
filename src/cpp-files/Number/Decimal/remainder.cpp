@@ -92,13 +92,6 @@ Decimal Decimal::operator%(const Hexadecimal& h) {
 	return result;
 }
 
-Decimal &Decimal::operator=(const Decimal &d) {
-	if (this == &d)
-		return *this;
-	this->num = d.num;
-	return *this;
-}
-
 Decimal &Decimal::operator%=(const Decimal &d) {
 	*this = *this % d;
 	return *this;
