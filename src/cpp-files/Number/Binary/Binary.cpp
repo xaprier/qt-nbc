@@ -14,6 +14,11 @@ Binary::Binary(std::string num) {
 		return;
 	}
 
+	// trim binary string
+	if (num.substr(0, 2) == "0b" || num.substr(0, 2) == "0B") {
+		num = num.substr(2);
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -109,19 +114,19 @@ Binary::Binary(const Hexadecimal &h) {
     this->num = b.num;
 }
 
-Octal Binary::toOct() {
+Octal Binary::toOct() const {
     return Octal(*this);
 }
 
-Decimal Binary::toDec() {
+Decimal Binary::toDec() const {
     return Decimal(*this);
 }
 
-Binary Binary::toBin() {
+Binary Binary::toBin() const {
     return Binary { *this };
 }
 
-Hexadecimal Binary::toHex() {
+Hexadecimal Binary::toHex() const {
     return Hexadecimal(*this);
 }
 
@@ -136,7 +141,30 @@ Binary &Binary::operator=(const Binary &b) {
     return *this;
 }
 
+Binary &Binary::operator=(const Octal &o) {
+	this->num = o.toBin().num;
+	return *this;
+}
+
+Binary &Binary::operator=(const Decimal &d) {
+	this->num = d.toBin().num;
+	return *this;
+}
+
+Binary &Binary::operator=(const Hexadecimal &h) {
+	this->num = h.toBin().num;
+	return *this;
+}
+
 Binary::operator std::string() {
 	return this->num;
+}
+
+Binary::Binary(const int &num) {
+	this->num = Decimal(num).toBin().num;
+}
+
+Binary::Binary(const double &num) {
+	this->num = Decimal(num).toBin().num;
 }
 
