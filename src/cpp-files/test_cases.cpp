@@ -11,7 +11,6 @@ Hexadecimal h("1FC.ABF");          // 508.671630859375
 Binary b("1100111011.110111101");  // 827.869140625
 BaseClass *n;
 
-
 void test(const std::string &expected, const std::string &output, int test_case) {
 	if (expected == output) {
 		std::cout << "Test " << test_case << " is successful!" << std::endl;
@@ -82,7 +81,7 @@ void testConstructors() {
 }
 
 // test successful
-void testConverters() {
+//void testConverters() {
 	std::cout << "\nBinary toX() Tests" << std::endl;
 	// print binary value of Binary(1100111011.110111101) = 1100111011.110111101
 	n = new Binary;
@@ -1045,4 +1044,273 @@ void operator_RelationOverloading() {
 	test("0", std::to_string(h == o), 2);
 	// 508.671630859375 == 12.75 = false
 	test("0", std::to_string(h == d), 3);
+
+	std::cout << "\nBinary operator!= Tests" << std::endl;
+	// 827.869140625 != 827.869140625 = false
+	test("0", std::to_string(b != b), 0);
+	// 827.869140625 != 125.83203125 = true
+	test("1", std::to_string(b != o), 1);
+	// 827.869140625 != 12.75 = true
+	test("1", std::to_string(b != d), 2);
+	// 827.869140625 != 508.671630859375 = true
+	test("1", std::to_string(b != h), 3);
+
+	std::cout << "\nOctal operator!= Tests" << std::endl;
+	// 125.83203125 != 125.83203125 = false
+	test("0", std::to_string(o != o), 0);
+	// 125.83203125 != 827.869140625 = true
+	test("1", std::to_string(o != b), 1);
+	// 125.83203125 != 12.75 = true
+	test("1", std::to_string(o != d), 2);
+	// 125.83203125 != 508.671630859375 = true
+	test("1", std::to_string(o != h), 3);
+
+	std::cout << "\nDecimal operator!= Tests" << std::endl;
+	// 12.75 != 12.75 = false
+	test("0", std::to_string(d != d), 0);
+	// 12.75 != 827.869140625 = true
+	test("1", std::to_string(d != b), 1);
+	// 12.75 != 125.83203125 = true
+	test("1", std::to_string(d != o), 2);
+	// 12.75 != 508.671630859375 = true
+	test("1", std::to_string(d != h), 3);
+
+	std::cout << "\nHexadecimal operator!= Tests" << std::endl;
+	// 508.671630859375 != 508.671630859375 = false
+	test("0", std::to_string(h != h), 0);
+	// 508.671630859375 != 827.869140625 = true
+	test("1", std::to_string(h != b), 1);
+	// 508.671630859375 != 125.83203125 = true
+	test("1", std::to_string(h != o), 2);
+	// 508.671630859375 != 12.75 = true
+	test("1", std::to_string(h != d), 3);
+}
+
+void templateTest() {
+	std::cout << "\nTemplate Tests - INT PARAMETER" << std::endl;
+	auto *b1 = new Number<Binary>(15);
+	auto *o1 = new Number<Octal>(15);
+	auto *d1 = new Number<Decimal>(15);
+	auto *h1 = new Number<Hexadecimal>(15);
+	test("1111.0", b1->getNumber().getNum(), 0);
+	test("17.0", o1->getNumber().getNum(), 1);
+	test("15.0", d1->getNumber().getNum(), 2);
+	test("F.0", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - DOUBLE PARAMETER" << std::endl;
+	b1 = new Number<Binary>(15.5);
+	o1 = new Number<Octal>(15.5);
+	d1 = new Number<Decimal>(15.5);
+	h1 = new Number<Hexadecimal>(15.5);
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - STRING PARAMETER" << std::endl;
+	b1 = new Number<Binary>("1111.1");
+	o1 = new Number<Octal>("17.4");
+	d1 = new Number<Decimal>("15.5");
+	h1 = new Number<Hexadecimal>("F.8");
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - BINARY PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Binary("1111.1"));
+	o1 = new Number<Octal>(Binary("1111.1"));
+	d1 = new Number<Decimal>(Binary("1111.1"));
+	h1 = new Number<Hexadecimal>(Binary("1111.1"));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - OCTAL PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Octal("17.4"));
+	o1 = new Number<Octal>(Octal("17.4"));
+	d1 = new Number<Decimal>(Octal("17.4"));
+	h1 = new Number<Hexadecimal>(Octal("17.4"));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - DECIMAL PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Decimal("15.5"));
+	o1 = new Number<Octal>(Decimal("15.5"));
+	d1 = new Number<Decimal>(Decimal("15.5"));
+	h1 = new Number<Hexadecimal>(Decimal("15.5"));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - HEXADECIMAL PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Hexadecimal("F.8"));
+	o1 = new Number<Octal>(Hexadecimal("F.8"));
+	d1 = new Number<Decimal>(Hexadecimal("F.8"));
+	h1 = new Number<Hexadecimal>(Hexadecimal("F.8"));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<BINARY> PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Binary>(Binary("1111.1")));
+	d1 = new Number<Decimal>(Number<Binary>(Binary("1111.1")));
+	h1 = new Number<Hexadecimal>(Number<Binary>(Binary("1111.1")));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<OCTAL> PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Number<Octal>(Octal("17.4")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Octal>(Octal("17.4")));
+	h1 = new Number<Hexadecimal>(Number<Octal>(Octal("17.4")));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<DECIMAL> PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Number<Decimal>(Decimal("15.5")));
+	o1 = new Number<Octal>(Number<Decimal>(Decimal("15.5")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Decimal>(Decimal("15.5")));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<HEXADECIMAL> PARAMETER" << std::endl;
+	b1 = new Number<Binary>(Number<Hexadecimal>(Hexadecimal("F.8")));
+	o1 = new Number<Octal>(Number<Hexadecimal>(Hexadecimal("F.8")));
+	d1 = new Number<Decimal>(Number<Hexadecimal>(Hexadecimal("F.8")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<> + NUMBER<> OPERATOR" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")) + Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")) + Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")) + Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")) + Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("11111.0", b1->getNumber().getNum(), 0);
+	test("37.0", o1->getNumber().getNum(), 1);
+	test("31.0", d1->getNumber().getNum(), 2);
+	test("1F.0", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<> - NUMBER<> OPERATOR" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")) - Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")) - Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")) - Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")) - Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("0.0", b1->getNumber().getNum(), 0);
+	test("0.0", o1->getNumber().getNum(), 1);
+	test("0.0", d1->getNumber().getNum(), 2);
+	test("0.0", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<> * NUMBER<> OPERATOR" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")) * Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")) * Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")) * Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")) * Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("11110000.01", b1->getNumber().getNum(), 0);
+	test("360.2", o1->getNumber().getNum(), 1);
+	test("240.25", d1->getNumber().getNum(), 2);
+	test("F0.4", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<> / NUMBER<> OPERATOR" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")) / Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")) / Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")) / Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")) / Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("1.0", b1->getNumber().getNum(), 0);
+	test("1.0", o1->getNumber().getNum(), 1);
+	test("1.0", d1->getNumber().getNum(), 2);
+	test("1.0", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - NUMBER<> % NUMBER<> OPERATOR" << std::endl;
+	b1 = new Number<Binary>(Number<Binary>(Binary("1111.1")) % Number<Binary>(Binary("1111.1")));
+	o1 = new Number<Octal>(Number<Octal>(Octal("17.4")) % Number<Octal>(Octal("17.4")));
+	d1 = new Number<Decimal>(Number<Decimal>(Decimal("15.5")) % Number<Decimal>(Decimal("15.5")));
+	h1 = new Number<Hexadecimal>(Number<Hexadecimal>(Hexadecimal("F.8")) % Number<Hexadecimal>(Hexadecimal("F.8")));
+	test("0.0", b1->getNumber().getNum(), 0);
+	test("0.0", o1->getNumber().getNum(), 1);
+	test("0.0", d1->getNumber().getNum(), 2);
+	test("0.0", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - Number<> < Number<> OPERATOR" << std::endl;
+	test("0", std::to_string(Number<Binary>(Binary("1111.1")) < Number<Binary>(Binary("1111.1"))), 0);
+	test("0", std::to_string(Number<Octal>(Octal("17.4")) < Number<Octal>(Octal("17.4"))), 1);
+	test("0", std::to_string(Number<Decimal>(Decimal("15.5")) < Number<Decimal>(Decimal("15.5"))), 2);
+	test("0", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) < Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<> > Number<> OPERATOR" << std::endl;
+	test("0", std::to_string(Number<Binary>(Binary("1111.1")) > Number<Binary>(Binary("1111.1"))), 0);
+	test("0", std::to_string(Number<Octal>(Octal("17.4")) > Number<Octal>(Octal("17.4"))), 1);
+	test("0", std::to_string(Number<Decimal>(Decimal("15.5")) > Number<Decimal>(Decimal("15.5"))), 2);
+	test("0", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) > Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<> <= Number<> OPERATOR" << std::endl;
+	test("1", std::to_string(Number<Binary>(Binary("1111.1")) <= Number<Binary>(Binary("1111.1"))), 0);
+	test("1", std::to_string(Number<Octal>(Octal("17.4")) <= Number<Octal>(Octal("17.4"))), 1);
+	test("1", std::to_string(Number<Decimal>(Decimal("15.5")) <= Number<Decimal>(Decimal("15.5"))), 2);
+	test("1", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) <= Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<> >= Number<> OPERATOR" << std::endl;
+	test("1", std::to_string(Number<Binary>(Binary("1111.1")) >= Number<Binary>(Binary("1111.1"))), 0);
+	test("1", std::to_string(Number<Octal>(Octal("17.4")) >= Number<Octal>(Octal("17.4"))), 1);
+	test("1", std::to_string(Number<Decimal>(Decimal("15.5")) >= Number<Decimal>(Decimal("15.5"))), 2);
+	test("1", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) >= Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<> == Number<> OPERATOR" << std::endl;
+	test("1", std::to_string(Number<Binary>(Binary("1111.1")) == Number<Binary>(Binary("1111.1"))), 0);
+	test("1", std::to_string(Number<Octal>(Octal("17.4")) == Number<Octal>(Octal("17.4"))), 1);
+	test("1", std::to_string(Number<Decimal>(Decimal("15.5")) == Number<Decimal>(Decimal("15.5"))), 2);
+	test("1", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) == Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<> != Number<> OPERATOR" << std::endl;
+	test("0", std::to_string(Number<Binary>(Binary("1111.1")) != Number<Binary>(Binary("1111.1"))), 0);
+	test("0", std::to_string(Number<Octal>(Octal("17.4")) != Number<Octal>(Octal("17.4"))), 1);
+	test("0", std::to_string(Number<Decimal>(Decimal("15.5")) != Number<Decimal>(Decimal("15.5"))), 2);
+	test("0", std::to_string(Number<Hexadecimal>(Hexadecimal("F.8")) != Number<Hexadecimal>(Hexadecimal("F.8"))), 3);
+
+	std::cout << "\nTemplate Tests - Number<X> = X OPERATOR" << std::endl;
+	*b1 = Binary("1111.1");
+	*o1 = Octal("17.4");
+	*d1 = Decimal("15.5");
+	*h1 = Hexadecimal("F.8");
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - Number<X> = DOUBLE OPERATOR" << std::endl;
+	*b1 = 15.5;
+	*o1 = 15.5;
+	*d1 = 15.5;
+	*h1 = 15.5;
+	test("1111.1", b1->getNumber().getNum(), 0);
+	test("17.4", o1->getNumber().getNum(), 1);
+	test("15.5", d1->getNumber().getNum(), 2);
+	test("F.8", h1->getNumber().getNum(), 3);
+
+	std::cout << "\nTemplate Tests - Number<X> = INT OPERATOR" << std::endl;
+	*b1 = 15;
+	*o1 = 15;
+	*d1 = 15;
+	*h1 = 15;
+	test("1111.0", b1->getNumber().getNum(), 0);
+	test("17.0", o1->getNumber().getNum(), 1);
+	test("15.0", d1->getNumber().getNum(), 2);
+	test("F.0", h1->getNumber().getNum(), 3);
+
 }

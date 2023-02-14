@@ -17,5 +17,6 @@ int main() {
     operator_remainderOverloading();
  	operator_assignmentsOverloading();
 	operator_RelationOverloading();
+	templateTest();
     return 0;
 }
