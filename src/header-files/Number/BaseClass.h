@@ -24,10 +24,10 @@ class BaseClass {
 	explicit BaseClass(const Binary& b);
 	explicit BaseClass(const Decimal& d);
 
-	virtual Octal toOct() = 0;
-	virtual Decimal toDec() = 0;
-	virtual Binary toBin() = 0;
-	virtual Hexadecimal toHex() = 0;
+	virtual Octal toOct() const = 0;
+	virtual Decimal toDec() const = 0;
+	virtual Binary toBin() const = 0;
+	virtual Hexadecimal toHex() const = 0;
 
 	virtual explicit operator std::string() = 0;
 
@@ -51,6 +51,10 @@ class BaseClass {
 	bool operator==(const Octal &o);
 	bool operator==(const Decimal &second);
 	bool operator==(const Hexadecimal &h);
+	bool operator!=(const Binary &b);
+	bool operator!=(const Octal &o);
+	bool operator!=(const Decimal &second);
+	bool operator!=(const Hexadecimal &h);
 
 	static void clean_number(std::string &num);
 
