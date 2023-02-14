@@ -14,6 +14,11 @@ Octal::Octal(std::string num) {
 		return;
 	}
 
+	// trim octal string
+	if (num.substr(0, 2) == "0o" || num.substr(0, 2) == "0O") {
+		num = num.substr(2);
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -108,19 +113,19 @@ Octal::Octal(const Hexadecimal &h) {
     this->num = o.num;
 }
 
-Octal Octal::toOct() {
+Octal Octal::toOct() const {
     return Octal { *this };
 }
 
-Binary Octal::toBin() {
+Binary Octal::toBin() const {
     return Binary(*this);
 }
 
-Decimal Octal::toDec() {
+Decimal Octal::toDec() const {
     return Decimal(*this);
 }
 
-Hexadecimal Octal::toHex() {
+Hexadecimal Octal::toHex() const {
     return Hexadecimal(*this);
 }
 
@@ -135,6 +140,29 @@ Octal &Octal::operator=(const Octal &o) {
 	return *this;
 }
 
+Octal &Octal::operator=(const Binary &b) {
+	this->num = b.toOct().num;
+	return *this;
+}
+
+Octal &Octal::operator=(const Decimal &d) {
+	this->num = d.toOct().num;
+	return *this;
+}
+
+Octal &Octal::operator=(const Hexadecimal &h) {
+	this->num = h.toOct().num;
+	return *this;
+}
+
 Octal::operator std::string() {
 	return this->num;
+}
+
+Octal::Octal(const int &num) {
+	this->num = Decimal(num).toOct().num;
+}
+
+Octal::Octal(const double &num) {
+	this->num = Decimal(num).toOct().num;
 }

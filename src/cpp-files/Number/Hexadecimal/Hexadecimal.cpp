@@ -15,6 +15,11 @@ Hexadecimal::Hexadecimal(std::string num) {
 		return;
 	}
 
+	// trim hexadecimal string
+	if (num.substr(0, 2) == "0x" || num.substr(0, 2) == "0X") {
+		num = num.substr(2);
+	}
+
     clean_number(num); // clean if it starts/ends with 0
 
     this->num = num;
@@ -152,19 +157,19 @@ Hexadecimal::Hexadecimal(const Binary &b) {
     this->num = h.num;
 }
 
-Octal Hexadecimal::toOct() {
+Octal Hexadecimal::toOct() const {
     return Octal(*this);
 }
 
-Decimal Hexadecimal::toDec() {
+Decimal Hexadecimal::toDec() const {
     return Decimal(*this);
 }
 
-Binary Hexadecimal::toBin() {
+Binary Hexadecimal::toBin() const {
     return Binary(*this);
 }
 
-Hexadecimal Hexadecimal::toHex() {
+Hexadecimal Hexadecimal::toHex() const {
     return Hexadecimal { *this };
 }
 
@@ -174,4 +179,33 @@ std::ostream &operator<<(std::ostream &output, const Hexadecimal &h) {
 
 Hexadecimal::operator std::string() {
 	return this->num;
+}
+
+Hexadecimal::Hexadecimal(const int &num) {
+	this->num = Decimal(num).toHex().num;
+}
+Hexadecimal::Hexadecimal(const double &num) {
+	this->num = Decimal(num).toHex().num;
+}
+
+Hexadecimal &Hexadecimal::operator=(const Hexadecimal &h) {
+	if (this == &h)
+		return *this;
+	this->num = h.num;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator=(const Binary &b) {
+	this->num = b.toHex().num;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator=(const Octal &o) {
+	this->num = o.toHex().num;
+	return *this;
+}
+
+Hexadecimal &Hexadecimal::operator=(const Decimal &d) {
+	this->num = d.toHex().num;
+	return *this;
 }

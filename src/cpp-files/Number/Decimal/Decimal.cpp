@@ -296,19 +296,19 @@ Decimal::Decimal(const Hexadecimal &h) {
     this->num = sResult;
 }
 
-Octal Decimal::toOct() {
+Octal Decimal::toOct() const {
     return Octal(*this);
 }
 
-Decimal Decimal::toDec() {
+Decimal Decimal::toDec() const {
     return Decimal { *this };
 }
 
-Binary Decimal::toBin() {
+Binary Decimal::toBin() const {
     return Binary(*this);
 }
 
-Hexadecimal Decimal::toHex() {
+Hexadecimal Decimal::toHex() const {
     return Hexadecimal(*this);
 }
 
@@ -318,4 +318,35 @@ std::ostream &operator<<(std::ostream &output, const Decimal &d) {
 
 Decimal::operator std::string() {
     return this->num;
+}
+
+Decimal::Decimal(const int &num) {
+	this->num = std::to_string(num) + ".0";
+}
+
+Decimal::Decimal(const double &num) {
+	this->num = std::to_string(num);
+	clean_number(this->num);
+}
+
+Decimal &Decimal::operator=(const Decimal &d) {
+	if (this == &d)
+		return *this;
+	this->num = d.num;
+	return *this;
+}
+
+Decimal &Decimal::operator=(const Binary &b) {
+	this->num = b.toDec().num;
+	return *this;
+}
+
+Decimal &Decimal::operator=(const Octal &o) {
+	this->num = o.toDec().num;
+	return *this;
+}
+
+Decimal &Decimal::operator=(const Hexadecimal &h) {
+	this->num = h.toDec().num;
+	return *this;
 }

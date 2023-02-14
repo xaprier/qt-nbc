@@ -7,16 +7,25 @@
 
 class Hexadecimal : public BaseClass {
   public:
-	explicit Hexadecimal(std::string num = "0.0");
+	// expression must be in hexadecimal format("0x...")
+	explicit Hexadecimal(std::string num = "0x0.0");
+	// expression must be decimal format(0)
+	explicit Hexadecimal(const int &num);
+	// expression must be decimal format(0.0)
+	explicit Hexadecimal(const double &num);
+	// expression must be octal object
 	explicit Hexadecimal(const Octal &o);
+	// expression must be decimal object
 	explicit Hexadecimal(const Decimal &d);
+	// expression must be binary object
 	explicit Hexadecimal(const Binary &b);
+	// copy constructor
 	Hexadecimal(const Hexadecimal &h);
 
-	Octal toOct() override;
-	Decimal toDec() override;
-	Binary toBin() override;
-	Hexadecimal toHex() override;
+	[[nodiscard]] Octal toOct() const override;
+	[[nodiscard]] Decimal toDec() const override;
+	[[nodiscard]] Binary toBin() const override;
+	[[nodiscard]] Hexadecimal toHex() const override;
 
 	explicit operator std::string() override;
 
@@ -27,7 +36,7 @@ class Hexadecimal : public BaseClass {
 	Hexadecimal operator+(const Binary& b);
 	Hexadecimal operator+(const Octal& o);
 	Hexadecimal operator+(const Decimal& second);
-	// operator overloadings of substraction
+	// operator overloadings of subtraction
 	Hexadecimal operator-(const Hexadecimal& h);
 	Hexadecimal operator-(const Binary& b);
 	Hexadecimal operator-(const Octal& o);
@@ -49,6 +58,9 @@ class Hexadecimal : public BaseClass {
 	Hexadecimal operator%(const Decimal& second);
 	// assignment operator overloadings
 	Hexadecimal &operator=(const Hexadecimal &h);
+	Hexadecimal &operator=(const Binary &b);
+	Hexadecimal &operator=(const Octal &o);
+	Hexadecimal &operator=(const Decimal &d);
 
 	Hexadecimal &operator+=(const Hexadecimal &h);
 	Hexadecimal &operator+=(const Binary &b);

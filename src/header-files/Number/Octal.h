@@ -8,16 +8,25 @@
 
 class Octal : public BaseClass {
   public:
-	explicit Octal(std::string num = "0.0");
+	// expression must be in Octal format("0o0.0")
+	explicit Octal(std::string num = "0o0.0");
+	// expression must be as Decimal format(0)
+	explicit Octal(const int &num);
+	// expression must be as Decimal format(0.0)
+	explicit Octal(const double &num);
+	// expression must be a hexadecimal object
 	explicit Octal(const Hexadecimal &h);
+	// expression must be a decimal object
 	explicit Octal(const Decimal &d);
+	// expression must be a binary object
 	explicit Octal(const Binary &b);
+	// expression must be a octal object
 	Octal(const Octal &o);
 
-	Octal toOct() override;
-	Decimal toDec() override;
-	Binary toBin() override;
-	Hexadecimal toHex() override;
+	[[nodiscard]] Octal toOct() const override;
+	[[nodiscard]] Decimal toDec() const override;
+	[[nodiscard]] Binary toBin() const override;
+	[[nodiscard]] Hexadecimal toHex() const override;
 
 	explicit operator std::string() override;
 
@@ -50,6 +59,9 @@ class Octal : public BaseClass {
 	Octal operator%(const Hexadecimal& h);
 	// assignment operator overloadings
 	Octal &operator=(const Octal &o);
+	Octal &operator=(const Binary &b);
+	Octal &operator=(const Decimal &d);
+	Octal &operator=(const Hexadecimal &h);
 
 	Octal &operator+=(const Octal &o);
 	Octal &operator+=(const Binary &b);
