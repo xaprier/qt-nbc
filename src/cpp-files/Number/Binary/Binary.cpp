@@ -14,10 +14,15 @@ Binary::Binary(std::string num) {
 		return;
 	}
 
+	// tolower character b in string
+	std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::tolower(c); });
+
 	// trim binary string
-	if (num.substr(0, 2) == "0b" || num.substr(0, 2) == "0B") {
-		num = num.substr(2);
-	}
+	if (num.substr(0, 2) == "0b" || num.substr(0, 2) == "0B")
+		num = num.substr(2, num.length());
+	else if (num.substr(0, 3) == "-0B" || num.substr(0, 3) == "-0b")
+		num = "-" + num.substr(3, num.length());
+
 
     clean_number(num); // clean if it starts/ends with 0
 
@@ -131,7 +136,7 @@ Hexadecimal Binary::toHex() const {
 }
 
 std::ostream &operator<<(std::ostream &output, const Binary &b) {
-    return output << b.num << "b";
+    return output << "0b" + b.num;
 }
 
 Binary &Binary::operator=(const Binary &b) {

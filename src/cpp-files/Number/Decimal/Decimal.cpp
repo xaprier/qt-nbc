@@ -113,6 +113,13 @@ Decimal::Decimal(const Octal &o) {
 		return;
 	}
 
+	std::string result;
+
+	if (number.at(0) == '-') {
+		number = number.substr(1, number.length());
+		result += "-";
+	}
+
     clean_number(number);  // clean if it starts/ends with 0
 
     if (number.length() == 0 || number == "0.0") {
@@ -120,12 +127,6 @@ Decimal::Decimal(const Octal &o) {
         return;
     }
 
-    std::string result;
-
-    if (number.at(0) == '-') {
-        number = number.substr(1, number.length());
-        result += "-";
-    }
     // split the decimal number as it supposed to be
     unsigned long long intPoint = 0;
     if (number.length() != 0) {
