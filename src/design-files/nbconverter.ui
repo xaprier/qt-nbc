@@ -168,6 +168,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>binLine</tabstop>
+  <tabstop>octLine</tabstop>
+  <tabstop>decLine</tabstop>
+  <tabstop>hexaLine</tabstop>
+  <tabstop>exitBut</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
