@@ -1,21 +1,10 @@
-#include <iostream>
-#include "../header-files/test_cases.h"
+#include <QApplication>
 
-std::ostream &operator<<(std::ostream &output, const BaseClass &n) {
-    output << n.num;
-    return output;
-}
+#include "../header-files/choose.h"
 
-int main() {
-    testConstructors();
-    testConverters();
-    ostreamOverloadTest();
-    operator_plusOverloading();
-    operator_subtractOverloading();
-    operator_multiplyOverloading();
-    operator_divideOverloading();
-    operator_remainderOverloading();
- 	operator_assignmentsOverloading();
-	operator_RelationOverloading();
-    return 0;
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
+    choose c;
+    c.show();
+    return QApplication::exec();
 }
