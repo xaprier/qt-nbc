@@ -5,14 +5,14 @@
 #include <QString>
 
 #include "../design-files/ui_nbconverter.h"
+#include "header-files/Number/Number.h"
 
-QRegularExpression binExpression("^-?[0-1]{1,}\\.?[0-1]*$");
-QRegularExpression octExpression("^-?[0-7]{1,}\\.?[0-7]*$");
+QRegularExpression binExpression("^-?0?b?[0-1]{1,}\\.?[0-1]*$");
+QRegularExpression octExpression("^-?0?o?[0-7]{1,}\\.?[0-7]*$");
 QRegularExpression decExpression("^-?[0-9]{1,}\\.?[0-9]*$");
-QRegularExpression hexExpression("^-?[0-9A-F]{1,}\\.?[0-9A-F]*$");
+QRegularExpression hexExpression("^-?0?x?[0-9A-F]{1,}\\.?[0-9A-F]*$");
 
-NBConverter::NBConverter(QWidget *parent)
-    : QDialog(parent), ui(new Ui::NBConverter) {
+NBConverter::NBConverter(QWidget *parent) : QDialog(parent), ui(new Ui::NBConverter) {
     QWidget::setFixedSize(800, 209);
 
     ui->setupUi(this);
@@ -40,33 +40,35 @@ NBConverter::NBConverter(QWidget *parent)
 NBConverter::~NBConverter() { delete ui; }
 
 void NBConverter::textChanged() {
+    QString bin = ui->binLine->text(), oct = ui->octLine->text(), dec = ui->decLine->text(), hex = ui->hexaLine->text();
+
     if (QObject::sender() == ui->binLine) {  // completed
-        ui->octLine->setText(QString::fromStdString(
-            binToDec(ui->binLine->text().toStdString())));
-        ui->decLine->setText(QString::fromStdString(
-            binToOct(ui->binLine->text().toStdString())));
-        ui->hexaLine->setText(QString::fromStdString(
-            binToHex(ui->binLine->text().toStdString())));
+        b = new Number<Binary>(ui->binLine->text().toStdString());
+        oct = QString::fromStdString(b->getNumber().toOct().getNum());
+        dec = QString::fromStdString(b->getNumber().toDec().getNum());
+        hex = QString::fromStdString(b->getNumber().toHex().getNum());
+        delete b;
     } else if (QObject::sender() == ui->decLine) {  // completed
-        ui->binLine->setText(QString::fromStdString(
-            decToBin(ui->decLine->text().toStdString())));
-        ui->octLine->setText(QString::fromStdString(
-            decToOct(ui->decLine->text().toStdString())));
-        ui->hexaLine->setText(QString::fromStdString(
-            decToHex(ui->decLine->text().toStdString())));
+        d = new Number<Decimal>(ui->decLine->text().toStdString());
+        bin = QString::fromStdString(d->getNumber().toBin().getNum());
+        oct = QString::fromStdString(d->getNumber().toOct().getNum());
+        hex = QString::fromStdString(d->getNumber().toHex().getNum());
+        delete d;
     } else if (QObject::sender() == ui->octLine) {  // completed
-        ui->binLine->setText(QString::fromStdString(
-            octToBin(ui->octLine->text().toStdString())));
-        ui->decLine->setText(QString::fromStdString(
-            octToDec(ui->octLine->text().toStdString())));
-        ui->hexaLine->setText(QString::fromStdString(
-            octToHex(ui->octLine->text().toStdString())));
+        o = new Number<Octal>(ui->octLine->text().toStdString());
+        bin = QString::fromStdString(o->getNumber().toBin().getNum());
+        dec = QString::fromStdString(o->getNumber().toDec().getNum());
+        hex = QString::fromStdString(o->getNumber().toHex().getNum());
+        delete o;
     } else {  // completed
-        ui->binLine->setText(QString::fromStdString(
-            hexToBin(ui->hexaLine->text().toStdString())));
-        ui->decLine->setText(QString::fromStdString(
-            hexToDec(ui->hexaLine->text().toStdString())));
-        ui->octLine->setText(QString::fromStdString(
-            hexToOct(ui->hexaLine->text().toStdString())));
+        h = new Number<Hexadecimal>(ui->hexaLine->text().toStdString());
+        bin = QString::fromStdString(h->getNumber().toBin().getNum());
+        oct = QString::fromStdString(h->getNumber().toOct().getNum());
+        dec = QString::fromStdString(h->getNumber().toDec().getNum());
+        delete h;
     }
+    ui->binLine->setText(bin);
+    ui->octLine->setText(oct);
+    ui->decLine->setText(dec);
+    ui->hexaLine->setText(hex);
 }

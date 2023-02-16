@@ -2,13 +2,14 @@
 // Created by "xaprier" on "10/8/22"
 //
 
-#ifndef QT_NBC_NBCALCULATOR_H
-#define QT_NBC_NBCALCULATOR_H
+#ifndef nbcalculator_h
+#define nbcalculator_h
 
 #include <QDialog>
 #include <QValidator>
 
 #include "nbc.h"
+#include "header-files/Number/Number.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,14 +27,19 @@ class NBCalculator : public QDialog, public nbc {
 
   private slots:
     void hasChanged();
-    void calculate(std::string num1, std::string num2);
-    void setNumbers(std::string numberToConvert, int indexing,
+    void calculate();
+    void setNumbers(const std::string& numberToConvert, int indexing,
                     std::string *pointOfNumber);
+	void help();
 
   private:
     std::string num1, num2;
     Ui::NBCalculator *ui;
-    QValidator *validator;
+    QRegularExpressionValidator *validator;
+	Number<Binary> *binaryNumber;
+	Number<Octal> *octalNumber;
+	Number<Decimal> *decimalNumber;
+	Number<Hexadecimal> *hexadecimalNumber;
 };
 
-#endif  // QT_NBC_NBCALCULATOR_H
+#endif  // nbcalculator_h

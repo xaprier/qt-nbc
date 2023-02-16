@@ -7,278 +7,319 @@ extern QRegularExpression binExpression;
 extern QRegularExpression octExpression;
 extern QRegularExpression decExpression;
 extern QRegularExpression hexExpression;
-
+#include <QDebug>
+#include <QString>
+#include <QMessageBox>
 #include "../design-files/ui_nbcalculator.h"
 #include "../header-files/nbconverter.h"
 
-NBCalculator::NBCalculator(QWidget *parent)
-    : QDialog(parent), ui(new Ui::NBCalculator) {
+NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalculator) {
     // fixed size of window
-    QWidget::setFixedSize(596, 275);
+    QWidget::setFixedSize(400, 200);
     ui->setupUi(this);
     // starting values
     this->num1 = "0.0", this->num2 = "0.0";
 
     // catch the signals of combo box changes
-    connect(ui->num1Combo, &QComboBox::currentTextChanged, this,
-            &NBCalculator::hasChanged);
-    connect(ui->num2Combo, &QComboBox::currentTextChanged, this,
-            &NBCalculator::hasChanged);
     connect(ui->resCombo, &QComboBox::currentTextChanged, this,
-            &NBCalculator::hasChanged);
-    connect(ui->operationCombo, &QComboBox::currentTextChanged, this,
             &NBCalculator::hasChanged);
 
     // catch the signals of line changes
-    connect(ui->num1Line, &QLineEdit::textChanged, this,
-            &NBCalculator::hasChanged);
-    connect(ui->num2Line, &QLineEdit::textChanged, this,
-            &NBCalculator::hasChanged);
+	connect(ui->num1LE, &QLineEdit::textChanged, this, &NBCalculator::hasChanged);
+	connect(ui->num2LE, &QLineEdit::textChanged, this, &NBCalculator::hasChanged);
+	connect(ui->operation, &QComboBox::currentTextChanged, this, &NBCalculator::hasChanged);
 
     // exit button handler
     connect(ui->exitButton, &QPushButton::clicked, this,
             &NBCalculator::close);
-    // validation for first start(from binary)
-    validator = new QRegularExpressionValidator(binExpression, this);
-    ui->num1Line->setValidator(validator);
-    ui->num2Line->setValidator(validator);
+	connect(ui->helpButton, &QToolButton::clicked, this, &NBCalculator::help);
+	connect(ui->exitButton, &QPushButton::clicked, this, &NBCalculator::close);
 }
 
-NBCalculator::~NBCalculator() { delete ui; }
-
-// there is a problem on regular expression when switching to another base
+NBCalculator::~NBCalculator() { delete ui; delete validator; delete binaryNumber; delete octalNumber; delete decimalNumber; delete hexadecimalNumber; }
 
 void NBCalculator::hasChanged() {
-    // clear the textbox if the base of this box change
-    if (QObject::sender() == ui->num1Combo) ui->num1Line->setText("");
-    if (QObject::sender() == ui->num2Combo) ui->num2Line->setText("");
+	if (QObject::sender() == ui->num1LE) {
+		QString temp = ui->num1LE->text();
+		temp = temp.toLower();
+		if (temp.isEmpty() || temp == "-") {
+			this->num1 = "0.0";
+			validator = new QRegularExpressionValidator(QRegularExpression("^[0-9bBxXoO-]*"), this);
+		} else {
+			int index = temp.contains("0b") ? 0 : temp.contains("0o") ? 1 : temp.contains("0x") ? 3 : 2;
+			if ((temp[0] == '-' && temp.length() == 3) || (temp.length() == 2 && temp[0] != '-')) {
+				if (index == 0) {
+					validator = new QRegularExpressionValidator(binExpression, this);
+				} else if (index == 1) {
+					validator = new QRegularExpressionValidator(octExpression, this);
+				} else if (index == 2) {
+					validator = new QRegularExpressionValidator(decExpression, this);
+				} else if (index == 3) {
+					validator = new QRegularExpressionValidator(hexExpression, this);
+				}
+			} else if ((temp.length() < 2 && temp[0] != '-') || (temp.length() < 3 && temp[0] == '-'))
+				validator = new QRegularExpressionValidator(QRegularExpression("^[0-9bBxXoO-]*"), this);
+			setNumbers(temp.toStdString(),
+					   index,
+					   &this->num1);
+		}
+		ui->num1LE->setValidator(validator);
+	} else if (QObject::sender() == ui->num2LE) {
+		QString temp = ui->num2LE->text();
+		temp = temp.toLower();
+		if (temp.isEmpty() || temp == "-") {
+			this->num2 = "0.0";
+			validator = new QRegularExpressionValidator(QRegularExpression("^[0-9bBxXoO-]*"), this);
+		} else {
+			int index = temp.startsWith("0b") ? 0 : temp.startsWith("0o") ? 1 : temp.startsWith("0x") ? 3 : 2;
+			if (temp.length() > 2) {
+				if (index == 0) {
+					validator = new QRegularExpressionValidator(binExpression, this);
+				} else if (index == 1) {
+					validator = new QRegularExpressionValidator(octExpression, this);
+				} else if (index == 2) {
+					validator = new QRegularExpressionValidator(decExpression, this);
+				} else if (index == 3) {
+					validator = new QRegularExpressionValidator(hexExpression, this);
+				}
+			} else if ((temp.length() < 2 && temp[0] != '-') || (temp.length() < 3 && temp[0] == '-'))
+				validator = new QRegularExpressionValidator(QRegularExpression("^[0-9bBxXoO-]*"), this);
 
-    // number 1
-    setNumbers((ui->num1Line->text().toStdString().length() != 0)
-                   ? ui->num1Line->text().toStdString()
-                   : "0.0",
-               ui->num1Combo->currentIndex(), &this->num1);
-
-    // number 2
-    setNumbers((ui->num2Line->text().toStdString().length() != 0)
-                   ? ui->num2Line->text().toStdString()
-                   : "0.0",
-               ui->num2Combo->currentIndex(), &this->num2);
-
-    calculate(this->num1, this->num2);
+			setNumbers(temp.toStdString(),
+					   index,
+					   &this->num2);
+		}
+		ui->num1LE->setValidator(validator);
+	}
+	calculate();
 }
 
-void NBCalculator::setNumbers(std::string numberToConvert, int indexing,
+void NBCalculator::setNumbers(const std::string& numberToConvert, int indexing,
                               std::string *pointOfNumber) {
+	// clear whitespaces in numberToConvert
+	std::string numberToConvertCleared = numberToConvert;
+	numberToConvertCleared.erase(std::remove(numberToConvertCleared.begin(), numberToConvertCleared.end(), ' '), numberToConvertCleared.end());
     switch (indexing) {
         // binary
         case 0: {
-            validator = new QRegularExpressionValidator(binExpression, this);
-            *pointOfNumber = binToDec(numberToConvert);
+			binaryNumber = new Number<Binary>(numberToConvertCleared);
+            *pointOfNumber = binaryNumber->getNumber().toDec().getNum();
             break;
         }
         // octal
         case 1: {
-            validator = new QRegularExpressionValidator(octExpression, this);
-            *pointOfNumber = octToDec(numberToConvert);
+			octalNumber = new Number<Octal>(numberToConvertCleared);
+			*pointOfNumber = octalNumber->getNumber().toDec().getNum();
             break;
         }
         // decimal
         case 2: {
-            validator = new QRegularExpressionValidator(decExpression, this);
-            *pointOfNumber = numberToConvert;
+            *pointOfNumber = numberToConvertCleared;
             break;
         }
         // hexadecimal
-        default: {
-            validator = new QRegularExpressionValidator(hexExpression, this);
-            *pointOfNumber = hexToDec(numberToConvert);
+        case 3: {
+			hexadecimalNumber = new Number<Hexadecimal>(numberToConvertCleared);
+			*pointOfNumber = hexadecimalNumber->getNumber().toDec().getNum();
             break;
         }
     }
-    (pointOfNumber == &this->num1) ? ui->num1Line->setValidator(validator)
-                                   : ui->num2Line->setValidator(validator);
 }
 
-void NBCalculator::calculate(std::string num1, std::string num2) {
-    // maybe there is a easier way...
-    // setting locale for qapplication changes(. might be , in region)
+void NBCalculator::calculate() {
+    // maybe there is an easier way...
+    // setting locale for QApplication changes(. might be , in region)
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
+
+	if (ui->operation->currentText().isEmpty())
+		return;
+
     switch (ui->resCombo->currentIndex()) {
         // binary
         case 0: {
-            switch (ui->operationCombo->currentIndex()) {
+            switch (ui->operation->currentText().toStdString().at(0)) {
                 // addition
-                case 0: {
-                    ui->resLine->setText(QString::fromStdString(decToBin(
-                        QString::number(std::stod(num1) + std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '+': {
+					binaryNumber = new Number<Binary>(Number<Decimal>(num1) + Number<Decimal>(num2));
+                    ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
                     break;
                 }
                 // subtraction
-                case 1: {
-                    ui->resLine->setText(QString::fromStdString(decToBin(
-                        QString::number(std::stod(num1) - std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '-': {
+					binaryNumber = new Number<Binary>(Number<Decimal>(num1) - Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
                     break;
                 }
                 // multiplication
-                case 2: {
-                    ui->resLine->setText(QString::fromStdString(decToBin(
-                        QString::number(std::stod(num1) * std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '*': {
+					binaryNumber = new Number<Binary>(Number<Decimal>(num1) * Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
                     break;
                 }
                 // dividing
-                default: {
-                    // exception handling for divide by 0
-                    if (std::stod(num2) == 0.0) {
-                        ui->resLine->setText("NaN");
-                        break;
-                    }
-                    ui->resLine->setText(QString::fromStdString(decToBin(
-                        QString::number(std::stod(num1) / std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
-                    break;
+				case '/': {
+					// exception handling for divide by 0
+					if (num2 == "0.0" || num2 == "0") {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					binaryNumber = new Number<Binary>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
+					break;
+				}
+				// modulo
+                case '%': {
+					binaryNumber = new Number<Binary>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
+					break;
                 }
             }
             break;
         }
         // octal
         case 1: {
-            switch (ui->operationCombo->currentIndex()) {
+            switch (ui->operation->currentText().toStdString().at(0)) {
                 // addition
-                case 0: {
-                    ui->resLine->setText(QString::fromStdString(decToOct(
-                        QString::number(std::stod(num1) + std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '+': {
+                    octalNumber = new Number<Octal>(Number<Decimal>(num1) + Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
                     break;
                 }
                 // subtraction
-                case 1: {
-                    ui->resLine->setText(QString::fromStdString(decToOct(
-                        QString::number(std::stod(num1) - std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '-': {
+                    octalNumber = new Number<Octal>(Number<Decimal>(num1) - Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
                     break;
                 }
                 // multiplication
-                case 2: {
-                    ui->resLine->setText(QString::fromStdString(decToOct(
-                        QString::number(std::stod(num1) * std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                case '*': {
+                    octalNumber = new Number<Octal>(Number<Decimal>(num1) * Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
                     break;
                 }
                 // dividing
-                default: {
+                case '/': {
                     // exception handling for divide by 0
-                    if (std::stod(num2) == 0.0) {
+                    if (num2 == "0.0" || num2 == "0") {
                         ui->resLine->setText("NaN");
                         break;
                     }
-                    ui->resLine->setText(QString::fromStdString(decToOct(
-                        QString::number(std::stod(num1) / std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
+                    octalNumber = new Number<Octal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
                     break;
                 }
+				// modulo
+				case '%': {
+					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					octalNumber = new Number<Octal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
+					break;
+				}
             }
             break;
         }
         // decimal
         case 2: {
-            switch (ui->operationCombo->currentIndex()) {
-                // addition
-                case 0: {
-                    ui->resLine->setText(QString::fromStdString(
-                        QString::number(std::stod(num1) + std::stod(num2),
-                                        'f', 14)
-                            .toStdString()));
-                    break;
-                }
-                // subtraction
-                case 1: {
-                    ui->resLine->setText(QString::fromStdString(
-                        QString::number(std::stod(num1) - std::stod(num2),
-                                        'f', 14)
-                            .toStdString()));
-                    break;
-                }
-                // multiplication
-                case 2: {
-                    ui->resLine->setText(QString::fromStdString(
-                        QString::number(std::stod(num1) * std::stod(num2),
-                                        'f', 14)
-                            .toStdString()));
-                    break;
-                }
-                // dividing
-                default: {
-                    // exception handling for divide by 0
-                    if (std::stod(num2) == 0.0) {
-                        ui->resLine->setText("NaN");
-                        break;
-                    }
-                    ui->resLine->setText(QString::fromStdString(
-                        QString::number(std::stod(num1) / std::stod(num2),
-                                        'f', 14)
-                            .toStdString()));
-                    break;
-                }
+            switch (ui->operation->currentText().toStdString().at(0)) {
+				// addition
+				case '+': {
+					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) + Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
+					break;
+				}
+				// subtraction
+				case '-': {
+					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) - Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
+					break;
+				}
+				// multiplication
+				case '*': {
+					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) * Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
+					break;
+				}
+				// dividing
+				case '/': {
+					// exception handling for divide by 0
+					if (num2 == "0.0" || num2 == "0") {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
+					break;
+				}
+				// modulo
+				case '%': {
+					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
+					break;
+				}
             }
             break;
         }
-            // hexadecimal
-        default: {
-            switch (ui->operationCombo->currentIndex()) {
-                // addition
-                case 0: {
-                    ui->resLine->setText(QString::fromStdString(decToHex(
-                        QString::number(std::stod(num1) + std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
-                    break;
-                }
-                // subtraction
-                case 1: {
-                    ui->resLine->setText(QString::fromStdString(decToHex(
-                        QString::number(std::stod(num1) - std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
-                    break;
-                }
-                // multiplication
-                case 2: {
-                    ui->resLine->setText(QString::fromStdString(decToHex(
-                        QString::number(std::stod(num1) * std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
-                    break;
-                }
-                // dividing
-                default: {
-                    // exception handling for divide by 0
-                    if (std::stod(num2) == 0.0) {
-                        ui->resLine->setText("NaN");
-                        break;
-                    }
-                    ui->resLine->setText(QString::fromStdString(decToHex(
-                        QString::number(std::stod(num1) / std::stod(num2),
-                                        'f', 14)
-                            .toStdString())));
-                    break;
-                }
+		// hexadecimal
+        case 3: {
+            switch (ui->operation->currentText().toStdString().at(0)) {
+				// addition
+				case '+': {
+					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) + Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
+					break;
+				}
+				// subtraction
+				case '-': {
+					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) - Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
+					break;
+				}
+				// multiplication
+				case '*': {
+					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) * Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
+					break;
+				}
+				// dividing
+				case '/': {
+					// exception handling for divide by 0
+					if (num2 == "0.0" || num2 == "0") {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
+					break;
+				}
+				// modulo
+				case '%': {
+					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
+						ui->resLine->setText("NaN");
+						break;
+					}
+					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
+					break;
+				}
             }
             break;
         }
     }
     // setting the locale to old
     std::setlocale(LC_NUMERIC, oldLocale.c_str());
+}
+
+void NBCalculator::help() {
+	QMessageBox::about(
+		this, tr("About Calculator"),
+		tr("If you want to use the calculator, you have to enter two numbers and choose the operation you want to do. Then you can choose the base of the result. The calculator supports the following operations: addition, subtraction, multiplication, division and modulo. The calculator supports the following bases: binary, octal, decimal and hexadecimal."
+		   "<br><br>You can define the entered number base with writing<br> <b>[-]0b1001.1001</b> for binary, <br><b>[-]0o175.175</b> for octal, <br><b>[-]0xA.F</b> for hexadecimal before the number. <br>If you don't define the base, the calculator will use the decimal base."));
 }
