@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
-
+# KDevelop files
+*.kdev*
 # Compiled Object files
 *.slo
 *.lo

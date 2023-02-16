@@ -2,6 +2,7 @@
 #include <QValidator>
 
 #include "nbc.h"
+#include "header-files/Number/Number.h"
 
 #ifndef QT_NBC_NBCONVERTER_H
 #define QT_NBC_NBCONVERTER_H
@@ -25,8 +26,11 @@ class NBConverter : public QDialog, public nbc {
 
   private:
     Ui::NBConverter *ui;
-
     QValidator *validator;
+	Number<Binary> *b;
+	Number<Octal> *o;
+	Number<Decimal> *d;
+	Number<Hexadecimal> *h;
 };
 
 #endif  // QT_NBC_NBCONVERTER_H

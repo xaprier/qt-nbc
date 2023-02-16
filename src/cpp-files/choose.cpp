@@ -16,6 +16,8 @@ choose::choose(QWidget *parent)
 
     connect(ui->pushButton, &QPushButton::clicked, this,
             &choose::onPushButton_clicked);
+
+	ui->comboBox->focusWidget();
 }
 
 choose::~choose() { delete ui; }
