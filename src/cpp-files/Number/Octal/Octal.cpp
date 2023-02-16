@@ -14,10 +14,14 @@ Octal::Octal(std::string num) {
 		return;
 	}
 
+	// tolower character x in string
+	std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::tolower(c); });
+
 	// trim octal string
-	if (num.substr(0, 2) == "0o" || num.substr(0, 2) == "0O") {
-		num = num.substr(2);
-	}
+	if (num.substr(0, 2) == "0o")
+		num = num.substr(2, num.length());
+	else if (num.substr(0, 3) == "-0o")
+		num = "-" + num.substr(3, num.length());
 
     clean_number(num); // clean if it starts/ends with 0
 
@@ -40,17 +44,18 @@ Octal::Octal(const Decimal &d) {
 
     clean_number(number); // clean if it starts/ends with 0
 
+	std::string result;
+
+	if (number.at(0) == '-') {
+		number = number.substr(1, number.length());
+		result += "-";
+	}
+
     if (number.length() == 0 || number == "0.0") {
         this->num = "0.0";
         return;
     }
 
-    std::string result;
-
-    if (number.at(0) == '-') {
-        number = number.substr(1, number.length());
-        result += "-";
-    }
 
     // split the decimal number as it supposed to be
     unsigned long long intPoint = 0;

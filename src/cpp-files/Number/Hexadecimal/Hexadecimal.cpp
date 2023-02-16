@@ -15,10 +15,14 @@ Hexadecimal::Hexadecimal(std::string num) {
 		return;
 	}
 
+	// toupper character x in string
+	std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::toupper(c); });
+
 	// trim hexadecimal string
-	if (num.substr(0, 2) == "0x" || num.substr(0, 2) == "0X") {
-		num = num.substr(2);
-	}
+	if (num.substr(0, 2) == "0X")
+		num = num.substr(2, num.length());
+	else if (num.substr(0, 3) == "-0X")
+		num = "-" + num.substr(3, num.length());
 
     clean_number(num); // clean if it starts/ends with 0
 

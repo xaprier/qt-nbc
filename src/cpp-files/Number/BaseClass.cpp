@@ -43,7 +43,7 @@ void BaseClass::clean_number(std::string &num) {
 	while (num.at(num.length() - 1) == '0' && num.at(num.length() - 2) != '.')
 		num = num.substr(0, num.length() - 1);
 
-	num = (num == "-." || num == ".") ? "0.0" : num;
+	num = (num == "-." || num == "." || num == ".0") ? "0.0" : num;
 
 	num = isItNegative ? "-" + num : num;
 }
