@@ -8,13 +8,8 @@ Binary Binary::operator%(const Binary& b) {
 	// creating return object/converting other object
 	Decimal first(*this), second(b);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
@@ -30,13 +25,8 @@ Binary Binary::operator%(const Octal& o) {
 	// creating return object/converting other object
 	Decimal first(*this), second(o);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
@@ -52,13 +42,8 @@ Binary Binary::operator%(const Decimal& second) {
 	// creating return object/converting other object
 	Decimal first(*this);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);
@@ -74,13 +59,8 @@ Binary Binary::operator%(const Hexadecimal& h) {
 	// creating return object/converting other object
 	Decimal first(*this), second(h);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(fmod(std::stold(first.num), std::stold(second.num)), 30);

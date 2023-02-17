@@ -7,13 +7,8 @@ Hexadecimal Hexadecimal::operator/(const Hexadecimal& h) {
 	// creating return object/converting other object
 	Decimal first(*this), second(h);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
@@ -29,13 +24,8 @@ Hexadecimal Hexadecimal::operator/(const Binary& b) {
 	// creating return object/converting other object
 	Decimal first(*this), second(b);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
@@ -51,13 +41,8 @@ Hexadecimal Hexadecimal::operator/(const Octal& o) {
 	// creating return object/converting other object
 	Decimal first(*this), second(o);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);
@@ -73,13 +58,8 @@ Hexadecimal Hexadecimal::operator/(const Decimal& second) {
 	// creating return object/converting other object
 	Decimal first(*this);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the multiplying of decimal values
 	first.num = to_string_with_precision(std::stold(first.num) / std::stold(second.num), 30);

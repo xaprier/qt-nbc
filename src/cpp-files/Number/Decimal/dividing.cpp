@@ -7,13 +7,8 @@ Decimal Decimal::operator/(const Decimal& second) {
 	// creating return object/converting other object
 	Decimal result(*this);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the multiplying of decimal values
 	result.num = this->div(result.num, second.num);
@@ -29,13 +24,8 @@ Decimal Decimal::operator/(const Binary& b) {
 	// creating return object/converting other object
 	Decimal result(*this), second(b);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the divide of decimal values
 	result.num = this->div(result.num, second.num);
@@ -51,13 +41,8 @@ Decimal Decimal::operator/(const Octal& o) {
 	// creating return object/converting other object
 	Decimal result(*this), second(o);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the divide of decimal values
 	result.num = this->div(result.num, second.num);
@@ -73,13 +58,8 @@ Decimal Decimal::operator/(const Hexadecimal& h) {
 	// creating return object/converting other object
 	Decimal result(*this), second(h);
 
-	try {
-		if (second.num == "0.0")
-			throw "Divide by 0 exception. Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Divide by 0 exception.");
 
 	// calculate the divide of decimal values
 	result.num = this->div(result.num, second.num);

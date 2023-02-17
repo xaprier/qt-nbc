@@ -8,13 +8,8 @@ Decimal Decimal::operator%(const Decimal& second) {
 	// creating return object/converting other object
 	Decimal result(*this);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
@@ -30,13 +25,8 @@ Decimal Decimal::operator%(const Binary& b) {
 	// creating return object/converting other object
 	Decimal result(*this), second(b);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
@@ -52,13 +42,8 @@ Decimal Decimal::operator%(const Octal& o) {
 	// creating return object/converting other object
 	Decimal result(*this), second(o);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
 
 	// calculate the multiplying of decimal values
 	result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
@@ -74,13 +59,9 @@ Decimal Decimal::operator%(const Hexadecimal& h) {
 	// creating return object/converting other object
 	Decimal result(*this), second(h);
 
-	try {
-		if (second.num == "0.0")
-			throw "Domain number cannot be zero! Exiting...";
-	} catch(const char* er) {
-		std::cerr << er << std::endl;
-		exit(1);
-	}
+	if (second.num == "0.0")
+		throw std::runtime_error("Domain number cannot be zero!");
+
 
 	// calculate the multiplying of decimal values
 	result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
