@@ -186,6 +186,7 @@ std::string BaseClass::sub(std::string val1, std::string val2) {
 std::string BaseClass::mul(std::string val1, std::string val2) {
 	if (val1 == "NaN" || val2 == "NaN")
 		return "NaN";
+
 	// setting locale for QApplication changes(. might be , in region)
 	const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
 	std::setlocale(LC_NUMERIC, "C");
@@ -226,13 +227,16 @@ std::string BaseClass::mul(std::string val1, std::string val2) {
 			firstLen = n.length();
 		results[i] = std::string(firstLen - n.length() + i + 1, '0') + n + std::string(tVal2.length() - i - 1, '0');
 	}
+
 	std::string result = "0";
 	for (int i = 0; i < tVal2.length(); i++) {
 		result = this->sum(result, results[i]);
 	}
 
 	result.erase(result.size() - 2); // remove last 2 items(.0)
-	result.insert(result.length() - decLoc, ".");
+	if (result.length() - decLoc < result.length())
+		result.insert(result.length() - decLoc, ".");
+	else result += ".0";
 
 	// setting the locale to old
 	std::setlocale(LC_NUMERIC, oldLocale.c_str());
