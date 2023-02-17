@@ -167,17 +167,23 @@ void NBCalculator::calculate() {
                 // dividing
 				case '/': {
 					// exception handling for divide by 0
-					if (num2 == "0.0" || num2 == "0") {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						binaryNumber = new Number<Binary>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					} catch (const std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					binaryNumber = new Number<Binary>(Number<Decimal>(num1) / Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
 					break;
 				}
 				// modulo
                 case '%': {
-					binaryNumber = new Number<Binary>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					try {
+						binaryNumber = new Number<Binary>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					} catch (std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
+					}
 					ui->resLine->setText(QString::fromStdString(binaryNumber->getNumber().getNum()));
 					break;
                 }
@@ -206,23 +212,25 @@ void NBCalculator::calculate() {
                     break;
                 }
                 // dividing
-                case '/': {
-                    // exception handling for divide by 0
-                    if (num2 == "0.0" || num2 == "0") {
-                        ui->resLine->setText("NaN");
-                        break;
-                    }
-                    octalNumber = new Number<Octal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+				case '/': {
+					// exception handling for divide by 0
+					try {
+						octalNumber = new Number<Octal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					} catch (const std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
+					}
 					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
-                    break;
-                }
+					break;
+				}
 				// modulo
 				case '%': {
-					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						octalNumber = new Number<Octal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					} catch (std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					octalNumber = new Number<Octal>(Number<Decimal>(num1) % Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(octalNumber->getNumber().getNum()));
 					break;
 				}
@@ -253,21 +261,23 @@ void NBCalculator::calculate() {
 				// dividing
 				case '/': {
 					// exception handling for divide by 0
-					if (num2 == "0.0" || num2 == "0") {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						decimalNumber = new Number<Decimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					} catch (const std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
 					break;
 				}
 				// modulo
 				case '%': {
-					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						decimalNumber = new Number<Decimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					} catch (std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					decimalNumber = new Number<Decimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(decimalNumber->getNumber().getNum()));
 					break;
 				}
@@ -298,21 +308,23 @@ void NBCalculator::calculate() {
 				// dividing
 				case '/': {
 					// exception handling for divide by 0
-					if (num2 == "0.0" || num2 == "0") {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
+					} catch (const std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) / Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
 					break;
 				}
 				// modulo
 				case '%': {
-					if (num2 == "0.0" || num2 == "0" || num2.empty()) {
-						ui->resLine->setText("NaN");
-						break;
+					try {
+						hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
+					} catch (std::runtime_error &a) {
+						ui->resLine->setText(a.what());
+						return;
 					}
-					hexadecimalNumber = new Number<Hexadecimal>(Number<Decimal>(num1) % Number<Decimal>(num2));
 					ui->resLine->setText(QString::fromStdString(hexadecimalNumber->getNumber().getNum()));
 					break;
 				}

@@ -288,7 +288,6 @@ std::string BaseClass::div(std::string val1, std::string val2) {
 		divisor = stoull(val2);
 	} catch (const std::out_of_range &oor) {
 		std::cerr << oor.what() << " threw std::out_of_range on second value\n";
-
 		return "NaN";
 	}
 
