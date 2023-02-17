@@ -37,7 +37,7 @@ NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalc
 }
 
 NBCalculator::~NBCalculator() { delete ui; delete validator; delete binaryNumber; delete octalNumber; delete decimalNumber; delete hexadecimalNumber; }
-
+static int i = 0;
 void NBCalculator::hasChanged() {
 	if (QObject::sender() == ui->num1LE) {
 		QString temp = ui->num1LE->text();
@@ -98,6 +98,9 @@ void NBCalculator::setNumbers(const std::string& numberToConvert, int indexing,
                               std::string *pointOfNumber) {
 	// clear whitespaces in numberToConvert
 	std::string numberToConvertCleared = numberToConvert;
+	numberToConvertCleared = numberToConvertCleared.empty() ? "0" : numberToConvertCleared;
+
+	// clear the whitespaces if exists
 	numberToConvertCleared.erase(std::remove(numberToConvertCleared.begin(), numberToConvertCleared.end(), ' '), numberToConvertCleared.end());
     switch (indexing) {
         // binary
@@ -134,6 +137,10 @@ void NBCalculator::calculate() {
 
 	if (ui->operation->currentText().isEmpty())
 		return;
+
+	/*
+	 * Number<Decimal> mulRes = Number<Decimal>(num1) * Number<Decimal>(num2);...
+	 */
 
     switch (ui->resCombo->currentIndex()) {
         // binary
