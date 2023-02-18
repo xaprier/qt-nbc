@@ -61,57 +61,114 @@ else()
     endif()
 endif()
 
-if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so")
-    add_library(
-        number SHARED
-        lib/Number/BaseClass.h
-        lib/Number/Binary.h
-        lib/Number/Decimal.h
-        lib/Number/Hexadecimal.h
-        lib/Number/Octal.h
-        lib/Number/Number.h
+if(UNIX)
+    # unix
+    if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so")
+        add_library(
+                number SHARED
+                lib/Number/BaseClass.h
+                lib/Number/Binary.h
+                lib/Number/Decimal.h
+                lib/Number/Hexadecimal.h
+                lib/Number/Octal.h
+                lib/Number/Number.h
 
-        lib/Number/Base/BaseClass.cpp
+                lib/Number/Base/BaseClass.cpp
 
-        lib/Number/Binary/Binary.cpp
-        lib/Number/Binary/dividing.cpp
-        lib/Number/Binary/multiplying.cpp
-        lib/Number/Binary/remainder.cpp
-        lib/Number/Binary/subtracting.cpp
-        lib/Number/Binary/summing.cpp
+                lib/Number/Binary/Binary.cpp
+                lib/Number/Binary/dividing.cpp
+                lib/Number/Binary/multiplying.cpp
+                lib/Number/Binary/remainder.cpp
+                lib/Number/Binary/subtracting.cpp
+                lib/Number/Binary/summing.cpp
 
-        lib/Number/Decimal/Decimal.cpp
-        lib/Number/Decimal/dividing.cpp
-        lib/Number/Decimal/multiplying.cpp
-        lib/Number/Decimal/remainder.cpp
-        lib/Number/Decimal/subtracting.cpp
-        lib/Number/Decimal/summing.cpp
+                lib/Number/Decimal/Decimal.cpp
+                lib/Number/Decimal/dividing.cpp
+                lib/Number/Decimal/multiplying.cpp
+                lib/Number/Decimal/remainder.cpp
+                lib/Number/Decimal/subtracting.cpp
+                lib/Number/Decimal/summing.cpp
 
-        lib/Number/Hexadecimal/Hexadecimal.cpp
-        lib/Number/Hexadecimal/dividing.cpp
-        lib/Number/Hexadecimal/multiplying.cpp
-        lib/Number/Hexadecimal/remainder.cpp
-        lib/Number/Hexadecimal/subtracting.cpp
-        lib/Number/Hexadecimal/summing.cpp
+                lib/Number/Hexadecimal/Hexadecimal.cpp
+                lib/Number/Hexadecimal/dividing.cpp
+                lib/Number/Hexadecimal/multiplying.cpp
+                lib/Number/Hexadecimal/remainder.cpp
+                lib/Number/Hexadecimal/subtracting.cpp
+                lib/Number/Hexadecimal/summing.cpp
 
-        lib/Number/Octal/Octal.cpp
-        lib/Number/Octal/dividing.cpp
-        lib/Number/Octal/multiplying.cpp
-        lib/Number/Octal/remainder.cpp
-        lib/Number/Octal/subtracting.cpp
-        lib/Number/Octal/summing.cpp
-    )
-    target_link_libraries(qt-nbc PRIVATE number)
+                lib/Number/Octal/Octal.cpp
+                lib/Number/Octal/dividing.cpp
+                lib/Number/Octal/multiplying.cpp
+                lib/Number/Octal/remainder.cpp
+                lib/Number/Octal/subtracting.cpp
+                lib/Number/Octal/summing.cpp
+        )
+        target_link_libraries(qt-nbc PRIVATE number)
+    else()
+        add_library(
+                number SHARED
+                IMPORTED
+        )
+        set_target_properties(
+                number PROPERTIES
+                IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so"
+        )
+        target_link_libraries(qt-nbc PRIVATE number)
+    endif()
 else()
-    add_library(
-        number SHARED
-        IMPORTED
-    )
-    set_target_properties(
-        number PROPERTIES
-        IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so"
-    )
-    target_link_libraries(qt-nbc PRIVATE number)
+    # windows
+    if (NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.dll")
+        add_library(
+                number SHARED
+                lib/Number/BaseClass.h
+                lib/Number/Binary.h
+                lib/Number/Decimal.h
+                lib/Number/Hexadecimal.h
+                lib/Number/Octal.h
+                lib/Number/Number.h
+
+                lib/Number/Base/BaseClass.cpp
+
+                lib/Number/Binary/Binary.cpp
+                lib/Number/Binary/dividing.cpp
+                lib/Number/Binary/multiplying.cpp
+                lib/Number/Binary/remainder.cpp
+                lib/Number/Binary/subtracting.cpp
+                lib/Number/Binary/summing.cpp
+
+                lib/Number/Decimal/Decimal.cpp
+                lib/Number/Decimal/dividing.cpp
+                lib/Number/Decimal/multiplying.cpp
+                lib/Number/Decimal/remainder.cpp
+                lib/Number/Decimal/subtracting.cpp
+                lib/Number/Decimal/summing.cpp
+
+                lib/Number/Hexadecimal/Hexadecimal.cpp
+                lib/Number/Hexadecimal/dividing.cpp
+                lib/Number/Hexadecimal/multiplying.cpp
+                lib/Number/Hexadecimal/remainder.cpp
+                lib/Number/Hexadecimal/subtracting.cpp
+                lib/Number/Hexadecimal/summing.cpp
+
+                lib/Number/Octal/Octal.cpp
+                lib/Number/Octal/dividing.cpp
+                lib/Number/Octal/multiplying.cpp
+                lib/Number/Octal/remainder.cpp
+                lib/Number/Octal/subtracting.cpp
+                lib/Number/Octal/summing.cpp
+        )
+        target_link_libraries(qt-nbc PRIVATE number)
+    else()
+        add_library(
+                number SHARED
+                IMPORTED
+        )
+        set_target_properties(
+                number PROPERTIES
+                IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.dll"
+        )
+        target_link_libraries(qt-nbc PRIVATE number)
+    endif()
 endif()
 
 # target_link_libraries(qt-nbc PRIVATE number)
@@ -132,4 +189,14 @@ endif()
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/icon.svg
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-file(COPY ${CMAKE_CURRENT_BINARY_DIR}/libnumber.so DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+if(UNIX)
+    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so")
+        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.so
+            DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    endif()
+else()
+    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.dll")
+        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/lib/libnumber.dll
+            DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    endif()
+endif()
