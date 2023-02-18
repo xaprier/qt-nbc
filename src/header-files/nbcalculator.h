@@ -8,8 +8,8 @@
 #include <QDialog>
 #include <QValidator>
 
+#include "lib/Number/Number.h"
 #include "nbc.h"
-#include "header-files/Number/Number.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,18 +28,18 @@ class NBCalculator : public QDialog, public nbc {
   private slots:
     void hasChanged();
     void calculate();
-    void setNumbers(const std::string& numberToConvert, int indexing,
+    void setNumbers(const std::string &numberToConvert, int indexing,
                     std::string *pointOfNumber);
-	void help();
+    void help();
 
   private:
     std::string num1, num2;
     Ui::NBCalculator *ui;
     QRegularExpressionValidator *validator;
-	Number<Binary> *binaryNumber;
-	Number<Octal> *octalNumber;
-	Number<Decimal> *decimalNumber;
-	Number<Hexadecimal> *hexadecimalNumber;
+    Number<Binary> *binaryNumber;
+    Number<Octal> *octalNumber;
+    Number<Decimal> *decimalNumber;
+    Number<Hexadecimal> *hexadecimalNumber;
 };
 
 #endif  // nbcalculator_h
