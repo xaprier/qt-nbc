@@ -5,11 +5,11 @@
 #ifndef QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
 #define QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
 
-#include "Number/Binary.h"
-#include "Number/Decimal.h"
-#include "Number/Hexadecimal.h"
-#include "Number/Octal.h"
-#include "Number/BaseClass.h"
+#include "lib/Number/BaseClass.h"
+#include "lib/Number/Binary.h"
+#include "lib/Number/Decimal.h"
+#include "lib/Number/Hexadecimal.h"
+#include "lib/Number/Octal.h"
 
 void testConstructors();
 void testConverters();
@@ -22,4 +22,4 @@ void operator_remainderOverloading();
 void operator_assignmentsOverloading();
 void operator_RelationOverloading();
 
-#endif //QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
+#endif  // QT_NBC_SRC_HEADER_FILES_TEST_CASES_H_
