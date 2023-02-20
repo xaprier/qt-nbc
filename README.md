@@ -1,6 +1,21 @@
 # Socials
-
-<p align="center"> <a href="https://discord.com/users/xaprier#6129" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/discord.svg" width="32" height="32" /></a> <a href="https://www.github.com/xaprier" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/github.svg" width="32" height="32" /></a> <a href="http://www.instagram.com/xaprier.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/instagram.svg" width="32" height="32" /></a> <a href="https://www.linkedin.com/in/seymen-kalkan-819b01220" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/linkedin.svg" width="32" height="32" /></a> <a href="https://twitter.com/xaprier_dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/twitter.svg" width="32" height="32" /></a></p>
+<p align="center">
+  <a href="https://discord.com/users/xaprier#6129" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/discord.svg" width="32" height="32" />
+  </a>&nbsp
+  <a href="https://www.github.com/xaprier" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/github.svg" width="32" height="32" />
+  </a>&nbsp
+  <a href="http://www.instagram.com/xaprier.dev" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/instagram.svg" width="32" height="32" />
+  </a>&nbsp
+  <a href="https://www.linkedin.com/in/seymen-kalkan-819b01220" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/linkedin.svg" width="32" height="32" />
+  </a>&nbsp
+  <a href="https://twitter.com/xaprier_dev" target="_blank" rel="noreferrer">
+    <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/twitter.svg" width="32" height="32" />
+  </a>
+</p>
 
 # About qt-nbc
 
@@ -49,7 +64,7 @@ git clone https://github.com/xaprier/qt-nbc.git
 Enter the direcotry of the source code
 
 ```sh
-cd qt-nbc/src
+cd qt-nbc
 ```
 
 You can see the CMakeLists.txt which we use for build
@@ -57,13 +72,13 @@ You can see the CMakeLists.txt which we use for build
 Build the makefile with CMake, if you don't have cmake you have to install it.
 
 ```sh
-cmake -G "Unix Makefiles" -B "../build"
+cmake -G "Unix Makefiles" -B "build"
 ```
 
 Than our Makefile is ready for build the source code. We have to access the directory of makefile and run make.
 
 ```sh
-cd ../build && make
+cd build && make
 ```
 
 Than our compiled program is ready for run in the directory of the makefile with the name "qt-nbc"
@@ -75,14 +90,53 @@ You can run the program with this command
 
 # Documentation
 
-## nbc class
+## Number Class
 
-- A class which includes number base converting functions
-- Only used C++'s main features.
-- It can be easily useable on console applications and more...
+- Template Class for using Decimal, Octal, Binary, Hexadecimal as a Number
+  - [Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number.h)
 
-  - [Header file](https://github.com/xaprier/qt-nbc/blob/main/src/header-files/nbc.h)
-  - [Source file](https://github.com/xaprier/qt-nbc/blob/main/src/cpp-files/nbc.cpp)
+  ## Binary/Octal/Decimal/Hexadecimal Class
+
+  - The Classes which includes the operations(+,-,_,/,%,+=,-=,_=,%=,=) in Number Bases
+  - [Binary Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary.h)
+    - [Source files](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary)
+    - [Binary.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/Binary.cpp) Constructors, converter functions, assignment operators
+    - [dividing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/dividing.cpp) Dividing operators(/, /=)
+    - [multiplying.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/multiplying.cpp) Multiply operators(*, *=)
+    - [remainder.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/remainder.cpp) Remainder operators(%, %=)
+    - [subtracting.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/subtracting.cpp) Subtracting operators(-, -=)
+    - [summing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Binary/summing.cpp) Addition operators(+, +=)
+  - [Octal Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal.h)
+    - [Source files](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal)
+    - [Octal.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/Octal.cpp) Constructors, converter functions, assignment operators
+    - [dividing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/dividing.cpp) Dividing operators(/, /=)
+    - [multiplying.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/multiplying.cpp) Multiply operators(*, *=)
+    - [remainder.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/remainder.cpp) Remainder operators(%, %=)
+    - [subtracting.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/subtracting.cpp) Subtracting operators(-, -=)
+    - [summing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Octal/summing.cpp) Addition operators(+, +=)
+  - [Decimal Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal.h)
+    - [Source files](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal)
+    - [Decimal.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/Decimal.cpp) Constructors, converter functions, assignment operators
+    - [dividing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/dividing.cpp) Dividing operators(/, /=)
+    - [multiplying.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/multiplying.cpp) Multiply operators(*, *=)
+    - [remainder.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/remainder.cpp) Remainder operators(%, %=)
+    - [subtracting.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/subtracting.cpp) Subtracting operators(-, -=)
+    - [summing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Decimal/summing.cpp) Addition operators(+, +=)
+  - [Hexadecimal Header file](Hexadecimal.h)
+    - [Source files](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal)
+    - [Hexadecimal.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/Hexadecimal.cpp) Constructors, converter functions, assignment operators
+    - [dividing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/dividing.cpp) Dividing operators(/, /=)
+    - [multiplying.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/multiplying.cpp) Multiply operators(*, *=)
+    - [remainder.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/remainder.cpp) Remainder operators(%, %=)
+    - [subtracting.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/subtracting.cpp) Subtracting operators(-, -=)
+    - [summing.cpp](https://github.com/xaprier/qt-nbc/blob/main/lib/Hexadecimal/summing.cpp) Addition operators(+, +=)
+    ## Base Class
+
+    - The base class which using for Polymorphism and Inheritance
+    - Includes my algorithms for calculating sum, subtraction, multiplaction and the divide
+    - Also includes the operator overloadings for logical operators
+    - [Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/BaseClass.h)
+    - [Source file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/Base/BaseClass.cpp)
 
 ## choose class
 
