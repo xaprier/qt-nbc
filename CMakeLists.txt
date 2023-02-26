@@ -15,8 +15,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-add_library(QT::Widgets ALIAS Qt${QT_VERSION_MAJOR}::Widgets)
-
 set(PROJECT_SOURCES
     src/cpp-files/main.cpp
 
@@ -63,6 +61,7 @@ else()
     endif()
 endif()
 
+# number library creating
 add_library(
     number SHARED
     lib/Number/BaseClass.h
@@ -103,7 +102,7 @@ add_library(
     lib/Number/Octal/summing.cpp
 )
 
-target_link_libraries(qt-nbc PRIVATE number -shared)
+target_link_libraries(qt-nbc PRIVATE number)
 target_link_libraries(qt-nbc PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 set_target_properties(qt-nbc PROPERTIES
@@ -118,10 +117,11 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(qt-nbc)
 endif()
 
+# copy icon to binary path
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/icon.svg
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-# copy qt libraries to the binary path
+# copy libraries to binary path
 if (UNIX) # unix files
     file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/lib/Linux/*.so*")
     foreach(file ${files})
