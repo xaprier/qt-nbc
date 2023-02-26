@@ -31,6 +31,7 @@ Coded a Qt application with C++ which is converting number bases, calculating th
 
 - Qt5 or Qt6 Widgets
   - https://wiki.qt.io/Install_Qt_5_on_Ubuntu
+  - Do not forget to change CMake Prefix Path for QtConfig
 - Compiler and Linker for C++, Make system for build the project
 
   - Ubuntu and Debian Based OS:
