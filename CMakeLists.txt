@@ -34,12 +34,16 @@ set(PROJECT_SOURCES
 
     src/cpp-files/test_cases.cpp
     src/header-files/test_cases.h
+
+    src/design-files/resources.qrc
 )
+set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/resources.qrc")
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(qt-nbc
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ${app_icon_resource_windows}
     )
 
 # Define target properties for Android with Qt 6 as:
@@ -57,6 +61,7 @@ else()
     else()
         add_executable(qt-nbc
             ${PROJECT_SOURCES}
+            ${app_icon_resource_windows}
         )
     endif()
 endif()
@@ -112,6 +117,8 @@ set_target_properties(qt-nbc PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(qt-nbc)

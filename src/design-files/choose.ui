@@ -14,8 +14,8 @@
    <string>Choose Operation</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>qt-nbc.svg</normaloff>qt-nbc.svg</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/qt-nbc.svg</normaloff>:/icons/qt-nbc.svg</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -71,6 +71,8 @@
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

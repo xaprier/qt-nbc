@@ -14,8 +14,8 @@
    <string>Number Based Calculator</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>qt-nbc.svg</normaloff>qt-nbc.svg</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/qt-nbc.svg</normaloff>:/icons/qt-nbc.svg</iconset>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -203,6 +203,8 @@
   <tabstop>helpButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
