@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_PREFIX_PATH "~/Qt/6.4.1/gcc_64/lib/cmake") # path to Qt6Config.cmake
+set(CMAKE_PREFIX_PATH "/home/builder/Qt5.7.0/5.7/gcc_64/lib/cmake") # path to Qt6Config.cmake
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -118,7 +118,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 # copy icon to binary path
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/icon.svg
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/qt-nbc.svg
     DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # copy libraries to binary path
