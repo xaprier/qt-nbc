@@ -15,9 +15,9 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon.svg</normaloff>icon.svg</iconset>
+    <normaloff>qt-nbc.svg</normaloff>qt-nbc.svg</iconset>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>

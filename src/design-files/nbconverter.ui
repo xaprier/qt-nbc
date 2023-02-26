@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon.svg</normaloff>icon.svg</iconset>
+    <normaloff>qt-nbc.svg</normaloff>qt-nbc.svg</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
