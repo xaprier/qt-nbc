@@ -14,8 +14,8 @@
    <string>Number Base Converter</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>qt-nbc.svg</normaloff>qt-nbc.svg</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/qt-nbc.svg</normaloff>:/icons/qt-nbc.svg</iconset>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -175,6 +175,8 @@
   <tabstop>hexaLine</tabstop>
   <tabstop>exitBut</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
