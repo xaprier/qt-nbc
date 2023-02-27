@@ -90,8 +90,9 @@ start:
         while (val1.substr(val1.find('.') + 1, val1.length()).length() != val2.substr(val2.find('.') + 1, val2.length()).length())
             val2.append("0");
 
-    int got = 0, index = val1.length() - 1, i = 0;
-    while (index != -1) {
+    int got = 0, i = 0;
+	std::size_t index = val1.length() - 1;
+    while (index != SIZE_MAX) {
         if (val1[index] == '.') {
             result.insert(0, ".");
             index--;
@@ -159,8 +160,9 @@ std::string BaseClass::sub(std::string val1, std::string val2) {
         while (val1.substr(val1.find('.') + 1, val1.length()).length() != val2.substr(val2.find('.') + 1, val2.length()).length())
             val2.append("0");
 
-    int borrow = 0, index = val1.length() - 1, i = 0;
-    while (index != -1) {
+    int borrow = 0, i = 0;
+	std::size_t index = val1.length() - 1;
+	while (index != SIZE_MAX) {
         if (val1[index] == '.') {
             result.insert(result.begin(), '.');
             index--;
@@ -198,24 +200,21 @@ std::string BaseClass::mul(std::string val1, std::string val2) {
     val1[0] == '-' ? val1.erase(0, 1) : "";
     val2[0] == '-' ? val2.erase(0, 1) : "";
 
-    if (!val1IsNegative && val2IsNegative) {  // + * - = -
-        return "-" + this->mul(val1, val2);
-    } else if (val1IsNegative && !val2IsNegative) {  // - * + = -
+    if ((!val1IsNegative && val2IsNegative) || (val1IsNegative && !val2IsNegative)) {  // + * - = - || - * + = -
         return "-" + this->mul(val1, val2);
     } else if (val1IsNegative && val2IsNegative) {  // - * - = +
         return this->mul(val1, val2);
     }
 
-    int decLoc = val1.substr(val1.find('.') + 1, val1.length()).length() + val2.substr(val2.find('.') + 1, val2.length()).length();
+	std::size_t decLoc = val1.substr(val1.find('.') + 1, val1.length()).length() + val2.substr(val2.find('.') + 1, val2.length()).length();
     std::string tVal1 = val1.substr(0, val1.find('.')) + val1.substr(val1.find('.') + 1, val1.length());
     std::string tVal2 = val2.substr(0, val2.find('.')) + val2.substr(val2.find('.') + 1, val2.length());
-
     auto *results = new std::string[tVal2.length()];
-    int firstLen;
-    for (int i = tVal2.length() - 1; i >= 0; i--) {
+	std::size_t firstLen;
+    for (std::size_t i = tVal2.length() - 1; i != SIZE_MAX; i--) {
         std::string n;
         int got = 0;
-        for (int j = tVal1.length() - 1; j >= 0; j--) {
+        for (std::size_t j = tVal1.length() - 1; j != SIZE_MAX; j--) {
             int res = int(tVal2[i] - '0') * int(tVal1[j] - '0') + got;
             got = static_cast<int>(res / 10);
             n.insert(n.begin(), static_cast<char>(res % 10 + '0'));
@@ -254,9 +253,7 @@ std::string BaseClass::div(std::string val1, std::string val2) {
     val1[0] == '-' ? val1.erase(0, 1) : "";
     val2[0] == '-' ? val2.erase(0, 1) : "";
 
-    if (!val1IsNegative && val2IsNegative) {  // + / - = -
-        return "-" + this->div(val1, val2);
-    } else if (val1IsNegative && !val2IsNegative) {  // - / + = -
+    if ((!val1IsNegative && val2IsNegative) || (val1IsNegative && !val2IsNegative)) {  // + / - = - || - / + = -
         return "-" + this->div(val1, val2);
     } else if (val1IsNegative && val2IsNegative) {  // - / - = +
         return this->div(val1, val2);
@@ -272,7 +269,7 @@ std::string BaseClass::div(std::string val1, std::string val2) {
     }
 
     // make decimal points equal
-    int i = val1.substr(val1.find('.') + 1, val1.length()).length(), j = val2.substr(val2.find('.') + 1, val2.length()).length();
+    std::size_t i = val1.substr(val1.find('.') + 1, val1.length()).length(), j = val2.substr(val2.find('.') + 1, val2.length()).length();
     if (i > j) {
         val2.append(std::string(i - j, '0'));
     } else if (j > i) {
