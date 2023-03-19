@@ -31,9 +31,6 @@ set(PROJECT_SOURCES
     src/cpp-files/nbcalculator.cpp
     src/header-files/nbcalculator.h
 
-    src/cpp-files/test_cases.cpp
-    src/header-files/test_cases.h
-
     src/design-files/resources.qrc
 )
 set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/src/design-files/resources.qrc")
@@ -45,10 +42,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${app_icon_resource_windows}
     )
 
-# Define target properties for Android with Qt 6 as:
-# set_property(TARGET qt-nbc APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-# ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
     if(ANDROID)
         add_library(qt-nbc SHARED
@@ -67,7 +60,7 @@ endif()
 
 # number library creating
 add_library(
-    number STATIC
+    number SHARED
     lib/Number/BaseClass.h
     lib/Number/Binary.h
     lib/Number/Decimal.h
@@ -117,8 +110,6 @@ set_target_properties(qt-nbc PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-
-
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(qt-nbc)
 endif()
@@ -139,3 +130,16 @@ else()
         file(COPY ${file} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
     endforeach()
 endif()
+
+# testing binary
+add_executable(cpp_test src/cpp-files/test.cpp src/cpp-files/test_cases.cpp src/header-files/test_cases.h)
+target_link_libraries(cpp_test PRIVATE number)
+
+# enable testing functionality
+enable_testing()
+
+# define tests
+add_test(
+  NAME cpp_test
+  COMMAND $<TARGET_FILE:cpp_test>
+)
