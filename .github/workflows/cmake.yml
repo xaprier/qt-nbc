@@ -41,14 +41,15 @@ jobs:
           archives:     qtbase
           dir:          ${{ github.workspace }}/qt/
           setup-python: false
+          
       - name: (4) Export Qt Location
         run: |
-          export PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/{arch}/bin:$PATH
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib:$LD_LIBRARY_PATH
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-        run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/{arch}/lib/cmake
+        run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib/cmake
 
       - name: Build
         # Build your program with the given configuration
