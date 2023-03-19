@@ -16,5 +16,6 @@ cmake-build-debug/
 
 # vscode settings
 .vscode*
+.VSCodeCounter/
 # idea settings
 .idea/
