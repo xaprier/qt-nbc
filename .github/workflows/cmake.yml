@@ -39,8 +39,11 @@ jobs:
           host:         linux
           target:       desktop
           archives:     qtbase
-          dir:          ${{ runner.temp }}
+          dir:          ${{ github.workspace }}/qt/
           setup-python: false
+      - name: (4) Export Qt Location
+        run: |
+          export PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/{arch}/bin:$PATH
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
