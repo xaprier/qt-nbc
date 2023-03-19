@@ -30,7 +30,7 @@ jobs:
       - name: (3) Install Qt
         run: |
           sudo apt-get install build-essential -y
-          sudo apt-get install qt5-default -y
+          sudo apt install qtbase5-dev qtchooser qtbase5-dev-tools
           sudo apt-get install libglu1-mesa-dev -y
           
       - name: (4) Export Qt Location
