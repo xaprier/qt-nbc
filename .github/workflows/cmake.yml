@@ -9,7 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  QT_VERSION:   6.4.3
+  QT_VERSION:   6.4.0
 
 jobs:
   build:
@@ -26,7 +26,11 @@ jobs:
         working-directory:  ${{ github.workspace }}
         run: |
             git fetch --all --tags -f
-
+      
+      - name: (3) Install libicui18n for latest-ubuntu
+        run: |
+          sudo apt install libharfbuzz-dev -y
+            
       - name: (3) Install Qt
         uses: jurplel/install-qt-action@v3
         with:
