@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.2)
-
+cmake_minimum_required(VERSION 3.0)
+set(CMAKE_CXX_COMPILER g++)
 project(qt-nbc VERSION 3.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -7,8 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_PREFIX_PATH "/home/builder/Qt5.7.0/5.7/gcc_64/lib/cmake") # path to Qt6Config.cmake
-
+set(CMAKE_PREFIX_PATH "/home/xaprier/Qt/6.4.3/gcc_64/lib/cmake") # path to Qt6Config.cmake
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -68,7 +67,7 @@ endif()
 
 # number library creating
 add_library(
-    number SHARED
+    number STATIC
     lib/Number/BaseClass.h
     lib/Number/Binary.h
     lib/Number/Decimal.h
