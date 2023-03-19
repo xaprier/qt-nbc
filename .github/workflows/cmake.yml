@@ -29,7 +29,8 @@ jobs:
       
       - name: (3) Install libicui18n for latest-ubuntu
         run: |
-          sudo apt install libharfbuzz-dev -y
+          wget http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu60_60.2-3ubuntu3.2_amd64.deb
+          sudo apt-get install ./libicu60_60.2-3ubuntu3.2_amd64.deb
             
       - name: (3) Install Qt
         uses: jurplel/install-qt-action@v3
