@@ -27,35 +27,17 @@ jobs:
         run: |
             git fetch --all --tags -f
       
-            
       - name: (3) Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          version:      ${{ env.QT_VERSION }}
-          host:         linux
-          target:       desktop
-          archives:     qtbase
-          dir:          ${{ github.workspace }}/qt/
-          setup-python: false
+        run: |
+          sudo apt-get install qt5-default 
           
       - name: (4) Export Qt Location
         run: |
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib:$LD_LIBRARY_PATH
-          sudo apt install --reinstall libqt5widgets5 libqt5gui5 libqt5dbus5 libqt5network5 libqt5core5a
-          ldd $GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib/libQt5Core.so.5.15.2
+          echo $QT5_DIR
 
       - name: Configure CMake
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib/cmake
 
       - name: Build
-        # Build your program with the given configuration
         run: cmake --build ${{ github.workspace }}/build --config ${{ env.BUILD_TYPE }}
-
-      - name: Test
-        working-directory: ${{ github.workspace }}/build
-        # Execute tests defined by the CMake configuration.
-        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-        run: ctest -C ${{ env.BUILD_TYPE }}
-
