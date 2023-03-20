@@ -9,7 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  QT_VERSION:   5.15.2
+  QT_VERSION: 5.15.2
 
 jobs:
   build:
@@ -27,11 +27,9 @@ jobs:
         run: |
             git fetch --all --tags -f
       
-      - name: (3) Install Qt
+      - name: (3) Install Dependencies
         run: |
-          sudo apt-get install build-essential -y
-          sudo apt install qtbase5-dev qtchooser qtbase5-dev-tools
-          sudo apt-get install libglu1-mesa-dev -y
+          sudo apt install qtbase5-dev qtchooser qtbase5-dev-tools libglu1-mesa-dev build-essential -y
           
       - name: (4) Export Qt Location
         run: |
