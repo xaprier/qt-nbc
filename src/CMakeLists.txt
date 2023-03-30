@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
 
-set(CMAKE_CXX_COMPILER "/usr/bin/g++")
-
 project(qt-nbc VERSION 3.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
