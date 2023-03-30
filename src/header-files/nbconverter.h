@@ -1,8 +1,7 @@
 #include <QDialog>
 #include <QValidator>
 
-#include "lib/Number/Number.h"
-#include "nbc.h"
+#include "inc/Number.h"
 
 #ifndef QT_NBC_NBCONVERTER_H
 #define QT_NBC_NBCONVERTER_H
@@ -12,7 +11,7 @@ class NBConverter;
 }
 QT_END_NAMESPACE
 
-class NBConverter : public QDialog, public nbc {
+class NBConverter : public QDialog {
     Q_OBJECT
 
   public:
