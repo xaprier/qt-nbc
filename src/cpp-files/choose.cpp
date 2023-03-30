@@ -1,13 +1,13 @@
 //
 // Created by "xaprier" on "10/8/22"
 //
-#include "src/header-files/choose.h"
+#include "../header-files/choose.h"
 
 #include <QMessageBox>
 
 #include "../design-files/ui_choose.h"
-#include "src/header-files/nbcalculator.h"
-#include "src/header-files/nbconverter.h"
+#include "../header-files/nbcalculator.h"
+#include "../header-files/nbconverter.h"
 
 choose::choose(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::choose) {
@@ -26,10 +26,10 @@ void choose::onPushButton_clicked() {
     if (ui->comboBox->currentIndex() == 0) {
         auto *n = new NBConverter(this);
         n->exec();
-		delete n;
+        delete n;
     } else {
         auto *n = new NBCalculator(this);
         n->exec();
-		delete n;
+        delete n;
     }
 }

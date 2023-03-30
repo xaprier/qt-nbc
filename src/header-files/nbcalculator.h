@@ -8,8 +8,7 @@
 #include <QDialog>
 #include <QValidator>
 
-#include "lib/Number/Number.h"
-#include "nbc.h"
+#include "inc/Number.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +16,7 @@ class NBCalculator;
 }
 QT_END_NAMESPACE
 
-class NBCalculator : public QDialog, public nbc {
+class NBCalculator : public QDialog {
     Q_OBJECT
 
   public:

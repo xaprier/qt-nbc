@@ -1,11 +1,11 @@
-#include "src/header-files/nbconverter.h"
+#include "../header-files/nbconverter.h"
 
 #include <QComboBox>
 #include <QMessageBox>
 #include <QString>
 
 #include "../design-files/ui_nbconverter.h"
-#include "lib/Number/Number.h"
+#include "inc/Number.h"
 
 QRegularExpression binExpression("^-?0?b?[0-1]{1,}\\.?[0-1]*$");
 QRegularExpression octExpression("^-?0?o?[0-7]{1,}\\.?[0-7]*$");
