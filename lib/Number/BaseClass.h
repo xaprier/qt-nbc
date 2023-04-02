@@ -19,31 +19,31 @@ class BaseClass {
     friend class Octal;
 
     /**
-     * @brief Construct a new Base Class object
+     * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param num The number with based Decimal
      */
     explicit BaseClass(std::string = "0.0");
 
     /**
-     * @brief Construct a new Base Class object
+     * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param o The number with Octal object
      */
     explicit BaseClass(const Octal &o);
 
     /**
-     * @brief Construct a new Base Class object
+     * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param h The number with Hexadecimal object
      */
     explicit BaseClass(const Hexadecimal &h);
 
     /**
-     * @brief Construct a new Base Class object
+     * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param b The number with Binary object
      */
     explicit BaseClass(const Binary &b);
 
     /**
-     * @brief Construct a new Base Class object
+     * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param d The number with Decimal object
      */
     explicit BaseClass(const Decimal &d);
