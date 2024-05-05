@@ -44,5 +44,5 @@ jobs:
 
       - name: CTest
         run: |
-          cd ${{ github.workspace }}/build/src
+          cd ${{ github.workspace }}/build/
           ctest . --output-on-failure
