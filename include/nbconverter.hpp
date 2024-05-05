@@ -31,6 +31,7 @@ class NBConverter : public QDialog {
     void textChanged();
 
   private:
+    void setupValidator();
     Ui::NBConverter *ui;
     QValidator *validator;
     Number<Binary> *b;

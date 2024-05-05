@@ -69,20 +69,5 @@ if(QT_VERSION_MAJOR EQUAL 6)
   qt_finalize_executable(${PROJECT_NAME})
 endif()
 
-# get test files
-file(GLOB TEST_FILES_CPP test/*.cpp)
-file(GLOB TEST_FILES_HPP test/*.hpp)
-
-# testing binary
-add_executable(cpp_test ${TEST_FILES_HPP} ${TEST_FILES_CPP})
-target_link_libraries(cpp_test PRIVATE number)
-target_include_directories(cpp_test PRIVATE include)
-
-# enable testing functionality
-enable_testing()
-
-# define tests
-add_test(
-  NAME cpp_test
-  COMMAND $<TARGET_FILE:cpp_test>
-)
+# add test directory
+add_subdirectory(test)

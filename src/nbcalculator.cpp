@@ -3,12 +3,8 @@
 //
 #include "nbcalculator.hpp"
 
-extern QRegularExpression binExpression;
-extern QRegularExpression octExpression;
-extern QRegularExpression decExpression;
-extern QRegularExpression hexExpression;
-
 #include "../design/ui_nbcalculator.h"
+#include "expressions.hpp"
 
 NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalculator) {
     // fixed size of window

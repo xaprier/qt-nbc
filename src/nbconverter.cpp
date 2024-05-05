@@ -1,11 +1,13 @@
 #include "nbconverter.hpp"
 
+#include <qobject.h>
+
 #include "../design/ui_nbconverter.h"
 
-QRegularExpression binExpression("^-?0?b?[0-1]{1,}\\.?[0-1]*$");
-QRegularExpression octExpression("^-?0?o?[0-7]{1,}\\.?[0-7]*$");
-QRegularExpression decExpression("^-?[0-9]{1,}\\.?[0-9]*$");
-QRegularExpression hexExpression("^-?0?x?[0-9A-F]{1,}\\.?[0-9A-F]*$");
+extern QRegularExpression binExpression;
+extern QRegularExpression octExpression;
+extern QRegularExpression decExpression;
+extern QRegularExpression hexExpression;
 
 NBConverter::NBConverter(QWidget *parent) : QDialog(parent), ui(new Ui::NBConverter) {
     QWidget::setFixedSize(800, 209);
@@ -22,40 +24,35 @@ NBConverter::NBConverter(QWidget *parent) : QDialog(parent), ui(new Ui::NBConver
             &NBConverter::textChanged);
     connect(ui->exitBut, &QPushButton::clicked, this, &NBConverter::close);
 
-    validator = new QRegularExpressionValidator(binExpression, this);
-    ui->binLine->setValidator(validator);
-    validator = new QRegularExpressionValidator(octExpression, this);
-    ui->octLine->setValidator(validator);
-    validator = new QRegularExpressionValidator(decExpression, this);
-    ui->decLine->setValidator(validator);
-    validator = new QRegularExpressionValidator(hexExpression, this);
-    ui->hexaLine->setValidator(validator);
+    this->setupValidator();
 }
 
-NBConverter::~NBConverter() { delete ui; }
+NBConverter::~NBConverter() {
+    delete ui;
+}
 
 void NBConverter::textChanged() {
     QString bin = ui->binLine->text(), oct = ui->octLine->text(), dec = ui->decLine->text(), hex = ui->hexaLine->text();
 
-    if (QObject::sender() == ui->binLine) {  // completed
+    if (QObject::sender() == ui->binLine) {
         b = new Number<Binary>(ui->binLine->text().toStdString());
         oct = QString::fromStdString(b->getNumber().toOct().getNum());
         dec = QString::fromStdString(b->getNumber().toDec().getNum());
         hex = QString::fromStdString(b->getNumber().toHex().getNum());
         delete b;
-    } else if (QObject::sender() == ui->decLine) {  // completed
+    } else if (QObject::sender() == ui->decLine) {
         d = new Number<Decimal>(ui->decLine->text().toStdString());
         bin = QString::fromStdString(d->getNumber().toBin().getNum());
         oct = QString::fromStdString(d->getNumber().toOct().getNum());
         hex = QString::fromStdString(d->getNumber().toHex().getNum());
         delete d;
-    } else if (QObject::sender() == ui->octLine) {  // completed
+    } else if (QObject::sender() == ui->octLine) {
         o = new Number<Octal>(ui->octLine->text().toStdString());
         bin = QString::fromStdString(o->getNumber().toBin().getNum());
         dec = QString::fromStdString(o->getNumber().toDec().getNum());
         hex = QString::fromStdString(o->getNumber().toHex().getNum());
         delete o;
-    } else {  // completed
+    } else {
         h = new Number<Hexadecimal>(ui->hexaLine->text().toStdString());
         bin = QString::fromStdString(h->getNumber().toBin().getNum());
         oct = QString::fromStdString(h->getNumber().toOct().getNum());
@@ -66,4 +63,11 @@ void NBConverter::textChanged() {
     ui->octLine->setText(oct);
     ui->decLine->setText(dec);
     ui->hexaLine->setText(hex);
+}
+
+void NBConverter::setupValidator() {
+    ui->binLine->setValidator(new QRegularExpressionValidator(binExpression));
+    ui->octLine->setValidator(new QRegularExpressionValidator(octExpression));
+    ui->decLine->setValidator(new QRegularExpressionValidator(decExpression));
+    ui->hexaLine->setValidator(new QRegularExpressionValidator(hexExpression));
 }
