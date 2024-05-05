@@ -3,7 +3,10 @@
 //
 #include <cmath>
 
+#include "Binary.hpp"
 #include "Decimal.hpp"
+#include "Hexadecimal.hpp"
+#include "Octal.hpp"
 
 Decimal Decimal::operator%(const Decimal &second) {
     // creating return object/converting other object

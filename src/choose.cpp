@@ -3,11 +3,7 @@
 //
 #include "choose.hpp"
 
-#include <QMessageBox>
-
 #include "../design/ui_choose.h"
-#include "nbcalculator.hpp"
-#include "nbconverter.hpp"
 
 choose::choose(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::choose) {

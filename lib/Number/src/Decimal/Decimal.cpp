@@ -3,6 +3,10 @@
 #include <cmath>
 #include <iostream>
 
+#include "Binary.hpp"
+#include "Hexadecimal.hpp"
+#include "Octal.hpp"
+
 Decimal::Decimal(std::string num) {
     // setting locale for QApplication changes(. might be , in region)
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);

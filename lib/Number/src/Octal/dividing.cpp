@@ -1,6 +1,9 @@
 //
 // Created by xaprier on 2/13/23.
 //
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
 #include "Octal.hpp"
 
 Octal Octal::operator/(const Octal &o) {

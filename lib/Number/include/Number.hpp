@@ -6,8 +6,6 @@
 #define NUMBER_H
 #include <ostream>
 
-#include "Binary.hpp"
-
 template <class T>
 class Number {
     T *number;

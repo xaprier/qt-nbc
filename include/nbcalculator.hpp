@@ -5,10 +5,17 @@
 #ifndef nbcalculator_h
 #define nbcalculator_h
 
+#include <QDebug>
 #include <QDialog>
+#include <QMessageBox>
+#include <QString>
 #include <QValidator>
 
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
 #include "Number.hpp"
+#include "Octal.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

@@ -4,6 +4,9 @@
 #include <cmath>
 
 #include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
+#include "Octal.hpp"
 
 Binary Binary::operator%(const Binary &b) {
     // creating return object/converting other object

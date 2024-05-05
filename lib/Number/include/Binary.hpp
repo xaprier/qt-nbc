@@ -3,9 +3,7 @@
 
 #include <iostream>
 
-#include "Decimal.hpp"
-#include "Hexadecimal.hpp"
-#include "Octal.hpp"
+#include "BaseClass.hpp"
 
 class Binary : public BaseClass {
   public:

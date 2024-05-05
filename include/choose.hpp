@@ -6,6 +6,10 @@
 #define QT_NBC_CHOOSE_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+
+#include "nbcalculator.hpp"
+#include "nbconverter.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

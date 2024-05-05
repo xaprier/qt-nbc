@@ -1,9 +1,12 @@
-
 #include "Hexadecimal.hpp"
 
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Octal.hpp"
 
 Hexadecimal::Hexadecimal(std::string num) {
     // setting locale for QApplication changes(. might be , in region)

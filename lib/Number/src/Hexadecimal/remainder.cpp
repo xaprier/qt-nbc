@@ -3,7 +3,10 @@
 //
 #include <cmath>
 
+#include "Binary.hpp"
+#include "Decimal.hpp"
 #include "Hexadecimal.hpp"
+#include "Octal.hpp"
 
 Hexadecimal Hexadecimal::operator%(const Hexadecimal &h) {
     // creating return object/converting other object

@@ -1,9 +1,7 @@
 #ifndef HEXADECIMAL_H
 #define HEXADECIMAL_H
 
-#include "Binary.hpp"
-#include "Decimal.hpp"
-#include "Octal.hpp"
+#include "BaseClass.hpp"
 
 class Hexadecimal : public BaseClass {
   public:

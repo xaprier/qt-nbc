@@ -1,7 +1,14 @@
+#include <QComboBox>
 #include <QDialog>
+#include <QMessageBox>
+#include <QString>
 #include <QValidator>
 
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
 #include "Number.hpp"
+#include "Octal.hpp"
 
 #ifndef QT_NBC_NBCONVERTER_H
 #define QT_NBC_NBCONVERTER_H

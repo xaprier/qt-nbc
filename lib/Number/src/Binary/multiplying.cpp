@@ -2,6 +2,9 @@
 // Created by xaprier on 2/13/23.
 //
 #include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
+#include "Octal.hpp"
 
 Binary Binary::operator*(const Binary &b) {
     // convert all values to decimal for multiply

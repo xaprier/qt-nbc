@@ -9,9 +9,6 @@ class Octal;
 class Hexadecimal;
 
 class BaseClass {
-  protected:
-    std::string num;
-
   public:
     friend class Binary;
     friend class Decimal;
@@ -49,28 +46,33 @@ class BaseClass {
     explicit BaseClass(const Decimal &d);
 
     /**
+     * @brief Destroy the Base Class object
+     */
+    virtual ~BaseClass() = default;
+
+    /**
      * @brief Returns the Octal object with converting the current based number(Raw Virtual Function)
      * @return Octal
      */
-    virtual Octal toOct() const = 0;
+    [[nodiscard]] virtual Octal toOct() const = 0;
 
     /**
      * @brief Returns the Decimal object with converting the current based number(Raw Virtual Function)
      * @return Decimal
      */
-    virtual Decimal toDec() const = 0;
+    [[nodiscard]] virtual Decimal toDec() const = 0;
 
     /**
      * @brief Returns the Binary object with converting the current based number(Raw Virtual Function)
      * @return Binary
      */
-    virtual Binary toBin() const = 0;
+    [[nodiscard]] virtual Binary toBin() const = 0;
 
     /**
      * @brief Returns the Hexadecimal object with converting the current based number(Raw Virtual Function)
      * @return Hexadecimal
      */
-    virtual Hexadecimal toHex() const = 0;
+    [[nodiscard]] virtual Hexadecimal toHex() const = 0;
 
     /**
      * @brief Returns the string with it's own based number(Raw Virtual Function)
@@ -315,6 +317,9 @@ class BaseClass {
      * @return std::string as result
      */
     std::string div(std::string val1, std::string val2);
+
+  protected:
+    std::string num;
 };
 
 #endif  // BASECLASS_H

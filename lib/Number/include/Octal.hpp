@@ -2,9 +2,6 @@
 #define OCTAL_H
 
 #include "BaseClass.hpp"
-#include "Binary.hpp"
-#include "Decimal.hpp"
-#include "Hexadecimal.hpp"
 
 class Octal : public BaseClass {
   public:

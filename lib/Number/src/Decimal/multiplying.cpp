@@ -1,7 +1,10 @@
 //
 // Created by xaprier on 2/13/23.
 //
+#include "Binary.hpp"
 #include "Decimal.hpp"
+#include "Hexadecimal.hpp"
+#include "Octal.hpp"
 
 Decimal Decimal::operator*(const Decimal &second) {
     // creating return object/converting other object

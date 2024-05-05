@@ -3,6 +3,9 @@
 //
 #include <cmath>
 
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
 #include "Octal.hpp"
 
 Octal Octal::operator%(const Octal &o) {

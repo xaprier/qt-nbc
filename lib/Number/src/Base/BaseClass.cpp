@@ -5,6 +5,9 @@
 #include <string>
 #include <utility>
 
+#include "Binary.hpp"
+#include "Decimal.hpp"
+#include "Hexadecimal.hpp"
 #include "Octal.hpp"
 
 BaseClass::BaseClass(std::string BaseClass) : num(std::move(BaseClass)) {}
