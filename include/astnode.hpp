@@ -18,7 +18,7 @@ class AST {
     AST() : token(Token(Type::Empty, "")), value(0), left(nullptr), right(nullptr) {}
     AST(Token t) : token(t), value(0), left(nullptr), right(nullptr) {}
     void print() {
-        printAST(std::shared_ptr<AST<T> >(this));
+        printAST(std::shared_ptr<AST<T>>(this));
         std::cout << std::endl;
     }
     void build(std::vector<Token> postfix);  // Notice how I make a copy of tokens and then pass that copy by reference. This way the original vector<Token> stays unchanged while the
@@ -28,18 +28,18 @@ class AST {
   private:
     Token token;
     T value;
-    std::shared_ptr<AST<T> > left;
-    std::shared_ptr<AST<T> > right;
+    std::shared_ptr<AST<T>> left;
+    std::shared_ptr<AST<T>> right;
 
     bool isFull() { return (left != nullptr && right != nullptr); }
-    void populate(std::shared_ptr<AST<T> > n, std::shared_ptr<AST<T> > m);
-    void printAST(std::shared_ptr<AST<T> > n);
+    void populate(std::shared_ptr<AST<T>> n, std::shared_ptr<AST<T>> m);
+    void printAST(std::shared_ptr<AST<T>> n);
     T toNumber(std::string str);
-    std::shared_ptr<AST<T> > buildAST(std::vector<Token> &postfix);
+    std::shared_ptr<AST<T>> buildAST(std::vector<Token> &postfix);
 };
 
 template <class T>
-void AST<T>::populate(std::shared_ptr<AST<T> > n, std::shared_ptr<AST<T> > m) {
+void AST<T>::populate(std::shared_ptr<AST<T>> n, std::shared_ptr<AST<T>> m) {
     if (n->right == nullptr)
         n->right = m;
     else if (n->left == nullptr)
@@ -49,7 +49,7 @@ void AST<T>::populate(std::shared_ptr<AST<T> > n, std::shared_ptr<AST<T> > m) {
 }
 
 template <class T>
-void AST<T>::printAST(std::shared_ptr<AST<T> > n) {
+void AST<T>::printAST(std::shared_ptr<AST<T>> n) {
     if (n->left != nullptr && n->right != nullptr) std::cout << '(';
     if (n->left != nullptr) printAST(n->left);
     std::cout << n->token.value;
@@ -59,21 +59,21 @@ void AST<T>::printAST(std::shared_ptr<AST<T> > n) {
 
 template <class T>
 void AST<T>::build(std::vector<Token> postfix) {
-    std::shared_ptr<AST<T> > n = buildAST(postfix);
+    std::shared_ptr<AST<T>> n = buildAST(postfix);
     this->token = n->token;
     this->right = n->right;
     this->left = n->left;
 }
 
 template <class T>
-std::shared_ptr<AST<T> > AST<T>::buildAST(std::vector<Token> &postfix) {
-    std::shared_ptr<AST<T> > root(new AST<T>(postfix.back()));
+std::shared_ptr<AST<T>> AST<T>::buildAST(std::vector<Token> &postfix) {
+    std::shared_ptr<AST<T>> root(new AST<T>(postfix.back()));
     postfix.pop_back();
     while (!postfix.empty()) {
         if (postfix.back().isOperator())
             populate(root, buildAST(postfix));
         else {
-            populate(root, std::shared_ptr<AST<T> >(new AST<T>(postfix.back())));
+            populate(root, std::shared_ptr<AST<T>>(new AST<T>(postfix.back())));
             postfix.pop_back();
         }
         if (root->isFull())

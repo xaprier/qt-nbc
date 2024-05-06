@@ -1,5 +1,6 @@
 #include "Decimal.hpp"
 
+#include <algorithm>
 #include <cctype>
 #include <cmath>
 #include <iostream>
@@ -17,6 +18,17 @@ Decimal::Decimal(std::string num) {
         this->num = "NaN";
         return;
     }
+
+    // toupper character d in string
+    std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::toupper(c); });
+
+    // trim decimal string
+    if (num.substr(0, 2) == "0d")
+        num = num.substr(2, num.length());
+    else if (num.substr(0, 3) == "-0d")
+        num = "-" + num.substr(3, num.length());
+    else if (num.substr(0, 1) == "d")
+        num = num.substr(1, num.length());
 
     clean_number(num);  // clean if it starts/ends with 0
 
@@ -49,12 +61,6 @@ Decimal::Decimal(const Binary &b) {
     if (number.at(0) == '-') {
         number = number.substr(1, number.length());
         result += "-";
-    }
-
-    if (std::tolower(number.at(0)) == 'b') {
-        number = number.substr(1, number.length());
-    } else if (number.size() > 1 && std::tolower(number.at(1)) == 'b') {
-        number = number.substr(2, number.length());
     }
 
     // split the decimal number as it supposed to be
@@ -129,12 +135,6 @@ Decimal::Decimal(const Octal &o) {
     if (number.at(0) == '-') {
         number = number.substr(1, number.length());
         result += "-";
-    }
-
-    if (std::tolower(number.at(0)) == 'o') {
-        number = number.substr(1, number.length());
-    } else if (number.size() > 1 && std::tolower(number.at(1)) == 'o') {
-        number = number.substr(2, number.length());
     }
 
     clean_number(number);  // clean if it starts/ends with 0
@@ -222,12 +222,6 @@ Decimal::Decimal(const Hexadecimal &h) {
     if (number.at(0) == '-') {
         number = number.substr(1, number.length());
         isItNegative = true;
-    }
-
-    if (std::tolower(number.at(0)) == 'x') {
-        number = number.substr(1, number.length());
-    } else if (number.size() > 1 && std::tolower(number.at(1)) == 'x') {
-        number = number.substr(2, number.length());
     }
 
     double result = 0;
