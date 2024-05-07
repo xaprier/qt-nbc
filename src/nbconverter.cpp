@@ -3,11 +3,7 @@
 #include <qobject.h>
 
 #include "../design/ui_nbconverter.h"
-
-extern QRegularExpression binExpression;
-extern QRegularExpression octExpression;
-extern QRegularExpression decExpression;
-extern QRegularExpression hexExpression;
+#include "expressions.hpp"
 
 NBConverter::NBConverter(QWidget *parent) : QDialog(parent), ui(new Ui::NBConverter) {
     QWidget::setFixedSize(800, 209);

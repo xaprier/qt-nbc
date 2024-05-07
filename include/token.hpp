@@ -18,8 +18,8 @@ enum class Type : char {
 struct Token {
     Type type;
     std::string value;
-    int precedence;
-    Token(Type t, std::string v) : type(t), value(v), precedence(0) {
+    int precedence{};
+    Token(Type t, std::string v) : type(t), value(v) {
         if (t == Type::Divide || t == Type::Multiply || t == Type::Remainder) precedence = 2;
         if (t == Type::Addition || t == Type::Subtract) precedence = 1;
     }
