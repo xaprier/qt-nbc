@@ -11,6 +11,7 @@ class Test {
         : name(name), testFunction(testFunction) {}
 
     void run() const;
+    [[nodiscard]] std::string getName() const { return name; }
 
   private:
     std::string name;

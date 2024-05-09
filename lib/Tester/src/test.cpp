@@ -1,5 +1,7 @@
 #include "test.hpp"
 
+#include <exception>
+
 void Test::run() const {
     std::cout << "Running test for: " << name << std::endl;
     testFunction();
@@ -14,21 +16,31 @@ void Tester::addTestCase(const std::string& expected, const std::string& output,
 }
 
 Tester::~Tester() {
-    if (tests.size() > 0) {
-        std::cout << "Running tests..." << std::endl;
+    std::cout << "Running tests..." << std::endl;
+    if (!tests.empty()) {
         for (const auto& test : tests) {
-            test.run();
+            try {
+                test.run();
+                std::cout << "Test \"" << test.getName() << "\" is successful" << std::endl;
+            } catch (const std::exception& e) {
+                std::cerr << "Test \"" << test.getName() << "\" failed: " << e.what() << std::endl;
+            }
         }
+    } else {
+        std::cout << "No individual tests found" << std::endl;
     }
 
-    if (testCases.size() > 0) {
-        std::cout << "Running test cases..." << std::endl;
+    std::cout << "Running test cases..." << std::endl;
+    if (!testCases.empty()) {
         for (const auto& testCase : testCases) {
             testCase.run();
         }
+    } else {
+        std::cout << "No test cases found" << std::endl;
     }
 
     if (testCases.empty() && tests.empty()) {
-        std::cout << "No tests and cases found" << std::endl;
+        std::cout << "No tests or cases found" << std::endl;
     }
+    std::cout << std::endl;
 }
