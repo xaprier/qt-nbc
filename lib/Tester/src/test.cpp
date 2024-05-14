@@ -16,7 +16,7 @@ void Tester::addTestCase(const std::string& expected, const std::string& output,
 }
 
 Tester::~Tester() {
-    std::cout << "Running tests..." << std::endl;
+    std::cout << "Running tests" << std::endl;
     if (!tests.empty()) {
         for (const auto& test : tests) {
             try {
@@ -30,7 +30,7 @@ Tester::~Tester() {
         std::cout << "No individual tests found" << std::endl;
     }
 
-    std::cout << "Running test cases..." << std::endl;
+    std::cout << "Running test cases" << std::endl;
     if (!testCases.empty()) {
         for (const auto& testCase : testCases) {
             testCase.run();
@@ -39,8 +39,5 @@ Tester::~Tester() {
         std::cout << "No test cases found" << std::endl;
     }
 
-    if (testCases.empty() && tests.empty()) {
-        std::cout << "No tests or cases found" << std::endl;
-    }
     std::cout << std::endl;
 }

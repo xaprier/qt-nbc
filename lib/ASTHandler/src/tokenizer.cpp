@@ -1,19 +1,16 @@
 #include "tokenizer.hpp"
 
+#include <algorithm>
 #include <stdexcept>
 
 bool Tokenizer::validOperator(char c) {
     std::string operators = "+-*/%()";
-    for (char i : operators)
-        if (i == c) return true;
-    return false;
+    return std::find(operators.begin(), operators.end(), c) != operators.end();
 }
 
 bool Tokenizer::validBase(char c) {
     std::string bases = "bodx";
-    for (char i : bases)
-        if (i == c) return true;
-    return false;
+    return std::find(bases.begin(), bases.end(), c) != bases.end();
 }
 
 std::string Tokenizer::getNumber() {

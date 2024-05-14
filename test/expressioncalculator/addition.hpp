@@ -1,8 +1,23 @@
+#include <string>
+
+#include "astnode.hpp"
+#include "parser.hpp"
 #include "test.hpp"
+#include "tokenizer.hpp"
 
 void add_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    {
+        Tokenizer lexer("b11101.001 + b11.0101");  // 29.125 + 3.3125 = 32.4375
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        auto res = parser.getPostfix();
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(32.4375);
+        tester.addTestCase(expected, output, 1);
+    }
 }
 void add_bin_oct() {
     Tester tester;
