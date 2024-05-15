@@ -1,6 +1,7 @@
 #ifndef TOKENIZER_HPP
 #define TOKENIZER_HPP
 
+#include <cctype>
 #include <sstream>
 #include <string>
 #include <vector>

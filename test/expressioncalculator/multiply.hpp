@@ -2,73 +2,74 @@
 
 void mul_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_bin_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_bin_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_bin_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void mul_oct_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_oct_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_oct_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_oct_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void mul_dec_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_dec_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_dec_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_dec_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void mul_hex_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_hex_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_hex_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void mul_hex_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void multiply_tests() {
+    return;
     Tester tester;
     // Adding test functions
     tester.addTest("Multiply Binary to Binary", mul_bin_bin);

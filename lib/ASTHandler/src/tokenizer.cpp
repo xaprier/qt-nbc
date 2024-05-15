@@ -1,6 +1,7 @@
 #include "tokenizer.hpp"
 
 #include <algorithm>
+#include <cctype>
 #include <stdexcept>
 
 bool Tokenizer::validOperator(char c) {
@@ -10,13 +11,14 @@ bool Tokenizer::validOperator(char c) {
 
 bool Tokenizer::validBase(char c) {
     std::string bases = "bodx";
-    return std::find(bases.begin(), bases.end(), c) != bases.end();
+    return std::find(bases.begin(), bases.end(), std::tolower(c)) != bases.end();
 }
 
 std::string Tokenizer::getNumber() {
     std::string rv;
     bool decimal = false;
     bool base = false;  // Flag to detect base prefix
+    char base_c = '0';
     char c;
     while (stream.good()) {
         c = stream.peek();
@@ -29,10 +31,12 @@ std::string Tokenizer::getNumber() {
                 decimal = true;
             rv += c;
         } else if (validBase(c)) {
-            if (base)
+            if (base && std::tolower(c) == std::tolower(base_c))
                 throw std::runtime_error("Multiple base prefixes on number");
-            else
+            else {
+                base_c = c;
                 base = true;
+            }
             rv += c;
         } else {
             rv += c;
@@ -44,13 +48,13 @@ std::string Tokenizer::getNumber() {
 void Tokenizer::tokenize() {
     char c = stream.peek();  // This is important ( check note at the bottom)
     while (stream.good()) {
-        if (isdigit(c) || c == '.' || validBase(c))
-            tokens.push_back(Token(Type::Number, getNumber()));
+        if (isdigit(c) || c == '.' || this->validBase(c))
+            tokens.push_back(Token(Type::Number, this->getNumber()));
         else {
             stream.get(c);
             if (isspace(c))
                 while (stream.good() && isspace(stream.peek())) stream.get();
-            else if (validOperator(c))
+            else if (this->validOperator(c))
                 tokens.push_back(Token(static_cast<Type>(c), {c}));
             else
                 throw std::runtime_error("Invalid character");

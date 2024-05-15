@@ -2,73 +2,74 @@
 
 void rem_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_bin_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_bin_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_bin_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void rem_oct_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_oct_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_oct_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_oct_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void rem_dec_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_dec_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_dec_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_dec_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void rem_hex_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_hex_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_hex_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void rem_hex_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void remainder_tests() {
+    return;
     Tester tester;
     // Adding test functions
     tester.addTest("Remainder Binary to Binary", rem_bin_bin);

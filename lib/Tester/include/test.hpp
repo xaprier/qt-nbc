@@ -20,14 +20,11 @@ class Test {
 
 class TestCase {
   public:
-    TestCase(const std::string& expected, const std::string& output, int test_case)
-        : expected(expected), output(output), test_case(test_case) {}
+    TestCase(const std::string& expected, const std::string& output)
+        : expected(expected), output(output) {}
 
     void run() const {
-        if (expected == output) {
-            std::cout << "Test " << test_case << " is successful!" << std::endl;
-        } else {
-            std::cerr << "Test " << test_case << " is unsuccessful!!" << std::endl;
+        if (expected != output) {
             std::cout << "Expected : " << expected << "\n"
                       << "Output : " << output << std::endl;
             assert(expected == output);
@@ -37,13 +34,12 @@ class TestCase {
   private:
     std::string expected;
     std::string output;
-    int test_case;
 };
 
 class Tester {
   public:
     void addTest(const std::string& name, std::function<void()> testFunction);
-    void addTestCase(const std::string& expected, const std::string& output, int test_case);
+    void addTestCase(const std::string& expected, const std::string& output);
     ~Tester();
 
   private:

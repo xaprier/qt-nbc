@@ -2,73 +2,74 @@
 
 void div_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_bin_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_bin_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_bin_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void div_oct_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_oct_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_oct_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_oct_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void div_dec_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_dec_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_dec_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_dec_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void div_hex_bin() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_hex_oct() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_hex_dec() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 void div_hex_hex() {
     Tester tester;
-    tester.addTestCase("1", "1", 1);
+    tester.addTestCase("1", "1");
 }
 
 void division_tests() {
+    return;
     Tester tester;
     // Adding test functions
     tester.addTest("Division Binary to Binary", div_bin_bin);

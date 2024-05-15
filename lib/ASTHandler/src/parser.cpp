@@ -1,5 +1,6 @@
 #include "parser.hpp"
 
+#include <algorithm>
 #include <cctype>
 #include <stdexcept>
 
@@ -60,13 +61,17 @@ bool Parser::validSyntax() {
 Token Parser::getConvertedBase(Token& token) {
     // get base token
     char base = getBaseToken(token);
+    auto base_loc = token.value.end();
     switch (base) {
         case 'b':
             return Token(Type::Number, std::string(Decimal(Binary(token.value))));
         case 'o':
             return Token(Type::Number, std::string(Decimal(Octal(token.value))));
         case 'd':
-            return Token(Type::Number, std::string(Decimal(Decimal(token.value))));
+            base_loc = std::find(token.value.begin(), token.value.end(), 'd');
+            if (base_loc != token.value.end())
+                token.value = token.value.substr(std::distance(token.value.begin(), base_loc) + 1);
+            return Token(Type::Number, token.value);
         case 'x':
             return Token(Type::Number, std::string(Decimal(Hexadecimal(token.value))));
     }
