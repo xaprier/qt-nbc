@@ -37,6 +37,4 @@ Tester::~Tester() {
             std::cout << "Test case " << c + 1 << " is successful" << std::endl;
         }
     }
-
-    // std::cout << std::endl;
 }
