@@ -1,24 +1,13 @@
-#include <string>
-
 #include "astnode.hpp"
+#include "numbers.hpp"
 #include "parser.hpp"
 #include "test.hpp"
 #include "tokenizer.hpp"
 
-const std::string b1 = "11101.001";
-const std::string b2 = "11.0101";
-const std::string o1 = "35.1";
-const std::string o2 = "3.24";
-const std::string d1 = "29.125";
-const std::string d2 = "3.3125";
-const std::string x1 = "1D.2";
-const std::string x2 = "3.5";
-const double res_addition = 32.4375;
-
 void add_bin_bin() {
     Tester tester;
     {
-        Tokenizer lexer("b" + b1 + " + b" + b2);
+        Tokenizer lexer("b" + b1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -28,7 +17,7 @@ void add_bin_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b1 + " + 0b" + b2);
+        Tokenizer lexer("0b" + b1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -38,7 +27,7 @@ void add_bin_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b1 + " + 0b" + b2);
+        Tokenizer lexer("b" + b1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -48,7 +37,7 @@ void add_bin_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b1 + " + b" + b2);
+        Tokenizer lexer("0b" + b1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -58,7 +47,7 @@ void add_bin_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b2 + " + b" + b1);
+        Tokenizer lexer("b" + b2 + op_addition + "b" + b1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -71,7 +60,7 @@ void add_bin_bin() {
 void add_bin_oct() {
     Tester tester;
     {
-        Tokenizer lexer("b" + b1 + " + o" + o2);
+        Tokenizer lexer("b" + b1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -81,7 +70,7 @@ void add_bin_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + 0o" + o1);
+        Tokenizer lexer("0b" + b2 + op_addition + "0o" + o1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -91,7 +80,7 @@ void add_bin_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b1 + " + 0o" + o2);
+        Tokenizer lexer("b" + b1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -101,7 +90,7 @@ void add_bin_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + o" + o1);
+        Tokenizer lexer("0b" + b2 + op_addition + "o" + o1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -111,7 +100,7 @@ void add_bin_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o1 + " + b" + b2);
+        Tokenizer lexer("o" + o1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -124,7 +113,7 @@ void add_bin_oct() {
 void add_bin_dec() {
     Tester tester;
     {
-        Tokenizer lexer("b" + b1 + " + d" + d2);
+        Tokenizer lexer("b" + b1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -134,7 +123,7 @@ void add_bin_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + 0d" + d1);
+        Tokenizer lexer("0b" + b2 + op_addition + "0d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -144,7 +133,7 @@ void add_bin_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b1 + " + 0d" + d2);
+        Tokenizer lexer("b" + b1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -154,7 +143,7 @@ void add_bin_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + d" + d1);
+        Tokenizer lexer("0b" + b2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -164,7 +153,7 @@ void add_bin_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + b" + b2);
+        Tokenizer lexer("d" + d1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -177,7 +166,7 @@ void add_bin_dec() {
 void add_bin_hex() {
     Tester tester;
     {
-        Tokenizer lexer("b" + b1 + " + x" + x2);
+        Tokenizer lexer("b" + b1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -187,7 +176,7 @@ void add_bin_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + 0x" + x1);
+        Tokenizer lexer("0b" + b2 + op_addition + "0x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -197,7 +186,7 @@ void add_bin_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b1 + " + 0x" + x2);
+        Tokenizer lexer("b" + b1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -207,7 +196,7 @@ void add_bin_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0b" + b2 + " + x" + x1);
+        Tokenizer lexer("0b" + b2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -217,7 +206,7 @@ void add_bin_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + b" + b2);
+        Tokenizer lexer("x" + x1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -231,7 +220,7 @@ void add_bin_hex() {
 void add_oct_bin() {
     Tester tester;
     {
-        Tokenizer lexer("o" + o1 + " + b" + b2);
+        Tokenizer lexer("o" + o1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -241,7 +230,7 @@ void add_oct_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o1 + " + 0b" + b2);
+        Tokenizer lexer("0o" + o1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -251,7 +240,7 @@ void add_oct_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o1 + " + 0b" + b2);
+        Tokenizer lexer("o" + o1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -261,7 +250,7 @@ void add_oct_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o1 + " + b" + b2);
+        Tokenizer lexer("0o" + o1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -271,7 +260,7 @@ void add_oct_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b2 + " + o" + o1);
+        Tokenizer lexer("b" + b2 + op_addition + "o" + o1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -284,7 +273,7 @@ void add_oct_bin() {
 void add_oct_oct() {
     Tester tester;
     {
-        Tokenizer lexer("o" + o1 + " + o" + o2);
+        Tokenizer lexer("o" + o1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -294,7 +283,7 @@ void add_oct_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o1 + " + 0o" + o2);
+        Tokenizer lexer("0o" + o1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -304,7 +293,7 @@ void add_oct_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o1 + " + 0o" + o2);
+        Tokenizer lexer("o" + o1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -314,7 +303,7 @@ void add_oct_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o1 + " + o" + o2);
+        Tokenizer lexer("0o" + o1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -324,7 +313,7 @@ void add_oct_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o2 + " + o" + o1);
+        Tokenizer lexer("o" + o2 + op_addition + "o" + o1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -337,7 +326,7 @@ void add_oct_oct() {
 void add_oct_dec() {
     Tester tester;
     {
-        Tokenizer lexer("o" + o1 + " + d" + d2);
+        Tokenizer lexer("o" + o1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -347,7 +336,7 @@ void add_oct_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o2 + " + 0d" + d1);
+        Tokenizer lexer("0o" + o2 + op_addition + "0d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -357,7 +346,7 @@ void add_oct_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o1 + " + 0d" + d2);
+        Tokenizer lexer("o" + o1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -367,7 +356,7 @@ void add_oct_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o2 + " + d" + d1);
+        Tokenizer lexer("0o" + o2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -377,7 +366,7 @@ void add_oct_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + o" + o2);
+        Tokenizer lexer("d" + d1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -390,7 +379,7 @@ void add_oct_dec() {
 void add_oct_hex() {
     Tester tester;
     {
-        Tokenizer lexer("o" + o1 + " + x" + x2);
+        Tokenizer lexer("o" + o1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -400,7 +389,7 @@ void add_oct_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o2 + " + 0x" + x1);
+        Tokenizer lexer("0o" + o2 + op_addition + "0x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -410,7 +399,7 @@ void add_oct_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o1 + " + 0x" + x2);
+        Tokenizer lexer("o" + o1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -420,7 +409,7 @@ void add_oct_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0o" + o2 + " + x" + x1);
+        Tokenizer lexer("0o" + o2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -430,7 +419,7 @@ void add_oct_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + o" + o2);
+        Tokenizer lexer("x" + x1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -444,7 +433,7 @@ void add_oct_hex() {
 void add_dec_bin() {
     Tester tester;
     {
-        Tokenizer lexer("d" + d1 + " + b" + b2);
+        Tokenizer lexer("d" + d1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -454,7 +443,7 @@ void add_dec_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + 0b" + b2);
+        Tokenizer lexer("0d" + d1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -464,7 +453,7 @@ void add_dec_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + 0b" + b2);
+        Tokenizer lexer("d" + d1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -474,7 +463,7 @@ void add_dec_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + b" + b2);
+        Tokenizer lexer("0d" + d1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -484,7 +473,7 @@ void add_dec_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b2 + " + d" + d1);
+        Tokenizer lexer("b" + b2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -497,7 +486,7 @@ void add_dec_bin() {
 void add_dec_oct() {
     Tester tester;
     {
-        Tokenizer lexer("d" + d1 + " + o" + o2);
+        Tokenizer lexer("d" + d1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -507,7 +496,7 @@ void add_dec_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + 0o" + o2);
+        Tokenizer lexer("0d" + d1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -517,7 +506,7 @@ void add_dec_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + 0o" + o2);
+        Tokenizer lexer("d" + d1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -527,7 +516,7 @@ void add_dec_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + o" + o2);
+        Tokenizer lexer("0d" + d1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -537,7 +526,7 @@ void add_dec_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o2 + " + d" + d1);
+        Tokenizer lexer("o" + o2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -550,7 +539,7 @@ void add_dec_oct() {
 void add_dec_dec() {
     Tester tester;
     {
-        Tokenizer lexer("d" + d1 + " + d" + d2);
+        Tokenizer lexer("d" + d1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -560,7 +549,7 @@ void add_dec_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + 0d" + d2);
+        Tokenizer lexer("0d" + d1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -570,7 +559,7 @@ void add_dec_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + 0d" + d2);
+        Tokenizer lexer("d" + d1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -580,7 +569,7 @@ void add_dec_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + d" + d2);
+        Tokenizer lexer("0d" + d1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -590,7 +579,7 @@ void add_dec_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d2 + " + d" + d1);
+        Tokenizer lexer("d" + d2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -603,7 +592,7 @@ void add_dec_dec() {
 void add_dec_hex() {
     Tester tester;
     {
-        Tokenizer lexer("d" + d1 + " + x" + x2);
+        Tokenizer lexer("d" + d1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -613,7 +602,7 @@ void add_dec_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + 0x" + x2);
+        Tokenizer lexer("0d" + d1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -623,7 +612,7 @@ void add_dec_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d1 + " + 0x" + x2);
+        Tokenizer lexer("d" + d1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -633,7 +622,7 @@ void add_dec_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0d" + d1 + " + x" + x2);
+        Tokenizer lexer("0d" + d1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -643,7 +632,7 @@ void add_dec_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x2 + " + d" + d1);
+        Tokenizer lexer("x" + x2 + op_addition + "d" + d1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -657,7 +646,7 @@ void add_dec_hex() {
 void add_hex_bin() {
     Tester tester;
     {
-        Tokenizer lexer("x" + x1 + " + b" + b2);
+        Tokenizer lexer("x" + x1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -667,7 +656,7 @@ void add_hex_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + 0b" + b2);
+        Tokenizer lexer("0x" + x1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -677,7 +666,7 @@ void add_hex_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + 0b" + b2);
+        Tokenizer lexer("x" + x1 + op_addition + "0b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -687,7 +676,7 @@ void add_hex_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + b" + b2);
+        Tokenizer lexer("0x" + x1 + op_addition + "b" + b2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -697,7 +686,7 @@ void add_hex_bin() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("b" + b2 + " + x" + x1);
+        Tokenizer lexer("b" + b2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -710,7 +699,7 @@ void add_hex_bin() {
 void add_hex_oct() {
     Tester tester;
     {
-        Tokenizer lexer("x" + x1 + " + o" + o2);
+        Tokenizer lexer("x" + x1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -720,7 +709,7 @@ void add_hex_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + 0o" + o2);
+        Tokenizer lexer("0x" + x1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -730,7 +719,7 @@ void add_hex_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + 0o" + o2);
+        Tokenizer lexer("x" + x1 + op_addition + "0o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -740,7 +729,7 @@ void add_hex_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + o" + o2);
+        Tokenizer lexer("0x" + x1 + op_addition + "o" + o2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -750,7 +739,7 @@ void add_hex_oct() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("o" + o2 + " + x" + x1);
+        Tokenizer lexer("o" + o2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -763,7 +752,7 @@ void add_hex_oct() {
 void add_hex_dec() {
     Tester tester;
     {
-        Tokenizer lexer("x" + x1 + " + d" + d2);
+        Tokenizer lexer("x" + x1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -773,7 +762,7 @@ void add_hex_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + 0d" + d2);
+        Tokenizer lexer("0x" + x1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -783,7 +772,7 @@ void add_hex_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + 0d" + d2);
+        Tokenizer lexer("x" + x1 + op_addition + "0d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -793,7 +782,7 @@ void add_hex_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + d" + d2);
+        Tokenizer lexer("0x" + x1 + op_addition + "d" + d2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -803,7 +792,7 @@ void add_hex_dec() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("d" + d2 + " + x" + x1);
+        Tokenizer lexer("d" + d2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -816,7 +805,7 @@ void add_hex_dec() {
 void add_hex_hex() {
     Tester tester;
     {
-        Tokenizer lexer("x" + x1 + " + x" + x2);
+        Tokenizer lexer("x" + x1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -826,7 +815,7 @@ void add_hex_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + 0x" + x2);
+        Tokenizer lexer("0x" + x1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -836,7 +825,7 @@ void add_hex_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x1 + " + 0x" + x2);
+        Tokenizer lexer("x" + x1 + op_addition + "0x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -846,7 +835,7 @@ void add_hex_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("0x" + x1 + " + x" + x2);
+        Tokenizer lexer("0x" + x1 + op_addition + "x" + x2);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;
@@ -856,7 +845,7 @@ void add_hex_hex() {
         tester.addTestCase(expected, output);
     }
     {
-        Tokenizer lexer("x" + x2 + " + x" + x1);
+        Tokenizer lexer("x" + x2 + op_addition + "x" + x1);
         lexer.tokenize();
         Parser parser(lexer.getTokens());
         AST<double> tree;

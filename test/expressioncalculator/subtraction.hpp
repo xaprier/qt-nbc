@@ -1,77 +1,863 @@
+#include "astnode.hpp"
+#include "numbers.hpp"
+#include "parser.hpp"
 #include "test.hpp"
+#include "tokenizer.hpp"
 
 void sub_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_subtraction + "b" + b1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_bin_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "0o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_bin_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "0d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_bin_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "0x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void sub_oct_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_subtraction + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_oct_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_subtraction + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_oct_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_subtraction + "0d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_oct_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_subtraction + "0x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void sub_dec_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_dec_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_dec_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_dec_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x2 + op_subtraction + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void sub_hex_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_hex_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_hex_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 void sub_hex_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_subtraction + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_subtraction + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_subtraction);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x2 + op_subtraction + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(-res_subtraction);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void subtraction_tests() {
-    return;
     Tester tester;
-    // Adding test functions
     tester.addTest("Subtraction Binary to Binary", sub_bin_bin);
     tester.addTest("Subtraction Binary to Octal", sub_bin_oct);
     tester.addTest("Subtraction Binary to Decimal", sub_bin_dec);

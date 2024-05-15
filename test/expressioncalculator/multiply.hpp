@@ -1,77 +1,863 @@
+#include "astnode.hpp"
+#include "numbers.hpp"
+#include "parser.hpp"
 #include "test.hpp"
+#include "tokenizer.hpp"
 
 void mul_bin_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_multiply + "b" + b1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_bin_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "0o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_bin_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "0d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_bin_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "0x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0b" + b2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void mul_oct_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_multiply + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_oct_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_multiply + "o" + o1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_oct_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_multiply + "0d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_oct_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_multiply + "0x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0o" + o2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void mul_dec_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_dec_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_dec_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_dec_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0d" + d1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x2 + op_multiply + "d" + d1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void mul_hex_bin() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "0b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "b" + b2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("b" + b2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_hex_oct() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "0o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "o" + o2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("o" + o2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_hex_dec() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "0d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "d" + d2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("d" + d2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 void mul_hex_hex() {
     Tester tester;
-    tester.addTestCase("1", "1");
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x1 + op_multiply + "0x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("0x" + x1 + op_multiply + "x" + x2);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
+    {
+        Tokenizer lexer("x" + x2 + op_multiply + "x" + x1);
+        lexer.tokenize();
+        Parser parser(lexer.getTokens());
+        AST<double> tree;
+        tree.build(parser.getPostfix());
+        auto output = std::to_string(tree.evaluate());
+        auto expected = std::to_string(res_multiply);
+        tester.addTestCase(expected, output);
+    }
 }
 
 void multiply_tests() {
-    return;
     Tester tester;
-    // Adding test functions
     tester.addTest("Multiply Binary to Binary", mul_bin_bin);
     tester.addTest("Multiply Binary to Octal", mul_bin_oct);
     tester.addTest("Multiply Binary to Decimal", mul_bin_dec);

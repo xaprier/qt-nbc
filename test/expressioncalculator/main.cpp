@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "addition.hpp"
 #include "divide.hpp"
 #include "multiply.hpp"
