@@ -53,7 +53,7 @@ else()
   endif()
 endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE number)
+target_link_libraries(${PROJECT_NAME} PRIVATE NumberBases)
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 

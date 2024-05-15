@@ -15,4 +15,4 @@ add_library(${PROJECT_NAME} SHARED
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ASTHandler_LIBRARY)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
-target_link_libraries(${PROJECT_NAME} number)
+target_link_libraries(${PROJECT_NAME} NumberBases)

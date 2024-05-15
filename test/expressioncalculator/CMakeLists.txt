@@ -5,7 +5,7 @@ file(GLOB TEST_FILES_HPP *.hpp)
 
 # testing binary
 add_executable(expressioncalculator_test ${TEST_FILES_HPP} ${TEST_FILES_CPP})
-target_link_libraries(expressioncalculator_test PRIVATE Qt${QT_VERSION_MAJOR}::Core tester number ASTHandler)
+target_link_libraries(expressioncalculator_test PRIVATE Tester NumberBases ASTHandler)
 target_include_directories(expressioncalculator_test PRIVATE include)
 
 # define tests
