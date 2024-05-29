@@ -1,5 +1,6 @@
 #include "addition.hpp"
 #include "divide.hpp"
+#include "multiple.hpp"
 #include "multiply.hpp"
 #include "remainder.hpp"
 #include "subtraction.hpp"
@@ -12,4 +13,5 @@ int main() {
     t.addTest("Multiply Tests", multiply_tests);
     t.addTest("Division Tests", division_tests);
     t.addTest("Remainder Tests", remainder_tests);
+    t.addTest("Multiple Expression Tests", multiple_expression_tests);
 }
