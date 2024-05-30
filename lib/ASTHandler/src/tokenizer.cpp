@@ -17,12 +17,13 @@ bool Tokenizer::validBase(char c) {
 std::string Tokenizer::getNumber() {
     std::string rv;
     bool decimal = false;
-    bool base = false;  // Flag to detect base prefix
+    bool base = false;      // Flag to detect base prefix
+    bool negative = false;  // Flag to detect negative numbers
     char base_c = '0';
     char c;
     while (stream.good()) {
         c = stream.peek();
-        if (c != '.' && !isdigit(c) && !validBase(c)) break;
+        if (c != '.' && !isdigit(c) && !validBase(c) && c != '-') break;
         c = stream.get();
         if (c == '.') {
             if (decimal)
@@ -38,6 +39,13 @@ std::string Tokenizer::getNumber() {
                 base = true;
             }
             rv += c;
+        } else if (c == '-') {
+            if (negative)
+                throw std::runtime_error("Multiple negative signs on number");
+            else {
+                negative = true;
+                rv += c;
+            }
         } else {
             rv += c;
         }
@@ -48,9 +56,14 @@ std::string Tokenizer::getNumber() {
 void Tokenizer::tokenize() {
     char c = stream.peek();  // This is important ( check note at the bottom)
     while (stream.good()) {
-        if (isdigit(c) || c == '.' || this->validBase(c))
-            tokens.push_back(Token(Type::Number, this->getNumber()));
-        else {
+        if (isdigit(c) || c == '.' || this->validBase(c) || c == '-') {
+            std::string num = this->getNumber();
+            if (!num.empty()) {
+                tokens.push_back(Token(Type::Number, num));
+            } else {
+                throw std::runtime_error("Invalid number format");
+            }
+        } else {
             stream.get(c);
             if (isspace(c))
                 while (stream.good() && isspace(stream.peek())) stream.get();

@@ -42,7 +42,7 @@ bool Parser::validSyntax() {
     if (tokens.size() > 0 && tokens[0].isOperator()) return false;
     for (unsigned i = 0; i < tokens.size(); i++) {
         if (tokens[i].type == Type::Empty) continue;
-        if (tokens[i].isOperator())
+        if (tokens[i].isOperator() && tokens[i].value != "-")
             if (operation)
                 return false;
             else

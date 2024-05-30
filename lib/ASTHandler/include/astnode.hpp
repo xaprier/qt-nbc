@@ -101,7 +101,12 @@ T AST<T>::evaluate() {
         case Type::Addition:
             return left->evaluate() + right->evaluate();
         case Type::Subtract:
-            return left->evaluate() - right->evaluate();
+            if (right != nullptr && right->token.type == Type::Empty) {
+                // Unar subtract, -1, -2, etc.
+                return -1 * right->evaluate();
+            } else {
+                return left->evaluate() - right->evaluate();
+            }
         case Type::Multiply:
             return left->evaluate() * right->evaluate();
         case Type::Divide:
