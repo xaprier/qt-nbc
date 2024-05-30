@@ -1,36 +1,35 @@
 #ifndef EXPRESSION_CALCULATOR_HPP
 #define EXPRESSION_CALCULATOR_HPP
 
-#include <QDebug>
-#include <QStack>
 #include <QString>
-#include <cmath>
+#include <string>
 
-#include "Binary.hpp"
-#include "Decimal.hpp"
-#include "Hexadecimal.hpp"
-#include "Octal.hpp"
+#include "astnode.hpp"
+#include "parser.hpp"
+#include "tokenizer.hpp"
 
 class ExpressionCalculator {
   public:
-    explicit ExpressionCalculator(const QString &expression);
+    ExpressionCalculator(const QString &expression) : ExpressionCalculator(expression.toStdString()) {}
+    ExpressionCalculator(const char *expression) : ExpressionCalculator(std::string(expression)) {}
+    ExpressionCalculator(const std::string &expression);
 
-    operator double() const { return m_res; }
-    bool isExpressionValid();
+    double result() { return m_result; }
+    inline double getResult() { return result(); }
+    inline double calculate() { return result(); }
+
+    bool valid();
+    bool isValid() { return valid(); }
+
+    operator double() const { return m_result; }
+    operator std::string() const { return std::to_string(m_result); }
+    operator QString() const { return QString::number(m_result); }
+    operator bool() const { return m_valid; }
 
   private:
-    void doCalc();
-    double applyOperation(const double &num1, const double &num2, const QChar &op);
-    template <typename T>
-    double getConvertedNumber(const T &num);
-    double getConvertedNumber(const QString &num);
-
-    inline bool isOperator(QChar ch);
-    inline bool isBase(QChar ch);
-    inline int precedence(QChar op);
-
-    double m_res = 0.0;
-    QString m_expression;
+    double m_result;
+    bool m_valid;
+    std::string m_expression;
 };
 
 #endif  // EXPRESSION_CALCULATOR_HPP
