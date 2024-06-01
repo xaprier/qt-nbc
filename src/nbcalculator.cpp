@@ -3,6 +3,7 @@
 //
 #include "nbcalculator.hpp"
 
+#include <qlineedit.h>
 #include <qvariant.h>
 #include <qvector.h>
 
@@ -15,7 +16,9 @@ NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalc
     QWidget::setFixedSize(400, 200);
     ui->setupUi(this);
 
-    connect(this->ui->txtBoxOperation, &QLineEdit::textChanged, this, &NBCalculator::sl_operationChanged);
+    connect(this->ui->txtBoxOperation, &QLineEdit::returnPressed, this, &NBCalculator::sl_returnPressed);
+
+    // connect(this->ui->txtBoxOperation, &QLineEdit::textChanged, this, &NBCalculator::sl_operationChanged);
 
     // exit button handler
     connect(ui->exitButton, &QPushButton::clicked, this,
@@ -27,24 +30,11 @@ NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalc
 }
 
 NBCalculator::~NBCalculator() {
-    delete validator;
+    delete this->handler;
     delete ui;
 }
 
-// void NBCalculator::calculate() {
-//     // maybe there is an easier way...
-//     // setting locale for QApplication changes(. might be , in region)
-//     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
-//     std::setlocale(LC_NUMERIC, "C");
-
-//     // setting the locale to old
-//     std::setlocale(LC_NUMERIC, oldLocale.c_str());
-// }
-
-void NBCalculator::sl_operationChanged() {
-}
-
-void NBCalculator::sl_enterClicked() {}
+void NBCalculator::sl_returnPressed() {}
 void NBCalculator::sl_wrongCharClicked() {}
 
 void NBCalculator::sl_help() {

@@ -28,12 +28,12 @@ class NBCalculator : public QDialog {
 
   private slots:
     void sl_help();
-    void sl_operationChanged();
-    void sl_enterClicked();
+    // void sl_operationChanged();
+    void sl_returnPressed();
     void sl_wrongCharClicked();
 
   signals:
-    void si_enterClicked();      // todo: if enter clicked last result will be in operation
+    void si_returnPressed();     // todo: if enter clicked last result will be in operation
     void si_wrongCharClicked();  // todo: if wrong characted clicked, there will be popup.
 
   private:
