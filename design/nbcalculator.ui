@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>399</width>
-    <height>200</height>
+    <width>431</width>
+    <height>122</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,189 +17,121 @@
    <iconset resource="resources.qrc">
     <normaloff>:/icons/qt-nbc.svg</normaloff>:/icons/qt-nbc.svg</iconset>
   </property>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>379</width>
-     <height>184</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Number 1</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="num1LE"/>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Operation</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="operation">
-          <property name="editable">
-           <bool>true</bool>
-          </property>
-          <property name="currentText">
-           <string>+</string>
-          </property>
-          <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="labelOperation">
+         <property name="text">
+          <string>Enter Operation</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="labelResult">
            <property name="text">
-            <string>+</string>
+            <string>Result</string>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>-</string>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="cmbBoxResult">
+           <property name="maxVisibleItems">
+            <number>4</number>
            </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>*</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>/</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>%</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Number 2</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="num2LE"/>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QLabel" name="resLabel">
-          <property name="text">
-           <string>Result</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="resCombo">
-          <property name="editable">
-           <bool>false</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string>Binary</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Octal</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Decimal</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Hexadecimal</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="resLine">
-        <property name="maxLength">
-         <number>64</number>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QToolButton" name="helpButton">
-        <property name="text">
-         <string>?</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="exitButton">
-        <property name="text">
-         <string>Exit</string>
-        </property>
-        <property name="icon">
-         <iconset theme="help-about">
-          <normaloff>.</normaloff>.</iconset>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
-  </widget>
+           <item>
+            <property name="text">
+             <string>0b</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>0o</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>0d</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>0x</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="txtBoxOperation"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="txtBoxResult">
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="maxLength">
+          <number>32</number>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QToolButton" name="helpButton">
+         <property name="text">
+          <string>?</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="exitButton">
+         <property name="text">
+          <string>Exit</string>
+         </property>
+         <property name="icon">
+          <iconset theme="help-about"/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
  </widget>
  <tabstops>
-  <tabstop>num1LE</tabstop>
-  <tabstop>operation</tabstop>
-  <tabstop>num2LE</tabstop>
-  <tabstop>resCombo</tabstop>
-  <tabstop>resLine</tabstop>
   <tabstop>helpButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>
