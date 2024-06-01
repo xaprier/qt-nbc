@@ -8,14 +8,9 @@
 #include <QDebug>
 #include <QDialog>
 #include <QMessageBox>
-#include <QString>
 #include <QValidator>
 
-#include "Binary.hpp"
-#include "Decimal.hpp"
-#include "Hexadecimal.hpp"
-#include "Number.hpp"
-#include "Octal.hpp"
+#include "expressionhandler.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -32,20 +27,20 @@ class NBCalculator : public QDialog {
     ~NBCalculator() override;
 
   private slots:
-    void hasChanged();
-    void calculate();
-    void setNumbers(const std::string &numberToConvert, int indexing,
-                    std::string *pointOfNumber);
-    void help();
+    void sl_help();
+    void sl_operationChanged();
+    void sl_enterClicked();
+    void sl_wrongCharClicked();
+
+  signals:
+    void si_enterClicked();      // todo: if enter clicked last result will be in operation
+    void si_wrongCharClicked();  // todo: if wrong characted clicked, there will be popup.
 
   private:
-    std::string num1, num2;
+    void updateResult();
     Ui::NBCalculator *ui;
     QRegularExpressionValidator *validator;
-    Number<Binary> *binaryNumber;
-    Number<Octal> *octalNumber;
-    Number<Decimal> *decimalNumber;
-    Number<Hexadecimal> *hexadecimalNumber;
+    ExpressionHandler *handler;
 };
 
 #endif  // nbcalculator_h
