@@ -208,9 +208,9 @@ Decimal::Decimal(const Hexadecimal &h) {
 
     std::string number = h.num;
 
-    std::transform(number.begin(), number.end(), number.begin(), ::tolower);
+    std::transform(number.begin(), number.end(), number.begin(), ::toupper);
 
-    if (number.find("nan") != std::string::npos) {
+    if (number.find("NAN") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -246,25 +246,13 @@ Decimal::Decimal(const Hexadecimal &h) {
 
     std::string sResult;
 
-    std::transform(number.begin(), number.end(), number.begin(), ::toupper);
-
     // calculate the integer part of decimal from hexadecimal
     for (int i = intPoint.length() - 1; i >= 0; i--) {
-        if (intPoint[i] == 'A')
-            result += 10 * pow(16, intPoint.length() - i - 1);
-        else if (intPoint[i] == 'B')
-            result += 11 * pow(16, intPoint.length() - i - 1);
-        else if (intPoint[i] == 'C')
-            result += 12 * pow(16, intPoint.length() - i - 1);
-        else if (intPoint[i] == 'D')
-            result += 13 * pow(16, intPoint.length() - i - 1);
-        else if (intPoint[i] == 'E')
-            result += 14 * pow(16, intPoint.length() - i - 1);
-        else if (intPoint[i] == 'F')
-            result += 15 * pow(16, intPoint.length() - i - 1);
+        // if char is not digit
+        if (intPoint[i] >= 65 && intPoint[i] <= 70)                                                  /** ABCDEF in ascii */
+            result += static_cast<int>(intPoint[i] - 'A' + 10) * pow(16, intPoint.length() - i - 1); /** 65 is A, so -55 will be 10 */
         else
-            result += static_cast<int>(intPoint[i] - '0') *
-                      pow(16, intPoint.length() - i - 1);
+            result += static_cast<int>(intPoint[i] - '0') * pow(16, intPoint.length() - i - 1);
     }
 
     for (char i : std::to_string(static_cast<unsigned long long>(result))) {
@@ -276,19 +264,8 @@ Decimal::Decimal(const Hexadecimal &h) {
     if (!decPoint.empty()) {
         int iterator = -1;
         for (char i : decPoint) {
-            i = std::toupper(i);
-            if (i == 'A')
-                result += 10 * pow(16, iterator);
-            else if (i == 'B')
-                result += 11 * pow(16, iterator);
-            else if (i == 'C')
-                result += 12 * pow(16, iterator);
-            else if (i == 'D')
-                result += 13 * pow(16, iterator);
-            else if (i == 'E')
-                result += 14 * pow(16, iterator);
-            else if (i == 'F')
-                result += 15 * pow(16, iterator);
+            if (i >= 65 && i <= 70) /** ABCDEF in ascii */
+                result += static_cast<int>(i - 'A' + 10) * pow(16, iterator);
             else
                 result += static_cast<int>(i - '0') * pow(16, iterator);
             iterator--;

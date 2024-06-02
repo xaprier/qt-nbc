@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <cctype>
 #include <cmath>
-#include <iostream>
 
 #include "Binary.hpp"
 #include "Decimal.hpp"
@@ -80,21 +79,11 @@ Hexadecimal::Hexadecimal(const Decimal &d) {
     }
 
     do {
-        if (intPoint % 16 == 15) {
-            result += ('F');
-        } else if (intPoint % 16 == 14) {
-            result += ('E');
-        } else if (intPoint % 16 == 13) {
-            result += ('D');
-        } else if (intPoint % 16 == 12) {
-            result += ('C');
-        } else if (intPoint % 16 == 11) {
-            result += ('B');
-        } else if (intPoint % 16 == 10) {
-            result += ('A');
-        } else {
-            result += (static_cast<char>(intPoint % 16) + '0');
-        }
+        int remain = intPoint % 16;
+        if (remain >= 10)
+            result += static_cast<char>('A' + remain - 10);
+        else
+            result += static_cast<char>(intPoint % 16) + '0';
         intPoint /= 16;
     } while (intPoint > 0);
 
@@ -107,39 +96,15 @@ Hexadecimal::Hexadecimal(const Decimal &d) {
     if (decPoint != 0) {
         while (true) {
             decPoint *= 16;
+            int remain = static_cast<int>(decPoint);
+            if (remain >= 10)
+                result.push_back(static_cast<char>('A' + remain - 10));
+            else
+                result.push_back(static_cast<char>(((int)decPoint) + '0'));
+
             if (fmodl(decPoint, 1.0) == 0) {
-                if ((int)decPoint == 15) {
-                    result.push_back('F');
-                } else if ((int)decPoint == 14) {
-                    result.push_back('E');
-                } else if ((int)decPoint == 13) {
-                    result.push_back('D');
-                } else if ((int)decPoint == 12) {
-                    result.push_back('C');
-                } else if ((int)decPoint == 11) {
-                    result.push_back('B');
-                } else if ((int)decPoint == 10) {
-                    result.push_back('A');
-                } else {
-                    result.push_back(static_cast<char>(((int)decPoint) + '0'));
-                }
                 break;
             } else {
-                if ((int)decPoint == 15) {
-                    result.push_back('F');
-                } else if ((int)decPoint == 14) {
-                    result.push_back('E');
-                } else if ((int)decPoint == 13) {
-                    result.push_back('D');
-                } else if ((int)decPoint == 12) {
-                    result.push_back('C');
-                } else if ((int)decPoint == 11) {
-                    result.push_back('B');
-                } else if ((int)decPoint == 10) {
-                    result.push_back('A');
-                } else {
-                    result.push_back(static_cast<char>(((int)decPoint) + '0'));
-                }
                 decPoint -= (int)decPoint;
             }
         }
