@@ -14,8 +14,7 @@
 
 class ExpressionHandler : public QObject {
     Q_OBJECT
-    Q_DISABLE_COPY(ExpressionHandler)
-    Q_DISABLE_MOVE(ExpressionHandler)
+    Q_DISABLE_COPY_MOVE(ExpressionHandler)
   public:
     ExpressionHandler(QLineEdit *edit, QObject *parent = nullptr);
     ~ExpressionHandler();

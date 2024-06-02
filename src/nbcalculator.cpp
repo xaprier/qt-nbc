@@ -13,40 +13,39 @@
 #include "expressionhandler.hpp"
 #include "expressions.hpp"
 
-NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), ui(new Ui::NBCalculator) {
+NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), m_ui(new Ui::NBCalculator) {
     // fixed size of window
     QWidget::setFixedSize(400, 200);
-    ui->setupUi(this);
+    m_ui->setupUi(this);
 
     // Ensure the exit button is not the default button for returnPressed connection
-    this->ui->exitButton->setAutoDefault(false);
-    this->ui->exitButton->setDefault(false);
+    this->m_ui->exitButton->setAutoDefault(false);
+    this->m_ui->exitButton->setDefault(false);
 
-    connect(this->ui->txtBoxOperation, &QLineEdit::textChanged, this, &NBCalculator::sl_textChanged);
-    connect(this->ui->txtBoxOperation, &QLineEdit::returnPressed, this, &NBCalculator::sl_returnPressed);
-    connect(this->ui->cmbBoxResult, &QComboBox::currentTextChanged, this, &NBCalculator::sl_currentTextChanged);
+    connect(this->m_ui->txtBoxOperation, &QLineEdit::textChanged, this, &NBCalculator::sl_textChanged);
+    connect(this->m_ui->txtBoxOperation, &QLineEdit::returnPressed, this, &NBCalculator::sl_returnPressed);
+    connect(this->m_ui->cmbBoxResult, &QComboBox::currentTextChanged, this, &NBCalculator::sl_currentTextChanged);
 
     // exit button handler
-    connect(ui->exitButton, &QPushButton::clicked, this, &NBCalculator::close);
-    connect(ui->helpButton, &QToolButton::clicked, this, &NBCalculator::sl_help);
+    connect(m_ui->exitButton, &QPushButton::clicked, this, &NBCalculator::close);
+    connect(m_ui->helpButton, &QToolButton::clicked, this, &NBCalculator::sl_help);
 
-    this->handler = new ExpressionHandler(this->ui->txtBoxOperation);
+    this->m_handler = new ExpressionHandler(this->m_ui->txtBoxOperation);
 }
 
 NBCalculator::~NBCalculator() {
-    delete this->handler;
-    delete ui;
+    delete this->m_handler;
+    delete m_ui;
 }
 
 void NBCalculator::sl_returnPressed() {
-    qDebug() << "bastı";
     // disable signals
-    this->ui->txtBoxOperation->blockSignals(true);
+    this->m_ui->txtBoxOperation->blockSignals(true);
 
-    this->ui->txtBoxOperation->setText(this->ui->cmbBoxResult->currentText() + this->ui->txtBoxResult->text());
+    this->m_ui->txtBoxOperation->setText(this->m_ui->cmbBoxResult->currentText() + this->m_ui->txtBoxResult->text());
 
     // enable signals
-    this->ui->txtBoxOperation->blockSignals(false);
+    this->m_ui->txtBoxOperation->blockSignals(false);
 }
 
 void NBCalculator::sl_help() {
@@ -73,11 +72,11 @@ void NBCalculator::sl_textChanged(const QString &text) {
     if (text.isEmpty()) return;
     bool isValid = false;
     auto res = this->m_evaluateExpression(text, isValid);
-
+    this->m_cleanToString(res);
     if (isValid) {
         std::string convertedRes;
         Decimal number(res);
-        switch (this->ui->cmbBoxResult->currentText().toLower().back().toLatin1()) {
+        switch (this->m_ui->cmbBoxResult->currentText().toLower().back().toLatin1()) {
             case 'b':
                 convertedRes = number.toBin().getNum();
                 break;
@@ -91,17 +90,28 @@ void NBCalculator::sl_textChanged(const QString &text) {
                 convertedRes = number.toHex().getNum();
                 break;
         }
-        this->ui->txtBoxResult->setText(QString::fromStdString(convertedRes));
+        this->m_ui->txtBoxResult->setText(QString::fromStdString(convertedRes));
     }
 }
 
 std::string NBCalculator::m_evaluateExpression(const QString &text, bool &valid) const {
     ExpressionCalculator calculator(text);
     valid = calculator;
-    qDebug() << "Valid : " << valid << static_cast<QString>(calculator);
     return calculator;
 }
 
+void NBCalculator::m_cleanToString(std::string &str) {
+    // clean unneccessary 0's at the end
+    while (!str.empty() && str.back() == '0') {
+        str.pop_back();
+    }
+
+    // if last character remained ., add 1 zero
+    if (!str.empty() && str.back() == '.') {
+        str.append("0");
+    }
+}
+
 void NBCalculator::sl_currentTextChanged(const QString &text) {
-    this->sl_textChanged(this->ui->txtBoxOperation->text());
+    this->sl_textChanged(this->m_ui->txtBoxOperation->text());
 }

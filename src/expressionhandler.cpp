@@ -30,7 +30,7 @@ ExpressionHandler::~ExpressionHandler() {
 
 bool ExpressionHandler::eventFilter(QObject *obj, QEvent *event) {
     if (obj == this->m_edit && event->type() == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(event);
 
         QString keyText = keyEvent->text();
         QString currentText = this->m_edit->text();

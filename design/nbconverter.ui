@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>209</height>
+    <width>347</width>
+    <height>191</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,153 +17,142 @@
    <iconset resource="resources.qrc">
     <normaloff>:/icons/qt-nbc.svg</normaloff>:/icons/qt-nbc.svg</iconset>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
     <widget class="QWidget" name="centralwidget" native="true">
-     <widget class="QLineEdit" name="hexaLine">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>120</y>
-        <width>221</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="mouseTracking">
-       <bool>false</bool>
-      </property>
-      <property name="maxLength">
-       <number>15</number>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="decLine">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>120</y>
-        <width>221</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="maxLength">
-       <number>16</number>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="octLine">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>40</y>
-        <width>221</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="maxLength">
-       <number>16</number>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="binLine">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>40</y>
-        <width>221</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="inputMethodHints">
-       <set>Qt::ImhPreferNumbers</set>
-      </property>
-      <property name="maxLength">
-       <number>16</number>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="exitBut">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>80</y>
-        <width>84</width>
-        <height>34</height>
-       </rect>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Exit</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="binLabel">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>221</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Binary</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="decLabel">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>90</y>
-        <width>221</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Decimal</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="hexLabel">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>90</y>
-        <width>221</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Hexadecimal</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="octLabel">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>10</y>
-        <width>221</width>
-        <height>18</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Octal</string>
-      </property>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="binLabel">
+            <property name="text">
+             <string>Binary</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="octLabel">
+            <property name="text">
+             <string>Octal</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="decLabel">
+            <property name="text">
+             <string>Decimal</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="hexLabel">
+            <property name="text">
+             <string>Hexadecimal</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QLineEdit" name="binLine">
+            <property name="inputMethodHints">
+             <set>Qt::ImhNone</set>
+            </property>
+            <property name="maxLength">
+             <number>16</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="octLine">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maxLength">
+             <number>16</number>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="decLine">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maxLength">
+             <number>16</number>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="hexaLine">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="mouseTracking">
+             <bool>false</bool>
+            </property>
+            <property name="maxLength">
+             <number>15</number>
+            </property>
+            <property name="readOnly">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exitBut">
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Exit</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

@@ -2,68 +2,81 @@
 
 #include <qobject.h>
 
+#include <memory>
+
 #include "../design/ui_nbconverter.h"
+#include "NumberBase.hpp"
 #include "expressions.hpp"
 
-NBConverter::NBConverter(QWidget *parent) : QDialog(parent), ui(new Ui::NBConverter) {
-    QWidget::setFixedSize(800, 209);
+NBConverter::NBConverter(QWidget *parent) : QDialog(parent), m_ui(new Ui::NBConverter) {  // NOLINT
+    QWidget::setFixedSize(400, 200);                                                      // NOLINT
 
-    ui->setupUi(this);
+    this->m_ui->setupUi(this);
 
-    connect(ui->binLine, &QLineEdit::textEdited, this,
-            &NBConverter::textChanged);
-    connect(ui->octLine, &QLineEdit::textEdited, this,
-            &NBConverter::textChanged);
-    connect(ui->decLine, &QLineEdit::textEdited, this,
-            &NBConverter::textChanged);
-    connect(ui->hexaLine, &QLineEdit::textEdited, this,
-            &NBConverter::textChanged);
-    connect(ui->exitBut, &QPushButton::clicked, this, &NBConverter::close);
+    connect(this->m_ui->binLine, &QLineEdit::textEdited, this,
+            &NBConverter::sl_textChanged);
+    connect(this->m_ui->octLine, &QLineEdit::textEdited, this,
+            &NBConverter::sl_textChanged);
+    connect(this->m_ui->decLine, &QLineEdit::textEdited, this,
+            &NBConverter::sl_textChanged);
+    connect(this->m_ui->hexaLine, &QLineEdit::textEdited, this,
+            &NBConverter::sl_textChanged);
+    connect(this->m_ui->exitBut, &QPushButton::clicked, this, &NBConverter::close);
 
-    this->setupValidator();
+    m_lineEdits.push_back(this->m_ui->binLine);
+    m_lineEdits.push_back(this->m_ui->decLine);
+    m_lineEdits.push_back(this->m_ui->octLine);
+    m_lineEdits.push_back(this->m_ui->hexaLine);
+
+    this->m_setupValidator();
 }
 
 NBConverter::~NBConverter() {
-    delete ui;
+    delete m_ui;
 }
 
-void NBConverter::textChanged() {
-    QString bin = ui->binLine->text(), oct = ui->octLine->text(), dec = ui->decLine->text(), hex = ui->hexaLine->text();
-
-    if (QObject::sender() == ui->binLine) {
-        b = new Number<Binary>(ui->binLine->text().toStdString());
-        oct = QString::fromStdString(b->getNumber().toOct().getNum());
-        dec = QString::fromStdString(b->getNumber().toDec().getNum());
-        hex = QString::fromStdString(b->getNumber().toHex().getNum());
-        delete b;
-    } else if (QObject::sender() == ui->decLine) {
-        d = new Number<Decimal>(ui->decLine->text().toStdString());
-        bin = QString::fromStdString(d->getNumber().toBin().getNum());
-        oct = QString::fromStdString(d->getNumber().toOct().getNum());
-        hex = QString::fromStdString(d->getNumber().toHex().getNum());
-        delete d;
-    } else if (QObject::sender() == ui->octLine) {
-        o = new Number<Octal>(ui->octLine->text().toStdString());
-        bin = QString::fromStdString(o->getNumber().toBin().getNum());
-        dec = QString::fromStdString(o->getNumber().toDec().getNum());
-        hex = QString::fromStdString(o->getNumber().toHex().getNum());
-        delete o;
-    } else {
-        h = new Number<Hexadecimal>(ui->hexaLine->text().toStdString());
-        bin = QString::fromStdString(h->getNumber().toBin().getNum());
-        oct = QString::fromStdString(h->getNumber().toOct().getNum());
-        dec = QString::fromStdString(h->getNumber().toDec().getNum());
-        delete h;
+void NBConverter::sl_textChanged() {
+    // disable signals
+    for (auto *line : this->m_lineEdits) {
+        line->blockSignals(true);
     }
-    ui->binLine->setText(bin);
-    ui->octLine->setText(oct);
-    ui->decLine->setText(dec);
-    ui->hexaLine->setText(hex);
+
+    QString bin = this->m_ui->binLine->text(), oct = this->m_ui->octLine->text(), dec = this->m_ui->decLine->text(), hex = this->m_ui->hexaLine->text();
+    std::shared_ptr<NumberBase> number;
+    auto sender = QObject::sender();
+    if (sender == this->m_ui->binLine) {
+        number = std::make_shared<Binary>(bin.toStdString());
+    } else if (sender == this->m_ui->octLine) {
+        number = std::make_shared<Octal>(oct.toStdString());
+    } else if (sender == this->m_ui->decLine) {
+        number = std::make_shared<Decimal>(dec.toStdString());
+    } else if (sender == this->m_ui->hexaLine) {
+        number = std::make_shared<Hexadecimal>(hex.toStdString());
+    }
+
+    // we shall not set the sender text.
+    if (sender != this->m_ui->binLine) {
+        this->m_ui->binLine->setText(QString::fromStdString(number->toBin().getNum()));
+    }
+    if (sender != this->m_ui->octLine) {
+        this->m_ui->octLine->setText(QString::fromStdString(number->toOct().getNum()));
+    }
+    if (sender != this->m_ui->decLine) {
+        this->m_ui->decLine->setText(QString::fromStdString(number->toDec().getNum()));
+    }
+    if (sender != this->m_ui->hexaLine) {
+        this->m_ui->hexaLine->setText(QString::fromStdString(number->toHex().getNum()));
+    }
+
+    // enable signals back
+    for (auto *line : this->m_lineEdits) {
+        line->blockSignals(false);
+    }
 }
 
-void NBConverter::setupValidator() {
-    ui->binLine->setValidator(new QRegularExpressionValidator(binExpression));
-    ui->octLine->setValidator(new QRegularExpressionValidator(octExpression));
-    ui->decLine->setValidator(new QRegularExpressionValidator(decExpression));
-    ui->hexaLine->setValidator(new QRegularExpressionValidator(hexExpression));
+void NBConverter::m_setupValidator() {
+    this->m_ui->binLine->setValidator(new QRegularExpressionValidator(binExpression));   // NOLINT
+    this->m_ui->octLine->setValidator(new QRegularExpressionValidator(octExpression));   // NOLINT
+    this->m_ui->decLine->setValidator(new QRegularExpressionValidator(decExpression));   // NOLINT
+    this->m_ui->hexaLine->setValidator(new QRegularExpressionValidator(hexExpression));  // NOLINT
 }

@@ -5,6 +5,8 @@
 #ifndef nbcalculator_h
 #define nbcalculator_h
 
+#include <qglobal.h>
+
 #include <QDebug>
 #include <QDialog>
 #include <QMessageBox>
@@ -22,10 +24,9 @@ QT_END_NAMESPACE
 
 class NBCalculator : public QDialog {
     Q_OBJECT
-
+    Q_DISABLE_COPY_MOVE(NBCalculator)
   public:
     explicit NBCalculator(QWidget *parent = nullptr);
-
     ~NBCalculator() override;
 
   private slots:
@@ -36,10 +37,13 @@ class NBCalculator : public QDialog {
 
   private:
     std::string m_evaluateExpression(const QString &text, bool &valid) const;
-    Ui::NBCalculator *ui;
-    QRegularExpressionValidator *validator;
-    Number<Decimal> number;
-    ExpressionHandler *handler;
+    void m_cleanToString(std::string &str);
+
+  private:
+    Ui::NBCalculator *m_ui;
+    QRegularExpressionValidator *m_validator;
+    Number<Decimal> m_number;
+    ExpressionHandler *m_handler;
 };
 
 #endif  // nbcalculator_h

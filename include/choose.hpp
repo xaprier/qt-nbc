@@ -8,9 +8,6 @@
 #include <QMainWindow>
 #include <QMessageBox>
 
-#include "nbcalculator.hpp"
-#include "nbconverter.hpp"
-
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class choose;
@@ -19,6 +16,7 @@ QT_END_NAMESPACE
 
 class choose : public QMainWindow {
     Q_OBJECT
+    Q_DISABLE_COPY_MOVE(choose)
 
   public:
     explicit choose(QWidget *parent = nullptr);
@@ -26,11 +24,10 @@ class choose : public QMainWindow {
     ~choose() override;
 
   private slots:
-
-    void onPushButton_clicked();
+    void sl_onPushButton_clicked();
 
   private:
-    Ui::choose *ui;
+    Ui::choose *m_ui;
 };
 
 #endif  // QT_NBC_CHOOSE_H

@@ -1,3 +1,5 @@
+#include <qglobal.h>
+
 #include <QComboBox>
 #include <QDialog>
 #include <QMessageBox>
@@ -20,24 +22,22 @@ QT_END_NAMESPACE
 
 class NBConverter : public QDialog {
     Q_OBJECT
+    Q_DISABLE_COPY_MOVE(NBConverter)
 
   public:
     explicit NBConverter(QWidget *parent = nullptr);
-
     ~NBConverter() override;
 
   private slots:
-
-    void textChanged();
+    void sl_textChanged();
 
   private:
-    void setupValidator();
-    Ui::NBConverter *ui;
-    QValidator *validator;
-    Number<Binary> *b;
-    Number<Octal> *o;
-    Number<Decimal> *d;
-    Number<Hexadecimal> *h;
+    void m_setupValidator();
+
+  private:
+    Ui::NBConverter *m_ui;
+    QList<QLineEdit *> m_lineEdits;
+    QValidator *m_validator;
 };
 
 #endif  // QT_NBC_NBCONVERTER_H

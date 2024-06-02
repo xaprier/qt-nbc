@@ -1,6 +1,5 @@
 #include "expressioncalculator.hpp"
 
-#include <cctype>
 #include <exception>
 #include <stdexcept>
 

@@ -4,22 +4,24 @@
 #include "choose.hpp"
 
 #include "../design/ui_choose.h"
+#include "nbcalculator.hpp"
+#include "nbconverter.hpp"
 
 choose::choose(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::choose) {
-    QWidget::setFixedSize(481, 268);
-    ui->setupUi(this);
+    : QMainWindow(parent), m_ui(new Ui::choose) {
+    QWidget::setFixedSize(400, 200);
+    this->m_ui->setupUi(this);
 
-    connect(ui->pushButton, &QPushButton::clicked, this,
-            &choose::onPushButton_clicked);
+    connect(this->m_ui->pushButton, &QPushButton::clicked, this,
+            &choose::sl_onPushButton_clicked);
 
-    ui->comboBox->focusWidget();
+    this->m_ui->comboBox->focusWidget();
 }
 
-choose::~choose() { delete ui; }
+choose::~choose() { delete this->m_ui; }
 
-void choose::onPushButton_clicked() {
-    if (ui->comboBox->currentIndex() == 0) {
+void choose::sl_onPushButton_clicked() {
+    if (this->m_ui->comboBox->currentIndex() == 0) {
         auto *n = new NBConverter(this);
         n->exec();
         delete n;
