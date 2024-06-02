@@ -2,6 +2,11 @@
 // Created by xaprier on 2/5/23.
 //
 
+//! IMPORTANT NOTE
+//! THIS TEST CASES REMAINED FROM NOT REFACTORED OLD CODE BUT IT'S WORKS.
+//! IF WE TRY TO REFACTOR IT, IT WILL TAKE TOO LONG.
+//! SO, THIS PART OF CODE WILL NOT REFACTORED.
+
 #include "test_cases.hpp"
 
 #include <cassert>
@@ -10,7 +15,7 @@ Decimal d("12.75");
 Octal o("175.652");                // 125.83203125
 Hexadecimal h("1FC.ABF");          // 508.671630859375
 Binary b("1100111011.110111101");  // 827.869140625
-BaseClass *n;
+NumberBase *n;
 
 void test(const std::string &expected, const std::string &output, int test_case) {
     if (expected == output) {
