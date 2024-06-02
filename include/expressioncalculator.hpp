@@ -18,8 +18,8 @@ class ExpressionCalculator {
     inline double getResult() { return result(); }
     inline double calculate() { return result(); }
 
-    bool valid();
-    bool isValid() { return valid(); }
+    inline bool valid() { return m_valid; };
+    inline bool isValid() { return m_valid; }
 
     operator double() const { return m_result; }
     operator std::string() const { return std::to_string(m_result); }

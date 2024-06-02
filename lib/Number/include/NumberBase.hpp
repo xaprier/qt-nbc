@@ -1,5 +1,5 @@
-#ifndef BASECLASS_H
-#define BASECLASS_H
+#ifndef NUMBERBASE_H
+#define NUMBERBASE_H
 #include <iostream>
 #include <string>
 
@@ -8,7 +8,7 @@ class Decimal;
 class Octal;
 class Hexadecimal;
 
-class BaseClass {
+class NumberBase {
   public:
     friend class Binary;
     friend class Decimal;
@@ -19,36 +19,36 @@ class BaseClass {
      * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param num The number with based Decimal
      */
-    explicit BaseClass(std::string = "0.0");
+    explicit NumberBase(std::string = "0.0");
 
     /**
      * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param o The number with Octal object
      */
-    explicit BaseClass(const Octal &o);
+    explicit NumberBase(const Octal &o);
 
     /**
      * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param h The number with Hexadecimal object
      */
-    explicit BaseClass(const Hexadecimal &h);
+    explicit NumberBase(const Hexadecimal &h);
 
     /**
      * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param b The number with Binary object
      */
-    explicit BaseClass(const Binary &b);
+    explicit NumberBase(const Binary &b);
 
     /**
      * @brief Construct a new Base Class object(can be usable with PolyMorphism)
      * @param d The number with Decimal object
      */
-    explicit BaseClass(const Decimal &d);
+    explicit NumberBase(const Decimal &d);
 
     /**
      * @brief Destroy the Base Class object
      */
-    virtual ~BaseClass() = default;
+    virtual ~NumberBase() = default;
 
     /**
      * @brief Returns the Octal object with converting the current based number(Raw Virtual Function)
@@ -263,12 +263,12 @@ class BaseClass {
     }
 
     /**
-     * @brief std::cout << operator overloading for BaseClass based objects
+     * @brief std::cout << operator overloading for NumberBase based objects
      * @param output std::ostream
-     * @param n BaseClass
+     * @param n NumberBase
      * @return std::ostream
      */
-    friend std::ostream &operator<<(std::ostream &output, const BaseClass &n);
+    friend std::ostream &operator<<(std::ostream &output, const NumberBase &n);
 
     /**
      * @brief Making function as friend for Unit Testing and accessing private/protected members
@@ -322,4 +322,4 @@ class BaseClass {
     std::string num;
 };
 
-#endif  // BASECLASS_H
+#endif  // NUMBERBASE_H

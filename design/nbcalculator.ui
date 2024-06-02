@@ -132,6 +132,9 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>txtBoxOperation</tabstop>
+  <tabstop>cmbBoxResult</tabstop>
+  <tabstop>txtBoxResult</tabstop>
   <tabstop>helpButton</tabstop>
   <tabstop>exitButton</tabstop>
  </tabstops>

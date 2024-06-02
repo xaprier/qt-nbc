@@ -35,7 +35,7 @@ Decimal::Decimal(std::string num) {
     this->num = num;
 }
 
-Decimal::Decimal(const Decimal &d) : BaseClass(d) {}
+Decimal::Decimal(const Decimal &d) : NumberBase(d) {}
 
 Decimal::Decimal(const Binary &b) {
     // setting locale for QApplication changes(. might be , in region)

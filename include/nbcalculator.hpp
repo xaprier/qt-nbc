@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QValidator>
 
+#include "Number.hpp"
+#include "NumberBase.hpp"
 #include "expressionhandler.hpp"
 
 QT_BEGIN_NAMESPACE
@@ -28,18 +30,15 @@ class NBCalculator : public QDialog {
 
   private slots:
     void sl_help();
-    // void sl_operationChanged();
     void sl_returnPressed();
-    void sl_wrongCharClicked();
-
-  signals:
-    void si_returnPressed();     // todo: if enter clicked last result will be in operation
-    void si_wrongCharClicked();  // todo: if wrong characted clicked, there will be popup.
+    void sl_textChanged(const QString &text);
+    void sl_currentTextChanged(const QString &text);
 
   private:
-    void updateResult();
+    std::string m_evaluateExpression(const QString &text, bool &valid) const;
     Ui::NBCalculator *ui;
     QRegularExpressionValidator *validator;
+    Number<Decimal> number;
     ExpressionHandler *handler;
 };
 

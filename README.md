@@ -102,8 +102,8 @@ You can run the program with this command
     - The base class which using for Polymorphism and Inheritance
     - Includes my algorithms for calculating sum, subtraction, multiplaction and the divide
     - Also includes the operator overloadings for logical operators
-    - [Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/BaseClass.h)
-    - [Source file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/Base/BaseClass.cpp)
+    - [Header file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/NumberBase.h)
+    - [Source file](https://github.com/xaprier/qt-nbc/blob/main/lib/Number/Base/NumberBase.cpp)
 
 ### choose class
 

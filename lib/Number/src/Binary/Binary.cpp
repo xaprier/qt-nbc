@@ -35,7 +35,7 @@ Binary::Binary(std::string num) {
 }
 
 // object type and the parameter object type is same
-Binary::Binary(const Binary &b) : BaseClass(b) {}
+Binary::Binary(const Binary &b) : NumberBase(b) {}
 
 Binary::Binary(const Decimal &d) {
     // setting locale for QApplication changes(. might be , in region)

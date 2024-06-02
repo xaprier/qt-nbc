@@ -1,5 +1,3 @@
-#include "BaseClass.hpp"
-
 #include <cstdint>
 #include <sstream>
 #include <string>
@@ -8,26 +6,27 @@
 #include "Binary.hpp"
 #include "Decimal.hpp"
 #include "Hexadecimal.hpp"
+#include "NumberBase.hpp"
 #include "Octal.hpp"
 
-BaseClass::BaseClass(std::string BaseClass) : num(std::move(BaseClass)) {}
+NumberBase::NumberBase(std::string NumberBase) : num(std::move(NumberBase)) {}
 
-BaseClass::BaseClass(const Octal &o) : num(o.num) {}
+NumberBase::NumberBase(const Octal &o) : num(o.num) {}
 
-BaseClass::BaseClass(const Hexadecimal &h) : num(h.num) {}
+NumberBase::NumberBase(const Hexadecimal &h) : num(h.num) {}
 
-BaseClass::BaseClass(const Binary &b) : num(b.num) {}
+NumberBase::NumberBase(const Binary &b) : num(b.num) {}
 
-BaseClass::BaseClass(const Decimal &d) : num(d.num) {}
+NumberBase::NumberBase(const Decimal &d) : num(d.num) {}
 
-std::string BaseClass::to_string_with_precision(const long double &value, int precision) {
+std::string NumberBase::to_string_with_precision(const long double &value, int precision) {
     std::ostringstream out;
     out.precision(precision);
     out << std::fixed << value;
     return out.str();
 }
 
-void BaseClass::clean_number(std::string &num) {
+void NumberBase::clean_number(std::string &num) {
     if (num == "NaN") return;
 
     if (num == "0" || num == "0.0" || num.empty()) {
@@ -52,7 +51,7 @@ void BaseClass::clean_number(std::string &num) {
     num = isItNegative ? "-" + num : num;
 }
 
-std::string BaseClass::sum(std::string val1, std::string val2) {
+std::string NumberBase::sum(std::string val1, std::string val2) {
     if (val1 == "NaN" || val2 == "NaN")
         return "NaN";
     bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
@@ -121,7 +120,7 @@ start:
     return result;
 }
 
-std::string BaseClass::sub(std::string val1, std::string val2) {
+std::string NumberBase::sub(std::string val1, std::string val2) {
     if (val1 == "NaN" || val2 == "NaN")
         return "NaN";
     bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
@@ -189,7 +188,7 @@ std::string BaseClass::sub(std::string val1, std::string val2) {
     return result;
 }
 
-std::string BaseClass::mul(std::string val1, std::string val2) {
+std::string NumberBase::mul(std::string val1, std::string val2) {
     if (val1 == "NaN" || val2 == "NaN")
         return "NaN";
 
@@ -249,7 +248,7 @@ std::string BaseClass::mul(std::string val1, std::string val2) {
     return result;
 }
 
-std::string BaseClass::div(std::string val1, std::string val2) {
+std::string NumberBase::div(std::string val1, std::string val2) {
     if (val1 == "NaN" || val2 == "NaN")
         return "NaN";
     bool val1IsNegative = val1[0] == '-', val2IsNegative = val2[0] == '-';
@@ -333,7 +332,7 @@ std::string BaseClass::div(std::string val1, std::string val2) {
     return result;
 }
 
-bool BaseClass::operator<(const Binary &b) {
+bool NumberBase::operator<(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -348,7 +347,7 @@ bool BaseClass::operator<(const Binary &b) {
     return first->num[0] == '-';
 }
 
-bool BaseClass::operator<(const Octal &o) {
+bool NumberBase::operator<(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -363,7 +362,7 @@ bool BaseClass::operator<(const Octal &o) {
     return first->num[0] == '-';
 }
 
-bool BaseClass::operator<(const Decimal &second) {
+bool NumberBase::operator<(const Decimal &second) {
     Decimal *first;
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -378,7 +377,7 @@ bool BaseClass::operator<(const Decimal &second) {
     return first->num[0] == '-';
 }
 
-bool BaseClass::operator<(const Hexadecimal &h) {
+bool NumberBase::operator<(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -392,7 +391,7 @@ bool BaseClass::operator<(const Hexadecimal &h) {
     *first -= second;
     return first->num[0] == '-';
 }
-bool BaseClass::operator<=(const Binary &b) {
+bool NumberBase::operator<=(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -406,7 +405,7 @@ bool BaseClass::operator<=(const Binary &b) {
     *first -= second;
     return first->num[0] == '-' || first->num == "0.0";
 }
-bool BaseClass::operator<=(const Octal &o) {
+bool NumberBase::operator<=(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -420,7 +419,7 @@ bool BaseClass::operator<=(const Octal &o) {
     *first -= second;
     return first->num[0] == '-' || first->num == "0.0";
 }
-bool BaseClass::operator<=(const Decimal &second) {
+bool NumberBase::operator<=(const Decimal &second) {
     Decimal *first;
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -434,7 +433,7 @@ bool BaseClass::operator<=(const Decimal &second) {
     *first -= second;
     return first->num[0] == '-' || first->num == "0.0";
 }
-bool BaseClass::operator<=(const Hexadecimal &h) {
+bool NumberBase::operator<=(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -449,7 +448,7 @@ bool BaseClass::operator<=(const Hexadecimal &h) {
     return first->num[0] == '-' || first->num == "0.0";
 }
 
-bool BaseClass::operator>(const Binary &b) {
+bool NumberBase::operator>(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -464,7 +463,7 @@ bool BaseClass::operator>(const Binary &b) {
     return second.num[0] == '-';
 }
 
-bool BaseClass::operator>(const Octal &o) {
+bool NumberBase::operator>(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -479,7 +478,7 @@ bool BaseClass::operator>(const Octal &o) {
     return second.num[0] == '-';
 }
 
-bool BaseClass::operator>(const Decimal &sec) {
+bool NumberBase::operator>(const Decimal &sec) {
     Decimal *first, second(sec);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -493,7 +492,7 @@ bool BaseClass::operator>(const Decimal &sec) {
     second -= *first;
     return second.num[0] == '-';
 }
-bool BaseClass::operator>(const Hexadecimal &h) {
+bool NumberBase::operator>(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -508,7 +507,7 @@ bool BaseClass::operator>(const Hexadecimal &h) {
     return second.num[0] == '-';
 }
 
-bool BaseClass::operator>=(const Binary &b) {
+bool NumberBase::operator>=(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -523,7 +522,7 @@ bool BaseClass::operator>=(const Binary &b) {
     return second.num[0] == '-' || second.num == "0.0";
 }
 
-bool BaseClass::operator>=(const Octal &o) {
+bool NumberBase::operator>=(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -538,7 +537,7 @@ bool BaseClass::operator>=(const Octal &o) {
     return second.num[0] == '-' || second.num == "0.0";
 }
 
-bool BaseClass::operator>=(const Decimal &sec) {
+bool NumberBase::operator>=(const Decimal &sec) {
     Decimal *first, second(sec);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -553,7 +552,7 @@ bool BaseClass::operator>=(const Decimal &sec) {
     return second.num[0] == '-' || second.num == "0.0";
 }
 
-bool BaseClass::operator>=(const Hexadecimal &h) {
+bool NumberBase::operator>=(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -568,7 +567,7 @@ bool BaseClass::operator>=(const Hexadecimal &h) {
     return second.num[0] == '-' || second.num == "0.0";
 }
 
-bool BaseClass::operator==(const Binary &b) {
+bool NumberBase::operator==(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -583,7 +582,7 @@ bool BaseClass::operator==(const Binary &b) {
     return first->num == "0.0";
 }
 
-bool BaseClass::operator==(const Octal &o) {
+bool NumberBase::operator==(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -598,7 +597,7 @@ bool BaseClass::operator==(const Octal &o) {
     return first->num == "0.0";
 }
 
-bool BaseClass::operator==(const Decimal &second) {
+bool NumberBase::operator==(const Decimal &second) {
     Decimal *first;
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -613,7 +612,7 @@ bool BaseClass::operator==(const Decimal &second) {
     return first->num == "0.0";
 }
 
-bool BaseClass::operator==(const Hexadecimal &h) {
+bool NumberBase::operator==(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -628,7 +627,7 @@ bool BaseClass::operator==(const Hexadecimal &h) {
     return first->num == "0.0";
 }
 
-bool BaseClass::operator!=(const Binary &b) {
+bool NumberBase::operator!=(const Binary &b) {
     Decimal *first, second(b);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -643,7 +642,7 @@ bool BaseClass::operator!=(const Binary &b) {
     return first->num != "0.0";
 }
 
-bool BaseClass::operator!=(const Octal &o) {
+bool NumberBase::operator!=(const Octal &o) {
     Decimal *first, second(o);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -658,7 +657,7 @@ bool BaseClass::operator!=(const Octal &o) {
     return first->num != "0.0";
 }
 
-bool BaseClass::operator!=(const Decimal &second) {
+bool NumberBase::operator!=(const Decimal &second) {
     Decimal *first;
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));
@@ -673,7 +672,7 @@ bool BaseClass::operator!=(const Decimal &second) {
     return first->num != "0.0";
 }
 
-bool BaseClass::operator!=(const Hexadecimal &h) {
+bool NumberBase::operator!=(const Hexadecimal &h) {
     Decimal *first, second(h);
     if (dynamic_cast<Binary *>(this) != nullptr) {
         first = new Decimal(*dynamic_cast<Binary *>(this));

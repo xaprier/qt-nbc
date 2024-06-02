@@ -1,9 +1,9 @@
 #ifndef HEXADECIMAL_H
 #define HEXADECIMAL_H
 
-#include "BaseClass.hpp"
+#include "NumberBase.hpp"
 
-class Hexadecimal : public BaseClass {
+class Hexadecimal : public NumberBase {
   public:
     /**
      * @brief Construct a new Hexadecimal object from a string(std::string must be formatted as "0x0.0")

@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include "BaseClass.hpp"
+#include "NumberBase.hpp"
 
-class Binary : public BaseClass {
+class Binary : public NumberBase {
   public:
     /**
      * @brief Construct a new Binary object from a string(std::string must be formatted as "0b...")

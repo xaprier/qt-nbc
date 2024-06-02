@@ -21,6 +21,7 @@ class Tokenizer {
     std::string getNumber();
     bool validOperator(char c);
     bool validBase(char c);
+    bool validHexaNum(char c);
 };
 
 #endif  // TOKENIZER_HPP

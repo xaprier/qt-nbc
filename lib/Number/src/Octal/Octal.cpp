@@ -34,7 +34,7 @@ Octal::Octal(std::string num) {
     this->num = num;
 }
 // copy constructor
-Octal::Octal(const Octal &o) : BaseClass(o) {}
+Octal::Octal(const Octal &o) : NumberBase(o) {}
 
 Octal::Octal(const Decimal &d) {
     // setting locale for QApplication changes(. might be , in region)

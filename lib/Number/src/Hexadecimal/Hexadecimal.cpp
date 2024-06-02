@@ -34,7 +34,7 @@ Hexadecimal::Hexadecimal(std::string num) {
     this->num = num;
 }
 // copy constructor
-Hexadecimal::Hexadecimal(const Hexadecimal &h) : BaseClass(h) {}
+Hexadecimal::Hexadecimal(const Hexadecimal &h) : NumberBase(h) {}
 
 // converter interface
 Hexadecimal::Hexadecimal(const Decimal &d) {

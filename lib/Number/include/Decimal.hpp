@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include "BaseClass.hpp"
+#include "NumberBase.hpp"
 
-class Decimal : public BaseClass {
+class Decimal : public NumberBase {
   public:
     /**
      * @brief Construct a new Decimal object from a string(std::string must be formatted as "0.0")

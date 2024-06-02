@@ -14,6 +14,11 @@ bool Tokenizer::validBase(char c) {
     return std::find(bases.begin(), bases.end(), std::tolower(c)) != bases.end();
 }
 
+bool Tokenizer::validHexaNum(char c) {
+    std::string chars = "ABCDEF";
+    return std::find(chars.begin(), chars.end(), std::toupper(c)) != chars.end();
+}
+
 std::string Tokenizer::getNumber() {
     std::string rv;
     bool decimal = false;
@@ -23,7 +28,7 @@ std::string Tokenizer::getNumber() {
     char c;
     while (stream.good()) {
         c = stream.peek();
-        if (c != '.' && !isdigit(c) && !validBase(c) && c != '-') break;
+        if (c != '.' && !isdigit(c) && !validBase(c) && !validHexaNum(c) && c != '-') break;
         c = stream.get();
         if (c == '.') {
             if (decimal)
