@@ -26,13 +26,15 @@ Octal::Octal(std::string num) {
         num = num.substr(2, num.length());
     else if (num.substr(0, 3) == "-0o")
         num = "-" + num.substr(3, num.length());
+    else if (num.substr(0, 1) == "o")
+        num = num.substr(1, num.length());
 
     clean_number(num);  // clean if it starts/ends with 0
 
     this->num = num;
 }
 // copy constructor
-Octal::Octal(const Octal &o) : BaseClass(o) {}
+Octal::Octal(const Octal &o) : NumberBase(o) {}
 
 Octal::Octal(const Decimal &d) {
     // setting locale for QApplication changes(. might be , in region)

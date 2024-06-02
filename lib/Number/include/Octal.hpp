@@ -1,9 +1,9 @@
 #ifndef OCTAL_H
 #define OCTAL_H
 
-#include "BaseClass.hpp"
+#include "NumberBase.hpp"
 
-class Octal : public BaseClass {
+class Octal : public NumberBase {
   public:
     /**
      * @brief Construct a new Octal object from a string(std::string must be formatted as "0o0.0")

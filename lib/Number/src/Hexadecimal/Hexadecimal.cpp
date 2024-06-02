@@ -26,13 +26,15 @@ Hexadecimal::Hexadecimal(std::string num) {
         num = num.substr(2, num.length());
     else if (num.substr(0, 3) == "-0X")
         num = "-" + num.substr(3, num.length());
+    else if (num.substr(0, 1) == "X")
+        num = num.substr(1, num.length());
 
     clean_number(num);  // clean if it starts/ends with 0
 
     this->num = num;
 }
 // copy constructor
-Hexadecimal::Hexadecimal(const Hexadecimal &h) : BaseClass(h) {}
+Hexadecimal::Hexadecimal(const Hexadecimal &h) : NumberBase(h) {}
 
 // converter interface
 Hexadecimal::Hexadecimal(const Decimal &d) {

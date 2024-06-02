@@ -35,13 +35,19 @@ jobs:
         run: |
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib:$LD_LIBRARY_PATH
           echo $QT5_DIR
+      
+      - name: (5) Get submodules
+        run: |
+          cd ${{ github.workspace }}
+          git submodule update --init --recursive
 
-      - name: Configure CMake
+      - name: (6) Configure CMake
         run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/qt/Qt/5.15.2/gcc_64/lib/cmake
 
-      - name: Build
+      - name: (7) Build
         run: cmake --build ${{ github.workspace }}/build --config ${{ env.BUILD_TYPE }}
 
-      - name: CTest
+      - name: (8) CTest
         run: |
-          ctest ${{ github.workspace }}/build/test/number --output-on-failure
+          cd ${{ github.workspace }}/build/test/
+          ctest --output-on-failure

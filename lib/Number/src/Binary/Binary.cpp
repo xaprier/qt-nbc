@@ -22,10 +22,12 @@ Binary::Binary(std::string num) {
     std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::tolower(c); });
 
     // trim binary string
-    if (num.substr(0, 2) == "0b" || num.substr(0, 2) == "0B")
+    if (num.substr(0, 2) == "0b")
         num = num.substr(2, num.length());
-    else if (num.substr(0, 3) == "-0B" || num.substr(0, 3) == "-0b")
+    else if (num.substr(0, 3) == "-0b")
         num = "-" + num.substr(3, num.length());
+    else if (num.substr(0, 1) == "b")
+        num = num.substr(1, num.length());
 
     clean_number(num);  // clean if it starts/ends with 0
 
@@ -33,7 +35,7 @@ Binary::Binary(std::string num) {
 }
 
 // object type and the parameter object type is same
-Binary::Binary(const Binary &b) : BaseClass(b) {}
+Binary::Binary(const Binary &b) : NumberBase(b) {}
 
 Binary::Binary(const Decimal &d) {
     // setting locale for QApplication changes(. might be , in region)

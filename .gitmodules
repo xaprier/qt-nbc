@@ -1,0 +1,3 @@
+[submodule "lib/tester"]
+	path = lib/tester
+	url = https://github.com/xaprier/tester.git
