@@ -14,13 +14,12 @@ Decimal::Decimal(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
-    if (num == "NaN") {
+    std::transform(num.begin(), num.end(), num.begin(), ::tolower);
+
+    if (num.find("nan") != std::string::npos) {
         this->num = "NaN";
         return;
     }
-
-    // toupper character d in string
-    std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::toupper(c); });
 
     // trim decimal string
     if (num.substr(0, 2) == "0d")
@@ -44,7 +43,9 @@ Decimal::Decimal(const Binary &b) {
 
     std::string number = b.num;
 
-    if (number == "NaN") {
+    std::transform(number.begin(), number.end(), number.begin(), ::tolower);
+
+    if (number.find("nan") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -71,15 +72,15 @@ Decimal::Decimal(const Binary &b) {
     }
 
     std::string decPoint;
-    if (number.find('.') != -1 &&
-        number.length() > number.find('.') + 1) {
+    if (number.find('.') != -1 && number.length() > number.find('.') + 1) {
         decPoint = number.substr(number.find('.') + 1, number.length());
     }
 
     // calculate the decimal number from binary
     unsigned long long integer = 0;
     for (int i = intPoint.length() - 1; i >= 0; i--) {
-        integer += static_cast<int>(intPoint[i] - '0') * pow(2, intPoint.length() - i - 1);
+        integer +=
+            static_cast<int>(intPoint[i] - '0') * pow(2, intPoint.length() - i - 1);
     }
 
     // add calculated integer value of decimal to result string
@@ -102,8 +103,8 @@ Decimal::Decimal(const Binary &b) {
                 result.push_back(static_cast<char>(decimal) + '0');
                 break;
             } else {
-                result.push_back(static_cast<char>(
-                    ((unsigned long long)decimal) + '0'));
+                result.push_back(
+                    static_cast<char>(((unsigned long long)decimal) + '0'));
                 decimal -= (unsigned long long)decimal;
             }
         }
@@ -125,7 +126,9 @@ Decimal::Decimal(const Octal &o) {
 
     std::string number = o.num;
 
-    if (number == "NaN") {
+    std::transform(number.begin(), number.end(), number.begin(), ::tolower);
+
+    if (number.find("nan") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -151,8 +154,7 @@ Decimal::Decimal(const Octal &o) {
     }
 
     std::string decPoint;
-    if (number.find('.') != -1 &&
-        number.length() > number.find('.') + 1) {
+    if (number.find('.') != -1 && number.length() > number.find('.') + 1) {
         decPoint = number.substr(number.find('.') + 1, number.length());
     }
 
@@ -183,8 +185,8 @@ Decimal::Decimal(const Octal &o) {
                 result.push_back(static_cast<char>(decimal) + '0');
                 break;
             } else {
-                result.push_back(static_cast<char>(
-                    ((unsigned long long)decimal) + '0'));
+                result.push_back(
+                    static_cast<char>(((unsigned long long)decimal) + '0'));
                 decimal -= (unsigned long long)decimal;
             }
         }
@@ -206,7 +208,9 @@ Decimal::Decimal(const Hexadecimal &h) {
 
     std::string number = h.num;
 
-    if (number == "NaN") {
+    std::transform(number.begin(), number.end(), number.begin(), ::tolower);
+
+    if (number.find("nan") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -236,12 +240,13 @@ Decimal::Decimal(const Hexadecimal &h) {
     }
 
     std::string decPoint;
-    if (number.find('.') != -1 &&
-        number.length() > number.find('.') + 1) {
+    if (number.find('.') != -1 && number.length() > number.find('.') + 1) {
         decPoint = number.substr(number.find('.') + 1, number.length());
     }
 
     std::string sResult;
+
+    std::transform(number.begin(), number.end(), number.begin(), ::toupper);
 
     // calculate the integer part of decimal from hexadecimal
     for (int i = intPoint.length() - 1; i >= 0; i--) {
@@ -262,8 +267,7 @@ Decimal::Decimal(const Hexadecimal &h) {
                       pow(16, intPoint.length() - i - 1);
     }
 
-    for (char i :
-         std::to_string(static_cast<unsigned long long>(result))) {
+    for (char i : std::to_string(static_cast<unsigned long long>(result))) {
         sResult.push_back(i);
     }
     sResult.push_back('.');
@@ -306,7 +310,8 @@ Decimal::Decimal(const Hexadecimal &h) {
         sResult.push_back('0');
     }
 
-    if (isItNegative) sResult.insert(0, "-");
+    if (isItNegative)
+        sResult.insert(0, "-");
 
     // setting the locale to old
     std::setlocale(LC_NUMERIC, oldLocale.c_str());
@@ -314,33 +319,21 @@ Decimal::Decimal(const Hexadecimal &h) {
     this->num = sResult;
 }
 
-Octal Decimal::toOct() const {
-    return Octal(*this);
-}
+Octal Decimal::toOct() const { return Octal(*this); }
 
-Decimal Decimal::toDec() const {
-    return Decimal{*this};
-}
+Decimal Decimal::toDec() const { return Decimal{*this}; }
 
-Binary Decimal::toBin() const {
-    return Binary(*this);
-}
+Binary Decimal::toBin() const { return Binary(*this); }
 
-Hexadecimal Decimal::toHex() const {
-    return Hexadecimal(*this);
-}
+Hexadecimal Decimal::toHex() const { return Hexadecimal(*this); }
 
 std::ostream &operator<<(std::ostream &output, const Decimal &d) {
     return output << d.num << "d";
 }
 
-Decimal::operator std::string() {
-    return this->num;
-}
+Decimal::operator std::string() { return this->num; }
 
-Decimal::Decimal(const int &num) {
-    this->num = std::to_string(num) + ".0";
-}
+Decimal::Decimal(const int &num) { this->num = std::to_string(num) + ".0"; }
 
 Decimal::Decimal(const double &num) {
     this->num = std::to_string(num);

@@ -19,7 +19,8 @@ Binary::Binary(std::string num) {
     }
 
     // tolower character b in string
-    std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::tolower(c); });
+    std::transform(num.begin(), num.end(), num.begin(),
+                   [](unsigned char c) { return std::tolower(c); });
 
     // trim binary string
     if (num.substr(0, 2) == "0b")
@@ -43,8 +44,9 @@ Binary::Binary(const Decimal &d) {
     std::setlocale(LC_NUMERIC, "C");
 
     std::string number = d.num;
+    std::transform(number.begin(), number.end(), number.begin(), ::tolower);
 
-    if (number == "NaN") {
+    if (number.find("nan") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -70,7 +72,8 @@ Binary::Binary(const Decimal &d) {
     }
     double decPoint = 0;
     if (number.length() > number.find('.') + 1) {
-        decPoint = std::stod(this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
+        decPoint = std::stod(
+            this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
     }
 
     // calculate the binary number from decimal
@@ -92,8 +95,7 @@ Binary::Binary(const Decimal &d) {
                 result.push_back(static_cast<char>(decPoint) + '0');
                 break;
             } else {
-                result.push_back(
-                    static_cast<char>(((int)decPoint) + '0'));
+                result.push_back(static_cast<char>(((int)decPoint) + '0'));
                 decPoint -= (int)decPoint;
             }
         }
@@ -124,21 +126,13 @@ Binary::Binary(const Hexadecimal &h) {
     this->num = b.num;
 }
 
-Octal Binary::toOct() const {
-    return Octal(*this);
-}
+Octal Binary::toOct() const { return Octal(*this); }
 
-Decimal Binary::toDec() const {
-    return Decimal(*this);
-}
+Decimal Binary::toDec() const { return Decimal(*this); }
 
-Binary Binary::toBin() const {
-    return Binary{*this};
-}
+Binary Binary::toBin() const { return Binary{*this}; }
 
-Hexadecimal Binary::toHex() const {
-    return Hexadecimal(*this);
-}
+Hexadecimal Binary::toHex() const { return Hexadecimal(*this); }
 
 std::ostream &operator<<(std::ostream &output, const Binary &b) {
     return output << "0b" + b.num;
@@ -166,14 +160,8 @@ Binary &Binary::operator=(const Hexadecimal &h) {
     return *this;
 }
 
-Binary::operator std::string() {
-    return this->num;
-}
+Binary::operator std::string() { return this->num; }
 
-Binary::Binary(const int &num) {
-    this->num = Decimal(num).toBin().num;
-}
+Binary::Binary(const int &num) { this->num = Decimal(num).toBin().num; }
 
-Binary::Binary(const double &num) {
-    this->num = Decimal(num).toBin().num;
-}
+Binary::Binary(const double &num) { this->num = Decimal(num).toBin().num; }

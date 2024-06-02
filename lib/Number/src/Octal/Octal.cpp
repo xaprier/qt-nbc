@@ -1,6 +1,7 @@
 #include "Octal.hpp"
 
 #include <algorithm>
+#include <cctype>
 #include <cmath>
 #include <iostream>
 
@@ -13,13 +14,15 @@ Octal::Octal(std::string num) {
     const std::string oldLocale = std::setlocale(LC_NUMERIC, nullptr);
     std::setlocale(LC_NUMERIC, "C");
 
-    if (num == "NaN") {
+    std::transform(num.begin(), num.end(), num.begin(), ::toupper);
+
+    if (num.find("NAN") != std::string::npos) {
         this->num = "NaN";
         return;
     }
 
     // tolower character x in string
-    std::transform(num.begin(), num.end(), num.begin(), [](unsigned char c) { return std::tolower(c); });
+    std::transform(num.begin(), num.end(), num.begin(), ::tolower);
 
     // trim octal string
     if (num.substr(0, 2) == "0o")
@@ -43,7 +46,9 @@ Octal::Octal(const Decimal &d) {
 
     std::string number = d.num;
 
-    if (number == "NaN") {
+    std::transform(number.begin(), number.end(), number.begin(), ::toupper);
+
+    if (number.find("NAN") != std::string::npos) {
         this->num = "NaN";
         return;
     }
@@ -68,9 +73,9 @@ Octal::Octal(const Decimal &d) {
         intPoint = std::stoull(number.substr(0, number.find('.')));
     }
     double decPoint = 0;
-    if (number.find('.') != -1 &&
-        number.length() > number.find('.') + 1) {
-        decPoint = std::stod(this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
+    if (number.find('.') != -1 && number.length() > number.find('.') + 1) {
+        decPoint = std::stod(
+            this->sub(number, number.substr(0, number.find('.') + 1) + "0"));
     }
 
     // calculate the octal number from decimal
@@ -92,8 +97,7 @@ Octal::Octal(const Decimal &d) {
                 result.push_back(static_cast<char>(decPoint) + '0');
                 break;
             } else {
-                result.push_back(
-                    static_cast<char>(((int)decPoint) + '0'));
+                result.push_back(static_cast<char>(((int)decPoint) + '0'));
                 decPoint -= (int)decPoint;
             }
         }
@@ -123,21 +127,13 @@ Octal::Octal(const Hexadecimal &h) {
     this->num = o.num;
 }
 
-Octal Octal::toOct() const {
-    return Octal{*this};
-}
+Octal Octal::toOct() const { return Octal{*this}; }
 
-Binary Octal::toBin() const {
-    return Binary(*this);
-}
+Binary Octal::toBin() const { return Binary(*this); }
 
-Decimal Octal::toDec() const {
-    return Decimal(*this);
-}
+Decimal Octal::toDec() const { return Decimal(*this); }
 
-Hexadecimal Octal::toHex() const {
-    return Hexadecimal(*this);
-}
+Hexadecimal Octal::toHex() const { return Hexadecimal(*this); }
 
 std::ostream &operator<<(std::ostream &output, const Octal &o) {
     return output << "0" << o.num;
@@ -165,14 +161,8 @@ Octal &Octal::operator=(const Hexadecimal &h) {
     return *this;
 }
 
-Octal::operator std::string() {
-    return this->num;
-}
+Octal::operator std::string() { return this->num; }
 
-Octal::Octal(const int &num) {
-    this->num = Decimal(num).toOct().num;
-}
+Octal::Octal(const int &num) { this->num = Decimal(num).toOct().num; }
 
-Octal::Octal(const double &num) {
-    this->num = Decimal(num).toOct().num;
-}
+Octal::Octal(const double &num) { this->num = Decimal(num).toOct().num; }
