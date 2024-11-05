@@ -332,357 +332,43 @@ std::string NumberBase::div(std::string val1, std::string val2) {
     return result;
 }
 
-bool NumberBase::operator<(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-';
+bool NumberBase::operator<(const NumberBase &base) const {
+    // Convert *this and base to Decimal for comparison
+    Decimal first = this->toDec();
+    Decimal second = base.toDec();
+
+    Decimal result = first - second;
+    return result.num[0] == '-';
 }
 
-bool NumberBase::operator<(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-';
+bool NumberBase::operator>(const NumberBase &base) const {
+    // Convert *this and base to Decimal for comparison
+    Decimal first = this->toDec();
+    Decimal second = base.toDec();
+
+    Decimal result = first - second;
+    return result.num[0] != '-' && result.num != "0.0";
 }
 
-bool NumberBase::operator<(const Decimal &second) {
-    Decimal *first;
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-';
+bool NumberBase::operator==(const NumberBase &base) const {
+    // Convert *this and base to Decimal for comparison
+    Decimal first = this->toDec();
+    Decimal second = base.toDec();
+
+    Decimal result = first - second;
+    return result.num == "0.0";
 }
 
-bool NumberBase::operator<(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-';
-}
-bool NumberBase::operator<=(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-' || first->num == "0.0";
-}
-bool NumberBase::operator<=(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-' || first->num == "0.0";
-}
-bool NumberBase::operator<=(const Decimal &second) {
-    Decimal *first;
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-' || first->num == "0.0";
-}
-bool NumberBase::operator<=(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num[0] == '-' || first->num == "0.0";
+bool NumberBase::operator!=(const NumberBase &base) const {
+    return !(*this == base);
 }
 
-bool NumberBase::operator>(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-';
+bool NumberBase::operator<=(const NumberBase &base) const {
+    // Use the existing operator< and operator== for <=
+    return (*this < base) || (*this == base);
 }
 
-bool NumberBase::operator>(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-';
-}
-
-bool NumberBase::operator>(const Decimal &sec) {
-    Decimal *first, second(sec);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-';
-}
-bool NumberBase::operator>(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-';
-}
-
-bool NumberBase::operator>=(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-' || second.num == "0.0";
-}
-
-bool NumberBase::operator>=(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-' || second.num == "0.0";
-}
-
-bool NumberBase::operator>=(const Decimal &sec) {
-    Decimal *first, second(sec);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-' || second.num == "0.0";
-}
-
-bool NumberBase::operator>=(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    second -= *first;
-    return second.num[0] == '-' || second.num == "0.0";
-}
-
-bool NumberBase::operator==(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num == "0.0";
-}
-
-bool NumberBase::operator==(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num == "0.0";
-}
-
-bool NumberBase::operator==(const Decimal &second) {
-    Decimal *first;
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num == "0.0";
-}
-
-bool NumberBase::operator==(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num == "0.0";
-}
-
-bool NumberBase::operator!=(const Binary &b) {
-    Decimal *first, second(b);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num != "0.0";
-}
-
-bool NumberBase::operator!=(const Octal &o) {
-    Decimal *first, second(o);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num != "0.0";
-}
-
-bool NumberBase::operator!=(const Decimal &second) {
-    Decimal *first;
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num != "0.0";
-}
-
-bool NumberBase::operator!=(const Hexadecimal &h) {
-    Decimal *first, second(h);
-    if (dynamic_cast<Binary *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Binary *>(this));
-    } else if (dynamic_cast<Octal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Octal *>(this));
-    } else if (dynamic_cast<Decimal *>(this) != nullptr) {
-        first = new Decimal(*dynamic_cast<Decimal *>(this));
-    } else {
-        first = new Decimal(*dynamic_cast<Hexadecimal *>(this));
-    }
-    *first -= second;
-    return first->num != "0.0";
+bool NumberBase::operator>=(const NumberBase &base) const {
+    // Use the existing operator> and operator== for >=
+    return (*this > base) || (*this == base);
 }

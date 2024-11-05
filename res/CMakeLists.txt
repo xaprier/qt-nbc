@@ -1,0 +1,7 @@
+if(WIN32)
+    install(FILES XNBC.png DESTINATION . COMPONENT desktop)
+    install(FILES XNBC.ico DESTINATION . COMPONENT desktop)
+else()
+    install(FILES XNBC.desktop DESTINATION share/applications/ COMPONENT desktop)
+    install(FILES XNBC.png DESTINATION share/icons/hicolor/256x256/apps COMPONENT desktop)
+endif()

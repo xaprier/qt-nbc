@@ -1,9 +1,5 @@
-//
-// Created by "xaprier" on "10/8/22"
-//
-
-#ifndef nbcalculator_h
-#define nbcalculator_h
+#ifndef NBCALCULATOR_HPP
+#define NBCALCULATOR_HPP
 
 #include <qglobal.h>
 
@@ -12,9 +8,10 @@
 #include <QMessageBox>
 #include <QValidator>
 
+#include "../design/ui_NBCalculator.h"
+#include "ExpressionHandler.hpp"
 #include "Number.hpp"
 #include "NumberBase.hpp"
-#include "expressionhandler.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +19,7 @@ class NBCalculator;
 }
 QT_END_NAMESPACE
 
-class NBCalculator : public QDialog {
+class NBCalculator : public QWidget {
     Q_OBJECT
     Q_DISABLE_COPY_MOVE(NBCalculator)
   public:
@@ -46,4 +43,4 @@ class NBCalculator : public QDialog {
     ExpressionHandler *m_handler;
 };
 
-#endif  // nbcalculator_h
+#endif  // NBCALCULATOR_HPP

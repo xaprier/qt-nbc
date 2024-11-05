@@ -1,41 +1,37 @@
 //
 // Created by "xaprier" on "10/8/22"
 //
-#include "nbcalculator.hpp"
+#include "NBCalculator.hpp"
 
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qvariant.h>
 #include <qvector.h>
 
-#include "../design/ui_nbcalculator.h"
-#include "expressioncalculator.hpp"
-#include "expressionhandler.hpp"
-#include "expressions.hpp"
+#include "ExpressionCalculator.hpp"
+#include "ExpressionHandler.hpp"
+#include "Expressions.hpp"
 
-NBCalculator::NBCalculator(QWidget *parent) : QDialog(parent), m_ui(new Ui::NBCalculator) {
+NBCalculator::NBCalculator(QWidget *parent) : QWidget(parent), m_ui(new Ui::NBCalculator) {
     // fixed size of window
     QWidget::setFixedSize(400, 200);
     m_ui->setupUi(this);
 
     // Ensure the exit button is not the default button for returnPressed connection
-    this->m_ui->exitButton->setAutoDefault(false);
-    this->m_ui->exitButton->setDefault(false);
 
     connect(this->m_ui->txtBoxOperation, &QLineEdit::textChanged, this, &NBCalculator::sl_textChanged);
     connect(this->m_ui->txtBoxOperation, &QLineEdit::returnPressed, this, &NBCalculator::sl_returnPressed);
     connect(this->m_ui->cmbBoxResult, &QComboBox::currentTextChanged, this, &NBCalculator::sl_currentTextChanged);
 
     // exit button handler
-    connect(m_ui->exitButton, &QPushButton::clicked, this, &NBCalculator::close);
     connect(m_ui->helpButton, &QToolButton::clicked, this, &NBCalculator::sl_help);
 
     this->m_handler = new ExpressionHandler(this->m_ui->txtBoxOperation);
 }
 
 NBCalculator::~NBCalculator() {
-    delete this->m_handler;
     delete m_ui;
+    delete m_handler;
 }
 
 void NBCalculator::sl_returnPressed() {

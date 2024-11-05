@@ -81,172 +81,64 @@ class NumberBase {
     virtual explicit operator std::string() = 0;
 
     /**
-     * @brief If the object value is less than the given value
-     * @param b Binary object
-     * @return Polymorphic operator
+     * @brief Checks if this number is less than the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is less than the given number, false otherwise.
      */
-    bool operator<(const Binary &b);
+    bool operator<(const NumberBase &base) const;
 
     /**
-     * @brief If the object value is less than the given value
-     * @param o Octal object
-     * @return Polymorphic operator
+     * @brief Checks if this number is greater than the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is greater than the given number, false otherwise.
      */
-    bool operator<(const Octal &o);
+    bool operator>(const NumberBase &base) const;
 
     /**
-     * @brief If the object value is less than the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
+     * @brief Checks if this number is equal to the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is equal to the given number, false otherwise.
      */
-    bool operator<(const Decimal &second);
+    bool operator==(const NumberBase &base) const;
 
     /**
-     * @brief If the object value is less than the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
+     * @brief Checks if this number is not equal to the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is not equal to the given number, false otherwise.
      */
-    bool operator<(const Hexadecimal &h);
+    bool operator!=(const NumberBase &base) const;
 
     /**
-     * @brief If the object value is less than or equal to the given value
-     * @param b Binary object
-     * @return Polymorphic operator
+     * @brief Checks if this number is less than or equal to the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is less than or equal to the given number, false otherwise.
      */
-    bool operator<=(const Binary &b);
+    bool operator<=(const NumberBase &base) const;
 
     /**
-     * @brief If the object value is less than or equal to the given value
-     * @param o Octal object
-     * @return Polymorphic operator
+     * @brief Checks if this number is greater than or equal to the given number.
+     *
+     * Compares this number to another NumberBase object after converting both to Decimal.
+     *
+     * @param base The number to compare against.
+     * @return true if this number is greater than or equal to the given number, false otherwise.
      */
-    bool operator<=(const Octal &o);
-
-    /**
-     * @brief If the object value is less than or equal to the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
-     */
-    bool operator<=(const Decimal &second);
-
-    /**
-     * @brief If the object value is less than or equal to the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
-     */
-    bool operator<=(const Hexadecimal &h);
-
-    /**
-     * @brief If the object value is greater than the given value
-     * @param b Binary object
-     * @return Polymorphic operator
-     */
-    bool operator>(const Binary &b);
-
-    /**
-     * @brief If the object value is greater than the given value
-     * @param o Octal object
-     * @return Polymorphic operator
-     */
-    bool operator>(const Octal &o);
-
-    /**
-     * @brief If the object value is greater than the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
-     */
-    bool operator>(const Decimal &sec);
-
-    /**
-     * @brief If the object value is greater than the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
-     */
-    bool operator>(const Hexadecimal &h);
-
-    /**
-     * @brief If the object value is greater than or equal to the given value
-     * @param b Binary object
-     * @return Polymorphic operator
-     */
-    bool operator>=(const Binary &b);
-
-    /**
-     * @brief If the object value is greater than or equal to the given value
-     * @param o Octal object
-     * @return Polymorphic operator
-     */
-    bool operator>=(const Octal &o);
-
-    /**
-     * @brief If the object value is greater than or equal to the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
-     */
-    bool operator>=(const Decimal &sec);
-
-    /**
-     * @brief If the object value is greater than or equal to the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
-     */
-    bool operator>=(const Hexadecimal &h);
-
-    /**
-     * @brief If the object value is equal to the given value
-     * @param b Binary object
-     * @return Polymorphic operator
-     */
-    bool operator==(const Binary &b);
-
-    /**
-     * @brief If the object value is equal to the given value
-     * @param o Octal object
-     * @return Polymorphic operator
-     */
-    bool operator==(const Octal &o);
-
-    /**
-     * @brief If the object value is equal to the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
-     */
-    bool operator==(const Decimal &second);
-
-    /**
-     * @brief If the object value is equal to the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
-     */
-    bool operator==(const Hexadecimal &h);
-
-    /**
-     * @brief If the object value is not equal to the given value
-     * @param b Binary object
-     * @return Polymorphic operator
-     */
-    bool operator!=(const Binary &b);
-
-    /**
-     * @brief If the object value is not equal to the given value
-     * @param o Octal object
-     * @return Polymorphic operator
-     */
-    bool operator!=(const Octal &o);
-
-    /**
-     * @brief If the object value is not equal to the given value
-     * @param second Decimal object
-     * @return Polymorphic operator
-     */
-    bool operator!=(const Decimal &second);
-
-    /**
-     * @brief If the object value is not equal to the given value
-     * @param h Hexadecimal object
-     * @return Polymorphic operator
-     */
-    bool operator!=(const Hexadecimal &h);
+    bool operator>=(const NumberBase &base) const;
 
     /**
      * @brief Clears the unnecessary zeros from the number and the other number cleaning stuffs

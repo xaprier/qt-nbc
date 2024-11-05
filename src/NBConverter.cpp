@@ -1,14 +1,13 @@
-#include "nbconverter.hpp"
+#include "NBConverter.hpp"
 
 #include <qobject.h>
 
 #include <memory>
 
-#include "../design/ui_nbconverter.h"
+#include "Expressions.hpp"
 #include "NumberBase.hpp"
-#include "expressions.hpp"
 
-NBConverter::NBConverter(QWidget *parent) : QDialog(parent), m_ui(new Ui::NBConverter) {  // NOLINT
+NBConverter::NBConverter(QWidget *parent) : QWidget(parent), m_ui(new Ui::NBConverter) {  // NOLINT
     QWidget::setFixedSize(400, 200);                                                      // NOLINT
 
     this->m_ui->setupUi(this);
@@ -21,7 +20,6 @@ NBConverter::NBConverter(QWidget *parent) : QDialog(parent), m_ui(new Ui::NBConv
             &NBConverter::sl_textChanged);
     connect(this->m_ui->hexaLine, &QLineEdit::textEdited, this,
             &NBConverter::sl_textChanged);
-    connect(this->m_ui->exitBut, &QPushButton::clicked, this, &NBConverter::close);
 
     m_lineEdits.push_back(this->m_ui->binLine);
     m_lineEdits.push_back(this->m_ui->decLine);

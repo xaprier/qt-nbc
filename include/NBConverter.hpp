@@ -1,3 +1,8 @@
+
+
+#ifndef NBCONVERTER_HPP
+#define NBCONVERTER_HPP
+
 #include <qglobal.h>
 
 #include <QComboBox>
@@ -6,21 +11,20 @@
 #include <QString>
 #include <QValidator>
 
+#include "../design/ui_NBConverter.h"
 #include "Binary.hpp"
 #include "Decimal.hpp"
 #include "Hexadecimal.hpp"
 #include "Number.hpp"
 #include "Octal.hpp"
 
-#ifndef QT_NBC_NBCONVERTER_H
-#define QT_NBC_NBCONVERTER_H
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class NBConverter;
 }
 QT_END_NAMESPACE
 
-class NBConverter : public QDialog {
+class NBConverter : public QWidget {
     Q_OBJECT
     Q_DISABLE_COPY_MOVE(NBConverter)
 
@@ -40,4 +44,4 @@ class NBConverter : public QDialog {
     QValidator *m_validator;
 };
 
-#endif  // QT_NBC_NBCONVERTER_H
+#endif  // NBCONVERTER_HPP

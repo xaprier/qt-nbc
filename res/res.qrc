@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>XNBC.png</file>
+        <file>XNBC.svg</file>
+    </qresource>
+    <qresource prefix="/qss">
+        <file>style.qss</file>
+    </qresource>
+    <qresource prefix="/qssicons">
+        <file>vs15/checkbox-check-disabled.png</file>
+        <file>vs15/checkbox-check.png</file>
+        <file>vs15/combobox-down.png</file>
+        <file>vs15/scrollbar-down-disabled.png</file>
+        <file>vs15/scrollbar-down-hover.png</file>
+        <file>vs15/scrollbar-down.png</file>
+        <file>vs15/scrollbar-left-disabled.png</file>
+        <file>vs15/scrollbar-left-hover.png</file>
+        <file>vs15/scrollbar-left.png</file>
+        <file>vs15/scrollbar-right-disabled.png</file>
+        <file>vs15/scrollbar-right-hover.png</file>
+        <file>vs15/scrollbar-right.png</file>
+        <file>vs15/scrollbar-up-disabled.png</file>
+        <file>vs15/scrollbar-up-hover.png</file>
+        <file>vs15/scrollbar-up.png</file>
+    </qresource>
+</RCC>

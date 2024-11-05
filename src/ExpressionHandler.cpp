@@ -1,4 +1,4 @@
-#include "expressionhandler.hpp"
+#include "ExpressionHandler.hpp"
 
 #include <qcoreevent.h>
 #include <qnamespace.h>
