@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(
     XNBC
-    VERSION 1.0.0
+    VERSION 2.0.0
     DESCRIPTION "Number based calculator and converter"
     HOMEPAGE_URL "https://github.com/xaprier/XNBC"
     LANGUAGES CXX)

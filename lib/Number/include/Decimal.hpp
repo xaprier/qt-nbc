@@ -1,5 +1,5 @@
-#ifndef DECIMAL_H
-#define DECIMAL_H
+#ifndef DECIMAL_HPP
+#define DECIMAL_HPP
 
 #include <iostream>
 
@@ -44,8 +44,8 @@ class Decimal : public NumberBase {
     explicit Decimal(const Hexadecimal &h);
 
     /**
-     * @brief Construct a new Decimal object from a Decimal object(Copy constructor)
-     * @param d The Decimal object
+     * @brief Construct a new Decimal object from another Decimal object(copy constructor)
+     * @param d The number with Decimal object
      */
     Decimal(const Decimal &d);
 
@@ -63,7 +63,7 @@ class Decimal : public NumberBase {
 
     /**
      * @brief Returns the Binary object with converting the current based number to Binary
-     * @return Binary object
+     * @return Decimal object
      */
     [[nodiscard]] Binary toBin() const override;
 
@@ -86,312 +86,86 @@ class Decimal : public NumberBase {
     friend std::ostream &operator<<(std::ostream &output, const Decimal &d);
 
     /**
-     * @brief operator overloading of addition with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
+     * @brief operator overloading of addition with another number base
+     *
+     * @param other another number base
+     * @return Decimal
      */
-    Decimal operator+(const Decimal &d);
+    Decimal operator+(const NumberBase &other);
 
     /**
-     * @brief operator overloading of addition with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
+     * @brief operator overloading of subtraction with another number base
+     *
+     * @param other another number base
+     * @return Decimal
      */
-    Decimal operator+(const Binary &b);
+    Decimal operator-(const NumberBase &other);
 
     /**
-     * @brief operator overloading of addition with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
+     * @brief operator overloading of multiply with another number base
+     *
+     * @param other another number base
+     * @return Decimal
      */
-    Decimal operator+(const Octal &o);
+    Decimal operator*(const NumberBase &other);
 
     /**
-     * @brief operator overloading of addition with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
+     * @brief operator overloading of divide with another number base
+     *
+     * @param other another number base
+     * @return Decimal
      */
-    Decimal operator+(const Hexadecimal &h);
+    Decimal operator/(const NumberBase &other);
 
     /**
-     * @brief operator overloading of subtraction with Decimal object
-     * @param second The number with Decimal reference object
-     * @return Decimal object
+     * @brief operator overloading of modulo with another number base
+     *
+     * @param other another number base
+     * @return Decimal
      */
-    Decimal operator-(const Decimal &second);
+    Decimal operator%(const NumberBase &other);
 
     /**
-     * @brief operator overloading of subtraction with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
+     * @brief operator overloading of assignment with another number base
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator-(const Binary &b);
+    Decimal &operator=(const NumberBase &other);
 
     /**
-     * @brief operator overloading of subtraction with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
+     * @brief operator overloading of addition assignment with another number base object
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator-(const Octal &o);
+    Decimal &operator+=(const NumberBase &other);
 
     /**
-     * @brief operator overloading of subtraction with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
+     * @brief operator overloading of subtraction assignment with another number base object
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator-(const Hexadecimal &h);
+    Decimal &operator-=(const NumberBase &other);
 
     /**
-     * @brief operator overloading of multiplication with Decimal object
-     * @param second The number with Decimal reference object
-     * @return Decimal object
+     * @brief operator overloading of multiply assignment with another number base object
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator*(const Decimal &second);
+    Decimal &operator*=(const NumberBase &other);
 
     /**
-     * @brief operator overloading of multiplication with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
+     * @brief operator overloading of divide assignment with another number base object
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator*(const Binary &b);
+    Decimal &operator/=(const NumberBase &other);
 
     /**
-     * @brief operator overloading of multiplication with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
+     * @brief operator overloading of modulo assignment with another number base object
+     * @param other The number with another NumberBase reference object
+     * @return Decimal
      */
-    Decimal operator*(const Octal &o);
-
-    /**
-     * @brief operator overloading of multiplication with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal operator*(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of division with Decimal object
-     * @param second The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal operator/(const Decimal &second);
-
-    /**
-     * @brief operator overloading of division with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal operator/(const Binary &b);
-
-    /**
-     * @brief operator overloading of division with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal operator/(const Octal &o);
-
-    /**
-     * @brief operator overloading of division with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal operator/(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of modulus with Decimal object
-     * @param second The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal operator%(const Decimal &second);
-
-    /**
-     * @brief operator overloading of modulus with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal operator%(const Binary &b);
-
-    /**
-     * @brief operator overloading of modulus with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal operator%(const Octal &o);
-
-    /**
-     * @brief operator overloading of modulus with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal operator%(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of assignement with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of assignement with Binary object(Converts the Base to the Decimal)
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator=(const Binary &b);
-
-    /**
-     * @brief operator overloading of assignement with Octal object(Converts the Base to the Decimal)
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator=(const Octal &o);
-
-    /**
-     * @brief operator overloading of assignement with Hexadecimal object(Converts the Base to the Decimal)
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator=(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of addition assignment with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator+=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of addition assignment with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator+=(const Binary &b);
-
-    /**
-     * @brief operator overloading of addition assignment with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator+=(const Octal &o);
-
-    /**
-     * @brief operator overloading of addition assignment with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator+=(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of subtraction assignment with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator-=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of subtraction assignment with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator-=(const Binary &b);
-
-    /**
-     * @brief operator overloading of subtraction assignment with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator-=(const Octal &o);
-
-    /**
-     * @brief operator overloading of subtraction assignment with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator-=(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of multiplication assignment with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator*=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of multiplication assignment with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator*=(const Binary &b);
-
-    /**
-     * @brief operator overloading of multiplication assignment with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator*=(const Octal &o);
-
-    /**
-     * @brief operator overloading of multiplication assignment with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator*=(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of division assignment with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator/=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of division assignment with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator/=(const Binary &b);
-
-    /**
-     * @brief operator overloading of division assignment with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator/=(const Octal &o);
-
-    /**
-     * @brief operator overloading of division assignment with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator/=(const Hexadecimal &h);
-
-    /**
-     * @brief operator overloading of modulus assignment with Decimal object
-     * @param d The number with Decimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator%=(const Decimal &d);
-
-    /**
-     * @brief operator overloading of modulus assignment with Binary object
-     * @param b The number with Binary reference object
-     * @return Decimal object
-     */
-    Decimal &operator%=(const Binary &b);
-
-    /**
-     * @brief operator overloading of modulus assignment with Octal object
-     * @param o The number with Octal reference object
-     * @return Decimal object
-     */
-    Decimal &operator%=(const Octal &o);
-
-    /**
-     * @brief operator overloading of modulus assignment with Hexadecimal object
-     * @param h The number with Hexadecimal reference object
-     * @return Decimal object
-     */
-    Decimal &operator%=(const Hexadecimal &h);
+    Decimal &operator%=(const NumberBase &other);
 };
 
-#endif  // DECIMAL_H
+#endif  // DECIMAL_HPP

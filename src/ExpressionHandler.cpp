@@ -33,6 +33,8 @@ bool ExpressionHandler::eventFilter(QObject *obj, QEvent *event) {
         QKeyEvent *keyEvent = dynamic_cast<QKeyEvent *>(event);
 
         QString keyText = keyEvent->text();
+        QString validKeys = "+-*/%0123456789xbdoBDO.";
+
         QString currentText = this->m_edit->text();
         int cursorPos = this->m_edit->cursorPosition();
 
@@ -47,11 +49,11 @@ bool ExpressionHandler::eventFilter(QObject *obj, QEvent *event) {
             lastToken = currentText.mid(0, 2).toUpper();
         else
             lastToken = currentText.mid(lastIndex + 1, cursorPos - lastIndex - 1).toUpper();
-
         auto validEntryList = this->GetValidEntries(lastToken, keyText);
 
         bool notValid = this->m_rx.indexIn(currentText) > -1;
-        if (!notValid) {
+        QString errorKeys = "xobd+-*/%";
+        if (!notValid && !errorKeys.contains(keyText)) {
             QString list = validEntryList.join(", ");
             list.chop(1);
             QString message = "Invalid Entry!<br/>Valid entries are: <b>" + list + "</b><br/>Valid operators are: <b>+, -, *, /, %</b>";

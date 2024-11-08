@@ -19,7 +19,7 @@ class AST {
     AST(Token t) : token(t), value(0), left(nullptr), right(nullptr) {}
     void print() {
         printAST(std::shared_ptr<AST<T>>(this));
-        std::cout << std::endl;
+        std::cout << '\n';
     }
     void build(std::vector<Token> postfix);  // Notice how I make a copy of tokens and then pass that copy by reference. This way the original vector<Token> stays unchanged while the
                                              // algorithm proceeds normally.

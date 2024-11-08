@@ -1,5 +1,5 @@
-#ifndef NUMBERBASE_H
-#define NUMBERBASE_H
+#ifndef NUMBERBASE_HPP
+#define NUMBERBASE_HPP
 #include <iostream>
 #include <string>
 
@@ -214,4 +214,4 @@ class NumberBase {
     std::string num;
 };
 
-#endif  // NUMBERBASE_H
+#endif  // NUMBERBASE_HPP

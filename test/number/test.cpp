@@ -1,3 +1,5 @@
+#include "test.hpp"
+
 #include "test_cases.hpp"
 
 //! IMPORTANT NOTE
@@ -6,15 +8,16 @@
 //! SO, THIS PART OF CODE WILL NOT REFACTORED.
 
 int main() {
-    testConstructors();
-    testConverters();
-    ostreamOverloadTest();
-    operator_plusOverloading();
-    operator_subtractOverloading();
-    operator_multiplyOverloading();
-    operator_divideOverloading();
-    operator_remainderOverloading();
-    operator_assignmentsOverloading();
-    operator_RelationOverloading();
+    Tester t;
+    t.addTest("Constructors", testConstructors);
+    t.addTest("Converters", testConverters);
+    t.addTest("ostreamOverload", ostreamOverloadTest);
+    t.addTest("operator_plusOverloading", operator_plusOverloading);
+    t.addTest("operator_subtractOverloading", operator_subtractOverloading);
+    t.addTest("operator_multiplyOverloading", operator_multiplyOverloading);
+    t.addTest("operator_divideOverloading", operator_divideOverloading);
+    t.addTest("operator_remainderOverloading", operator_remainderOverloading);
+    t.addTest("operator_assignmentsOverloading", operator_assignmentsOverloading);
+    t.addTest("operator_RelationOverloading", operator_RelationOverloading);
     return 0;
 }

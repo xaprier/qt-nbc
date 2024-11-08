@@ -2,8 +2,8 @@
 // Created by xaprier on 2/13/23.
 //
 
-#ifndef NUMBER_H
-#define NUMBER_H
+#ifndef NUMBER_HPP
+#define NUMBER_HPP
 #include <ostream>
 
 template <class T>
@@ -401,4 +401,4 @@ class Number {
      */
     explicit operator std::string() { return std::string(*number); }
 };
-#endif  // NUMBER_H
+#endif  // NUMBER_HPP

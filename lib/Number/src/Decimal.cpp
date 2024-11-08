@@ -304,12 +304,6 @@ Binary Decimal::toBin() const { return Binary(*this); }
 
 Hexadecimal Decimal::toHex() const { return Hexadecimal(*this); }
 
-std::ostream &operator<<(std::ostream &output, const Decimal &d) {
-    return output << d.num << "d";
-}
-
-Decimal::operator std::string() { return this->num; }
-
 Decimal::Decimal(const int &num) { this->num = std::to_string(num) + ".0"; }
 
 Decimal::Decimal(const double &num) {
@@ -317,24 +311,127 @@ Decimal::Decimal(const double &num) {
     clean_number(this->num);
 }
 
-Decimal &Decimal::operator=(const Decimal &d) {
-    if (this == &d)
+#pragma region operators
+
+std::ostream &operator<<(std::ostream &output, const Decimal &d) {
+    return output << d.num << "d";
+}
+
+Decimal::operator std::string() { return this->num; }
+
+Decimal &Decimal::operator=(const NumberBase &other) {
+    if (this == &other)
         return *this;
-    this->num = d.num;
+
+    // Try to cast `other` to `const Binary&`
+    const Decimal *decPtr = dynamic_cast<const Decimal *>(&other);
+    if (decPtr) {
+        this->num = decPtr->num;
+    } else {
+        this->num = other.toDec().num;
+    }
+
     return *this;
 }
 
-Decimal &Decimal::operator=(const Binary &b) {
-    this->num = b.toDec().num;
+Decimal Decimal::operator+(const NumberBase &other) {
+    Decimal result(*this), second = other.toDec();
+
+    // calculate the sum of decimal values
+    result.num = sum(result.num, second.num);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal &Decimal::operator+=(const NumberBase &other) {
+    *this = *this + other;
     return *this;
 }
 
-Decimal &Decimal::operator=(const Octal &o) {
-    this->num = o.toDec().num;
+Decimal Decimal::operator-(const NumberBase &other) {
+    // Converting values to Decimal/Create result object
+    Decimal result(*this), second(other.toDec());
+
+    // calculate the subtracting of decimal values
+    result.num = this->sub(result.num, second.num);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal &Decimal::operator-=(const NumberBase &other) {
+    *this = *this - other;
     return *this;
 }
 
-Decimal &Decimal::operator=(const Hexadecimal &h) {
-    this->num = h.toDec().num;
+Decimal Decimal::operator*(const NumberBase &other) {
+    // creating return object/converting other object
+    Decimal result(*this), second(other.toDec());
+
+    // calculate the multiplying of decimal values
+    result.num = this->mul(result.num, second.num);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal &Decimal::operator*=(const NumberBase &other) {
+    *this = *this * other;
     return *this;
 }
+
+Decimal Decimal::operator/(const NumberBase &other) {
+    // creating return object/converting other object
+    Decimal result(*this), second(other.toDec());
+
+    if (second.num == "0.0")
+        throw std::runtime_error("Divide by 0 exception.");
+
+    // calculate the multiplying of decimal values
+    result.num = this->div(result.num, second.num);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal &Decimal::operator/=(const NumberBase &other) {
+    *this = *this / other;
+    return *this;
+}
+
+Decimal Decimal::operator%(const NumberBase &other) {
+    // creating return object/converting other object
+    Decimal result(*this), second(other.toDec());
+
+    if (second.num == "0.0")
+        throw std::runtime_error("Domain number cannot be zero!");
+
+    // calculate the multiplying of decimal values
+    result.num = to_string_with_precision(fmod(std::stod(result.num), std::stod(second.num)), 30);
+
+    // remove the last indexes if it is 0
+    while (result.num.at(result.num.length() - 1) == '0' && result.num.at(result.num.length() - 2) != '.')
+        result.num = result.num.substr(0, result.num.length() - 1);
+
+    return result;
+}
+
+Decimal &Decimal::operator%=(const NumberBase &other) {
+    *this = *this % other;
+    return *this;
+}
+
+#pragma endregion operators

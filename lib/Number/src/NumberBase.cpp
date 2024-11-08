@@ -1,3 +1,5 @@
+#include "NumberBase.hpp"
+
 #include <cstdint>
 #include <sstream>
 #include <string>
@@ -6,7 +8,6 @@
 #include "Binary.hpp"
 #include "Decimal.hpp"
 #include "Hexadecimal.hpp"
-#include "NumberBase.hpp"
 #include "Octal.hpp"
 
 NumberBase::NumberBase(std::string NumberBase) : num(std::move(NumberBase)) {}
@@ -332,6 +333,8 @@ std::string NumberBase::div(std::string val1, std::string val2) {
     return result;
 }
 
+#pragma region operators
+
 bool NumberBase::operator<(const NumberBase &base) const {
     // Convert *this and base to Decimal for comparison
     Decimal first = this->toDec();
@@ -372,3 +375,5 @@ bool NumberBase::operator>=(const NumberBase &base) const {
     // Use the existing operator> and operator== for >=
     return (*this > base) || (*this == base);
 }
+
+#pragma endregion operators
